@@ -1,3 +1,3 @@
 export * from "./Groceries";
-export * from "./ItemCRUD";
+export * from "./ItemsCRUD/ItemCRUD";
 export * from "./SettingsCRUD";

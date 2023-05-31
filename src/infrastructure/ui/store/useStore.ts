@@ -1,4 +1,4 @@
-import { Id, ItemList, Settings } from "../../../domain";
+import { Id, Item, ItemList, Settings } from "../../../domain";
 import { proxy, useSnapshot } from "valtio";
 import {
   generateActions,
@@ -9,6 +9,7 @@ import {
 export interface StoreActions {
   getAllItems(): void;
   getSettings(): void;
+  saveItem(item: Item): void;
   setItemAsRequired(id: Id): void;
   setItemAsNotRequired(id: Id): void;
   setItemAsMandatory(id: Id): void;
@@ -28,6 +29,7 @@ const store = proxy<Store>({
   actions: {
     getAllItems() {},
     getSettings() {},
+    saveItem() {},
     setItemAsRequired() {},
     setItemAsNotRequired() {},
     setItemAsMandatory() {},

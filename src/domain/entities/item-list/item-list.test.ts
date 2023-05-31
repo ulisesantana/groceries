@@ -83,4 +83,18 @@ describe("Item List should", () => {
 
     expect(new ItemList(items).findById(item!.id)).toStrictEqual(item);
   });
+
+  it("check if an item is in the list", () => {
+    const items = [
+      ItemBuilder.random(),
+      ItemBuilder.random(),
+      ItemBuilder.random(),
+    ];
+    const item = items.at(1);
+
+    const itemList = new ItemList(items);
+
+    expect(itemList.has(item!)).toBeTruthy();
+    expect(itemList.has(ItemBuilder.random())).toBeFalsy();
+  });
 });

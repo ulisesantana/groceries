@@ -62,4 +62,8 @@ export class ItemList {
   findById(id: Id): Item | undefined {
     return this._items.find((item) => id.equals(item.id));
   }
+
+  has(item: Item): boolean {
+    return this._items.some(({ id }) => item.id.equals(id));
+  }
 }

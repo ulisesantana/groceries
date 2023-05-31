@@ -1,4 +1,4 @@
-import { Id, Settings } from "../../../domain";
+import { Id, Item, ItemList, Settings } from "../../../domain";
 import { generateUseCases, UseCases } from "../../../application";
 import { ItemRepositoryPouchDB } from "../../repositories/item-repository/item.repository.pouch-db";
 import { PouchDatasource } from "../../data-sources/pouch-db.data-source";
@@ -49,6 +49,17 @@ export function generateActions(
     getSettings() {
       useCases.getSettings.exec().then((settings) => {
         store.settings = settings;
+      });
+    },
+    saveItem(item: Item) {
+      useCases.saveItem.exec(item).then((item) => {
+        if (store.items.has(item)) {
+          store.items = new ItemList(
+            store.items.getAll().map((i) => (item.id.equals(i.id) ? item : i))
+          );
+        } else {
+          store.items = new ItemList([...store.items.getAll(), item]);
+        }
       });
     },
     setItemAsRequired(id: Id) {
