@@ -26,7 +26,7 @@ describe("Groceries view should", () => {
     render(<Groceries />);
 
     await waitFor(() => getAllItemsDouble.assertHasBeenCalled());
-    for (const item of items.getAll()) {
+    for (const item of items.values) {
       await screen.findByText(item.name);
     }
   });
@@ -52,10 +52,10 @@ describe("Groceries view should", () => {
     );
 
     await waitFor(() => {
-      screen.getByText(items.getAll().at(1)!.name);
-      screen.getByText(items.getAll().at(2)!.name);
+      screen.getByText(items.values.at(1)!.name);
+      screen.getByText(items.values.at(2)!.name);
       expect(
-        screen.queryByText(items.getAll().at(0)!.name)
+        screen.queryByText(items.values.at(0)!.name)
       ).not.toBeInTheDocument();
     });
   });
@@ -67,11 +67,11 @@ describe("Groceries view should", () => {
       ItemBuilder.init().withName("milk").build(),
     ]);
     const itemsUpdated = new ItemList([
-      ItemBuilder.clone(items.getAll().at(0)!).withIsRequired(true).build(),
-      ItemBuilder.clone(items.getAll().at(1)!).build(),
-      ItemBuilder.clone(items.getAll().at(2)!).build(),
+      ItemBuilder.clone(items.values.at(0)!).withIsRequired(true).build(),
+      ItemBuilder.clone(items.values.at(1)!).build(),
+      ItemBuilder.clone(items.values.at(2)!).build(),
     ]);
-    const [item] = items.getAll();
+    const [item] = items.values;
     const getAllItemsDouble = new GetAllItemsCaseDouble([items, itemsUpdated]);
     const setItemAsRequired = new UseCaseDouble();
     const useCases = UseCasesBuilder.init()
@@ -107,11 +107,11 @@ describe("Groceries view should", () => {
       ItemBuilder.init().withName("milk").build(),
     ]);
     const itemsUpdated = new ItemList([
-      ItemBuilder.clone(items.getAll().at(0)!).withIsMandatory(true).build(),
-      ItemBuilder.clone(items.getAll().at(1)!).build(),
-      ItemBuilder.clone(items.getAll().at(2)!).build(),
+      ItemBuilder.clone(items.values.at(0)!).withIsMandatory(true).build(),
+      ItemBuilder.clone(items.values.at(1)!).build(),
+      ItemBuilder.clone(items.values.at(2)!).build(),
     ]);
-    const [item] = items.getAll();
+    const [item] = items.values;
     const getAllItemsDouble = new GetAllItemsCaseDouble([items, itemsUpdated]);
     const setItemAsMandatoryDouble = new UseCaseDouble();
     const useCases = UseCasesBuilder.init()
@@ -160,13 +160,13 @@ describe("Groceries view should", () => {
     await userEvent.click(screen.getByLabelText(messages.menu.requiredListCTA));
 
     await waitFor(() => {
-      screen.getByText(items.getAll().at(0)!.name);
+      screen.getByText(items.values.at(0)!.name);
       expect(
-        screen.queryByText(items.getAll().at(2)!.name)
+        screen.queryByText(items.values.at(2)!.name)
       ).not.toBeInTheDocument();
     });
     expect(
-      screen.queryByText(items.getAll().at(1)!.name)
+      screen.queryByText(items.values.at(1)!.name)
     ).not.toBeInTheDocument();
   });
 
@@ -204,13 +204,13 @@ describe("Groceries view should", () => {
     );
 
     await waitFor(() => {
-      screen.getByText(items.getAll().at(1)!.name);
+      screen.getByText(items.values.at(1)!.name);
       expect(
-        screen.queryByText(items.getAll().at(2)!.name)
+        screen.queryByText(items.values.at(2)!.name)
       ).not.toBeInTheDocument();
     });
     expect(
-      screen.queryByText(items.getAll().at(0)!.name)
+      screen.queryByText(items.values.at(0)!.name)
     ).not.toBeInTheDocument();
   });
 });

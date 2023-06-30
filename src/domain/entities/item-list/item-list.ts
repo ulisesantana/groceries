@@ -1,5 +1,6 @@
 import { Item } from "../item";
 import { Id } from "../id";
+import { Category } from "../category";
 
 type CategoryName = string;
 
@@ -39,7 +40,7 @@ export class ItemList {
     return a > b ? 1 : a < b ? -1 : 0;
   }
 
-  getAll() {
+  get values() {
     return this.items;
   }
 

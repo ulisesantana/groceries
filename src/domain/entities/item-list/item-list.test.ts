@@ -27,7 +27,7 @@ describe("Item List should", () => {
   ];
 
   it("return all items sorted", () => {
-    expect(new ItemList(items).getAll()).toStrictEqual([
+    expect(new ItemList(items).values).toStrictEqual([
       items.at(3),
       items.at(1),
       items.at(0),
@@ -59,8 +59,8 @@ describe("Item List should", () => {
   });
 
   it("group items by category sorted by category name", () => {
-    const categoryA = CategoryBuilder.init().witName("Category A").build();
-    const categoryB = CategoryBuilder.init().witName("Category B").build();
+    const categoryA = CategoryBuilder.init().withName("Category A").build();
+    const categoryB = CategoryBuilder.init().withName("Category B").build();
     const items = [
       ItemBuilder.init().withCategory(categoryB).build(),
       ItemBuilder.init().withCategory(categoryA).build(),

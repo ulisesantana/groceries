@@ -13,7 +13,7 @@ export function Groceries() {
 
   return (
     <>
-      {view === Views.All && <List items={items.search(lastSearch).getAll()} />}
+      {view === Views.All && <List items={items.search(lastSearch).values} />}
       {view === Views.Required && (
         <List items={items.search(lastSearch).getAllRequired()} />
       )}

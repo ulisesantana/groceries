@@ -55,10 +55,10 @@ export function generateActions(
       useCases.saveItem.exec(item).then((item) => {
         if (store.items.has(item)) {
           store.items = new ItemList(
-            store.items.getAll().map((i) => (item.id.equals(i.id) ? item : i))
+            store.items.values.map((i) => (item.id.equals(i.id) ? item : i))
           );
         } else {
-          store.items = new ItemList([...store.items.getAll(), item]);
+          store.items = new ItemList([...store.items.values, item]);
         }
       });
     },
