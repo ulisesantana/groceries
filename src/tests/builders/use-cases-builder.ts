@@ -1,6 +1,7 @@
 import {
   GetAllItemsCase,
   GetSettingsCase,
+  SaveItemCase,
   SetItemAsMandatoryCase,
   SetItemAsNotMandatoryCase,
   SetItemAsNotRequiredCase,
@@ -17,6 +18,7 @@ type ValueOf<T> = T[keyof T];
 export class UseCasesBuilder {
   private getAllItems: GetAllItemsCase;
   private getSettings: GetSettingsCase;
+  private saveItem: SaveItemCase;
   private setItemAsRequired: SetItemAsRequiredCase;
   private setItemAsNotRequired: SetItemAsNotRequiredCase;
   private setItemAsMandatory: SetItemAsMandatoryCase;
@@ -26,6 +28,7 @@ export class UseCasesBuilder {
   private constructor({
     getAllItems,
     getSettings,
+    saveItem,
     setItemAsRequired,
     setItemAsNotRequired,
     setItemAsNotMandatory,
@@ -38,6 +41,7 @@ export class UseCasesBuilder {
       new UseCaseDouble([
         SettingsBuilder.init().withSyncUrl(undefined).build(),
       ])) as GetSettingsCase;
+    this.saveItem = (saveItem || new UseCaseDouble()) as SaveItemCase;
     this.setItemAsRequired = (setItemAsRequired ||
       new UseCaseDouble()) as SetItemAsRequiredCase;
     this.setItemAsNotRequired = (setItemAsNotRequired ||
@@ -68,6 +72,11 @@ export class UseCasesBuilder {
     getSettings: GetSettingsCase | UseCaseDouble
   ): UseCasesBuilder {
     this.getSettings = getSettings as GetSettingsCase;
+    return this;
+  }
+
+  withSaveItemCase(saveItem: SaveItemCase | UseCaseDouble): UseCasesBuilder {
+    this.saveItem = saveItem as SaveItemCase;
     return this;
   }
 
@@ -112,6 +121,7 @@ export class UseCasesBuilder {
     return {
       getAllItems: this.getAllItems,
       getSettings: this.getSettings,
+      saveItem: this.saveItem,
       setItemAsRequired: this.setItemAsRequired,
       setItemAsNotRequired: this.setItemAsNotRequired,
       setItemAsMandatory: this.setItemAsMandatory,
