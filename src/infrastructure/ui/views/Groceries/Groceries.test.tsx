@@ -20,7 +20,7 @@ describe("Groceries view should", () => {
 
     await waitFor(() =>
       initStore(
-        UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
+        UseCasesBuilder.init().withGetItemsCase(getAllItemsDouble).build()
       )
     );
     render(<Groceries />);
@@ -41,7 +41,7 @@ describe("Groceries view should", () => {
 
     await waitFor(() =>
       initStore(
-        UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
+        UseCasesBuilder.init().withGetItemsCase(getAllItemsDouble).build()
       )
     );
     render(<Groceries />);
@@ -75,7 +75,7 @@ describe("Groceries view should", () => {
     const getAllItemsDouble = new GetItemsCaseDouble([items, itemsUpdated]);
     const setItemAsRequired = new UseCaseDouble();
     const useCases = UseCasesBuilder.init()
-      .withGetAllItemsCase(getAllItemsDouble)
+      .withGetItemsCase(getAllItemsDouble)
       .withSetItemAsRequiredCase(setItemAsRequired)
       .build();
     await waitFor(() => initStore(useCases));
@@ -115,7 +115,7 @@ describe("Groceries view should", () => {
     const getAllItemsDouble = new GetItemsCaseDouble([items, itemsUpdated]);
     const setItemAsMandatoryDouble = new UseCaseDouble();
     const useCases = UseCasesBuilder.init()
-      .withGetAllItemsCase(getAllItemsDouble)
+      .withGetItemsCase(getAllItemsDouble)
       .withSetItemAsMandatoryCase(setItemAsMandatoryDouble)
       .build();
 
@@ -149,7 +149,7 @@ describe("Groceries view should", () => {
     const getAllItemsDouble = new GetItemsCaseDouble([items]);
     await waitFor(() =>
       initStore(
-        UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
+        UseCasesBuilder.init().withGetItemsCase(getAllItemsDouble).build()
       )
     );
     render(<Groceries />);
@@ -191,7 +191,7 @@ describe("Groceries view should", () => {
     const getAllItemsDouble = new GetItemsCaseDouble([items]);
     await waitFor(() =>
       initStore(
-        UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
+        UseCasesBuilder.init().withGetItemsCase(getAllItemsDouble).build()
       )
     );
     render(<Groceries />);

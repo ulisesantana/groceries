@@ -37,7 +37,7 @@ function generateOnSubmitHandler(
 ): FormEventHandler<HTMLFormElement> {
   return (event) => {
     event.preventDefault();
-    const form = event.target as HTMLFormElement;
+    const form = event.currentTarget;
     const formData = new FormData(form);
     actions.setSettings({
       syncUrl: formData.get("syncUrl")!.toString(),

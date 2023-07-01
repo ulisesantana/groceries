@@ -57,10 +57,9 @@ export function generateActions(
   useCases: UseCases
 ): StoreActions {
   return {
-    createCategory(category: Category) {
-      useCases.createCategory.exec(category).then(() => {
-        return store.actions.getCategories();
-      });
+    async createCategory(category: Category) {
+      await useCases.createCategory.exec(category);
+      return store.actions.getCategories();
     },
     getCategories() {
       useCases.getCategories.exec().then((categories) => {

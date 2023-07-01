@@ -1,5 +1,5 @@
 import { CategoryRepository } from "../../../application";
-import { Category, CategoryList, Id } from "../../../domain";
+import { Category, CategoryList, Id, ItemNotFoundError } from "../../../domain";
 import {
   PouchDatasource,
   PouchDBDocument,
@@ -13,7 +13,7 @@ export type PouchDBCategory = PouchDBDocument<Category> & {
 export class CategoryRepositoryPouchDb implements CategoryRepository {
   constructor(private readonly pouch: PouchDatasource) {}
 
-  private static mapCategoryToDomain(document: PouchDBCategory): Category {
+  private static mapToDomain(document: PouchDBCategory): Category {
     return new Category({
       _id: document._id,
       _rev: document._rev,
@@ -23,6 +23,18 @@ export class CategoryRepositoryPouchDb implements CategoryRepository {
       icon: document.icon,
     });
   }
+
+  private async findById(id: Id): Promise<Category> {
+    try {
+      const document = await this.pouch.db.get<PouchDBCategory>(id.value);
+      return CategoryRepositoryPouchDb.mapToDomain(document);
+    } catch (error) {
+      console.error(`Error getting category: ${error}`);
+      // TODO: Create error for categories
+      throw new ItemNotFoundError(id);
+    }
+  }
+
   async findAll(): Promise<CategoryList> {
     const documents = await this.pouch.db.allDocs<PouchDBCategory>({
       include_docs: true,
@@ -40,8 +52,33 @@ export class CategoryRepositoryPouchDb implements CategoryRepository {
     );
     return new CategoryList(
       rawCategories.map(({ doc }) =>
-        CategoryRepositoryPouchDb.mapCategoryToDomain(doc as PouchDBCategory)
+        CategoryRepositoryPouchDb.mapToDomain(doc as PouchDBCategory)
       )
     );
+  }
+
+  // TODO: Test this method
+  async save(category: Category): Promise<Category> {
+    try {
+      const response = await this.pouch.db.put({
+        ...category,
+        id: category.id.value,
+        type: PouchDatasource.DocumentTypes.Category,
+      });
+      if (!response.ok) {
+        // throw new ItemNotSavedError(category);
+      }
+      return this.findById(category.id);
+    } catch (error) {
+      // @ts-ignore
+      if (error.name === "conflict") {
+        console.debug(
+          `Retrying save for category ${category.name} (${category.id}).`
+        );
+        return this.save(category);
+      } else {
+        throw error;
+      }
+    }
   }
 }

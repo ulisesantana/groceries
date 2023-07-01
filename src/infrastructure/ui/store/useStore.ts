@@ -14,7 +14,7 @@ import {
 } from "./generators";
 
 export interface StoreActions {
-  createCategory(category: Category): void;
+  createCategory(category: Category): Promise<void>;
   getCategories(): void;
   getItems(): void;
   getSettings(): void;
@@ -38,7 +38,7 @@ const store = proxy<Store>({
   items: new ItemList([]),
   settings: { syncUrl: undefined },
   actions: {
-    createCategory() {},
+    async createCategory() {},
     getCategories() {},
     getItems() {},
     getSettings() {},

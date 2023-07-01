@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import "./App.scss";
-import { palette } from "../../../domain";
-import { initStore } from "../store";
 import { Link, Route, Router, useRoute } from "wouter";
-import { Groceries, ItemCRUD, SettingsCRUD } from "../views";
 import logo from "../../../assets/groceries.png";
+import { palette } from "../../../domain";
+import { CreateCategoryForm } from "../components";
+import { initStore } from "../store";
+import "../variables.scss";
+import { Groceries, ItemCRUD, SettingsCRUD } from "../views";
+import "./App.scss";
 
 function App() {
   const [match] = useRoute("/groceries");
@@ -34,6 +36,7 @@ function App() {
           <Route path="/" component={Groceries} />
           <Route path="/settings" component={SettingsCRUD} />
           <Route path="/items/:id" component={ItemCRUD} />
+          <Route path="/categories/create" component={CreateCategoryForm} />
         </main>
       </div>
     </Router>

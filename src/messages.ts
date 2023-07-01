@@ -1,3 +1,5 @@
+import { Category } from "./domain";
+
 export const messages = {
   menu: {
     requiredListCTA: "Show items to buy",
@@ -22,5 +24,20 @@ export const messages = {
       "Add your CouchDB url for syncing your data across devices.",
     syncUrlInput: "Set your database url",
     submitButton: "Save settings",
+  },
+  createCategoryForm: {
+    nameInput: "Category name",
+    iconInput: "Category icon",
+    iconInputPlaceholder: "Choose an emoji as category icon",
+    colorInput: "Category color",
+    submitButton: "Create category",
+    errors: {
+      categoryAlreadyExists(category: Category) {
+        return `Category "${category.name}" already exists.`;
+      },
+      unknown(error: Error) {
+        return `Unknown error: ${error.message}`;
+      },
+    },
   },
 };

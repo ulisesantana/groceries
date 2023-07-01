@@ -70,10 +70,15 @@ export class UseCasesBuilder {
     return new UseCasesBuilder().build();
   }
 
-  withGetAllItemsCase(
-    getAllItems: GetItemsCase | UseCaseDouble
+  withCreateCategoryCase(
+    createCategory: CreateCategoryCase | UseCaseDouble
   ): UseCasesBuilder {
-    this.getItems = getAllItems as GetItemsCase;
+    this.createCategory = createCategory as CreateCategoryCase;
+    return this;
+  }
+
+  withGetItemsCase(getItems: GetItemsCase | UseCaseDouble): UseCasesBuilder {
+    this.getItems = getItems as GetItemsCase;
     return this;
   }
 
