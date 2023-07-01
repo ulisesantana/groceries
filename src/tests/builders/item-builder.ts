@@ -37,6 +37,11 @@ export class ItemBuilder {
     return new ItemBuilder({ ...item });
   }
 
+  withId(id: Id): ItemBuilder {
+    this.id = id;
+    return this;
+  }
+
   withName(name: string): ItemBuilder {
     this.name = name;
     return this;

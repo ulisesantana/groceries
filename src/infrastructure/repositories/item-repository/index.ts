@@ -1,1 +1,1 @@
-export * from "./item.repository.local-storage";
+export * from "./item.repository.pouch-db";

@@ -1,8 +1,19 @@
-import { PouchDatasource } from "../infrastructure/data-sources/pouch-db.data-source";
-import { CategoryBuilder, ItemBuilder } from "./builders";
+import { PouchDatasource } from "../../infrastructure/data-sources/pouch-db.data-source";
+import { CategoryBuilder, ItemBuilder } from "../builders";
+import PouchDb from "pouchdb";
+import PouchDbMemoryAdapter from "pouchdb-adapter-memory";
+
+PouchDb.plugin(PouchDbMemoryAdapter);
 
 export class PouchDBTestHelper {
   constructor(private pouch: PouchDatasource) {}
+
+  static createPouchDatasource(): PouchDatasource {
+    return PouchDatasource.createPouchDatasource(PouchDb, {
+      dbName: "groceries-test",
+      options: { adapter: "memory" },
+    });
+  }
 
   async createCategory(category = CategoryBuilder.random()): Promise<void> {
     await this.pouch.db.put({

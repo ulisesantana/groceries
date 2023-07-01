@@ -1,21 +1,29 @@
 import {
-  GetAllItemsCase,
+  CreateCategoryCase,
+  GetCategoriesCase,
+  GetItemsCase,
   GetSettingsCase,
+  SaveItemCase,
   SetItemAsMandatoryCase,
   SetItemAsNotMandatoryCase,
   SetItemAsNotRequiredCase,
   SetItemAsRequiredCase,
   SetSettingsCase,
 } from "./index";
-import { ItemRepository, SettingsRepository } from "../repositories";
-import { SaveItemCase } from "./save-item/save-item.case";
+import {
+  CategoryRepository,
+  ItemRepository,
+  SettingsRepository,
+} from "../repositories";
 
 export interface UseCase<Input, Output> {
   exec(input: Input): Output;
 }
 
 export interface UseCases {
-  getAllItems: GetAllItemsCase;
+  createCategory: CreateCategoryCase;
+  getCategories: GetCategoriesCase;
+  getItems: GetItemsCase;
   getSettings: GetSettingsCase;
   saveItem: SaveItemCase;
   setItemAsRequired: SetItemAsRequiredCase;
@@ -26,16 +34,20 @@ export interface UseCases {
 }
 
 interface Repositories {
+  categoryRepository: CategoryRepository;
   itemRepository: ItemRepository;
   settingsRepository: SettingsRepository;
 }
 
 export function generateUseCases({
+  categoryRepository,
   itemRepository,
   settingsRepository,
 }: Repositories): UseCases {
   return {
-    getAllItems: new GetAllItemsCase(itemRepository),
+    createCategory: new CreateCategoryCase(categoryRepository),
+    getCategories: new GetCategoriesCase(categoryRepository),
+    getItems: new GetItemsCase(itemRepository),
     getSettings: new GetSettingsCase(settingsRepository),
     saveItem: new SaveItemCase(itemRepository),
     setItemAsMandatory: new SetItemAsMandatoryCase(itemRepository),

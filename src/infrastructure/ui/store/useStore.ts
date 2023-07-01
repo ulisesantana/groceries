@@ -1,4 +1,11 @@
-import { Id, Item, ItemList, Settings } from "../../../domain";
+import {
+  Category,
+  CategoryList,
+  Id,
+  Item,
+  ItemList,
+  Settings,
+} from "../../../domain";
 import { proxy, useSnapshot } from "valtio";
 import {
   generateActions,
@@ -7,7 +14,9 @@ import {
 } from "./generators";
 
 export interface StoreActions {
-  getAllItems(): void;
+  createCategory(category: Category): void;
+  getCategories(): void;
+  getItems(): void;
   getSettings(): void;
   saveItem(item: Item): void;
   setItemAsRequired(id: Id): void;
@@ -18,16 +27,20 @@ export interface StoreActions {
 }
 
 export interface Store {
+  actions: StoreActions;
+  categories: CategoryList;
   items: ItemList;
   settings: Settings;
-  actions: StoreActions;
 }
 
 const store = proxy<Store>({
+  categories: new CategoryList([]),
   items: new ItemList([]),
   settings: { syncUrl: undefined },
   actions: {
-    getAllItems() {},
+    createCategory() {},
+    getCategories() {},
+    getItems() {},
     getSettings() {},
     saveItem() {},
     setItemAsRequired() {},
@@ -39,6 +52,7 @@ const store = proxy<Store>({
 });
 
 export function initStore(useCases = generateUseCasesWithLocalDb()) {
+  store.categories = new CategoryList([]);
   store.items = new ItemList([]);
   useCases.getSettings.exec().then((settings) => {
     if (settings.syncUrl) {
@@ -46,7 +60,7 @@ export function initStore(useCases = generateUseCasesWithLocalDb()) {
       store.settings = settings;
       store.actions = generateActions(
         store,
-        generateUseCasesWithRemoteDb(settings, store.actions.getAllItems)
+        generateUseCasesWithRemoteDb(settings, store.actions.getItems)
       );
     } else {
       console.log("[INIT STORE]: LOCAL DB");

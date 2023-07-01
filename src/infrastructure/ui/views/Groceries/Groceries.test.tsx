@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { ItemList } from "../../../../domain";
 import { ItemBuilder } from "../../../../tests/builders";
-import { GetAllItemsCaseDouble } from "../../../../tests/doubles";
+import { GetItemsCaseDouble } from "../../../../tests/doubles";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import { UseCasesBuilder } from "../../../../tests/builders/use-cases-builder";
 import userEvent from "@testing-library/user-event";
@@ -16,7 +16,7 @@ describe("Groceries view should", () => {
     const items = new ItemList(
       Array.from({ length: 3 }).map(ItemBuilder.random)
     );
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items]);
 
     await waitFor(() =>
       initStore(
@@ -37,7 +37,7 @@ describe("Groceries view should", () => {
       ItemBuilder.init().withName("cream").build(),
       ItemBuilder.init().withName("milk").build(),
     ]);
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items]);
 
     await waitFor(() =>
       initStore(
@@ -72,7 +72,7 @@ describe("Groceries view should", () => {
       ItemBuilder.clone(items.values.at(2)!).build(),
     ]);
     const [item] = items.values;
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items, itemsUpdated]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items, itemsUpdated]);
     const setItemAsRequired = new UseCaseDouble();
     const useCases = UseCasesBuilder.init()
       .withGetAllItemsCase(getAllItemsDouble)
@@ -112,7 +112,7 @@ describe("Groceries view should", () => {
       ItemBuilder.clone(items.values.at(2)!).build(),
     ]);
     const [item] = items.values;
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items, itemsUpdated]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items, itemsUpdated]);
     const setItemAsMandatoryDouble = new UseCaseDouble();
     const useCases = UseCasesBuilder.init()
       .withGetAllItemsCase(getAllItemsDouble)
@@ -146,7 +146,7 @@ describe("Groceries view should", () => {
       ItemBuilder.init().withName("cream").withIsRequired(false).build(),
       ItemBuilder.init().withName("milk").withIsRequired(false).build(),
     ]);
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items]);
     await waitFor(() =>
       initStore(
         UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
@@ -188,7 +188,7 @@ describe("Groceries view should", () => {
         .withIsMandatory(false)
         .build(),
     ]);
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items]);
     await waitFor(() =>
       initStore(
         UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()

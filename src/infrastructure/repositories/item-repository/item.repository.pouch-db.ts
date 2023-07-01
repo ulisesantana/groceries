@@ -10,16 +10,13 @@ import {
   PouchDatasource,
   PouchDBDocument,
 } from "../../data-sources/pouch-db.data-source";
-import { ItemNotFoundError } from "../../../domain/errors/ItemNotFoundError";
+import { ItemNotFoundError } from "../../../domain";
+import { PouchDBCategory } from "../category-repository";
 
 export type PouchDBItem = PouchDBDocument<Item> & {
   _conflicts?: Array<string>;
   id: string;
   category: string;
-};
-export type PouchDBCategory = PouchDBDocument<Category> & {
-  _conflicts?: Array<string>;
-  id: string;
 };
 
 export class ItemRepositoryPouchDB implements ItemRepository {

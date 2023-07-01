@@ -8,7 +8,7 @@ export function Groceries() {
   const [view, setView] = useState(Views.All);
 
   useEffect(() => {
-    actions.getAllItems();
+    actions.getItems();
   }, [actions, view]);
 
   return (
