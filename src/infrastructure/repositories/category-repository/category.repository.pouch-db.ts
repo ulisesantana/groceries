@@ -1,5 +1,7 @@
 import { CategoryRepository } from "../../../application";
-import { Category, CategoryList, Id, ItemNotFoundError } from "../../../domain";
+import { Category, CategoryList, Id } from "../../../domain";
+import { CategoryNotFoundError } from "../../../domain/errors/CategoryNotFoundError";
+import { CategoryNotSavedError } from "../../../domain/errors/CategoryNotSavedError";
 import {
   PouchDatasource,
   PouchDBDocument,
@@ -24,14 +26,13 @@ export class CategoryRepositoryPouchDb implements CategoryRepository {
     });
   }
 
-  private async findById(id: Id): Promise<Category> {
+  async findById(id: Id): Promise<Category> {
     try {
       const document = await this.pouch.db.get<PouchDBCategory>(id.value);
       return CategoryRepositoryPouchDb.mapToDomain(document);
     } catch (error) {
       console.error(`Error getting category: ${error}`);
-      // TODO: Create error for categories
-      throw new ItemNotFoundError(id);
+      throw new CategoryNotFoundError(id);
     }
   }
 
@@ -66,7 +67,7 @@ export class CategoryRepositoryPouchDb implements CategoryRepository {
         type: PouchDatasource.DocumentTypes.Category,
       });
       if (!response.ok) {
-        // throw new ItemNotSavedError(category);
+        throw new CategoryNotSavedError(category);
       }
       return this.findById(category.id);
     } catch (error) {
