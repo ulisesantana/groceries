@@ -6,7 +6,7 @@ import { CreateCategoryForm } from "../components";
 import { routes } from "../routes";
 import { initStore } from "../store";
 import "../variables.scss";
-import { Groceries, ItemCRUD, SettingsView } from "../views";
+import { CategoriesView, Groceries, ItemCRUD, SettingsView } from "../views";
 import "./App.scss";
 
 function App() {
@@ -41,6 +41,7 @@ function App() {
             path={routes.categories.create}
             component={CreateCategoryForm}
           />
+          <Route path={routes.categories.list} component={CategoriesView} />
         </main>
       </div>
     </Router>
