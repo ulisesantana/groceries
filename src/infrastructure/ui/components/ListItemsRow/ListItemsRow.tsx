@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Item, palette } from "../../../../domain";
-import "./ListItem.scss";
+import "./ListItemRow.scss";
 import { BsFillStarFill } from "react-icons/bs";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 import { messages } from "../../../../messages";
@@ -11,10 +11,10 @@ export interface ListItemProps {
   item: Item;
 }
 
-export const ListItem: FC<ListItemProps> = ({ item }) => {
+export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
   const { actions } = useStore();
   return (
-    <div className="ListItem" data-testid={item.id.value}>
+    <div className="ListItemsRow" data-testid={item.id.value}>
       <span className="quantity">{item.quantity}</span>
       <Link to={`/items/${item.id.value}`}>
         <span className="item">{item.name}</span>

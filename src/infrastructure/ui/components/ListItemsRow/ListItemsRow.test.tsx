@@ -2,14 +2,14 @@ import { describe, expect, it } from "vitest";
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { ListItem } from "./index";
+import { ListItemsRow } from "./index";
 import { ItemBuilder } from "../../../../tests/builders";
 import { UseCasesBuilder } from "../../../../tests/builders/use-cases-builder";
 import { initStore } from "../../store";
 import { UseCaseDouble } from "../../../../tests/doubles/use-case.double";
 import { messages } from "../../../../messages";
 
-describe("List item should", () => {
+describe("ListItems row should", () => {
   it.each([
     ((item) => ({
       attr: "name",
@@ -24,7 +24,7 @@ describe("List item should", () => {
       useCases: UseCasesBuilder.random(),
     }))(ItemBuilder.random()),
   ])("show item $attr", ({ label, item, useCases }) => {
-    render(<ListItem item={item} />);
+    render(<ListItemsRow item={item} />);
     initStore(useCases);
     console.log("use", useCases);
 
@@ -57,7 +57,7 @@ describe("List item should", () => {
       item: ItemBuilder.init().withIsRequired(true).build(),
     },
   ])("show cta for set item as $status", ({ label, opositeLabel, item }) => {
-    render(<ListItem item={item} />);
+    render(<ListItemsRow item={item} />);
 
     screen.getByLabelText(label);
     expect(screen.queryByLabelText(opositeLabel)).toBeNull();
@@ -72,7 +72,9 @@ describe("List item should", () => {
         .build();
       await waitFor(() => initStore(useCases));
       render(
-        <ListItem item={ItemBuilder.init().withIsMandatory(false).build()} />
+        <ListItemsRow
+          item={ItemBuilder.init().withIsMandatory(false).build()}
+        />
       );
 
       await userEvent.click(screen.getByLabelText(label));
@@ -88,7 +90,7 @@ describe("List item should", () => {
         .build();
       await waitFor(() => initStore(useCases));
       render(
-        <ListItem item={ItemBuilder.init().withIsMandatory(true).build()} />
+        <ListItemsRow item={ItemBuilder.init().withIsMandatory(true).build()} />
       );
 
       await userEvent.click(screen.getByLabelText(label));
@@ -104,7 +106,7 @@ describe("List item should", () => {
         .build();
       await waitFor(() => initStore(useCases));
       render(
-        <ListItem item={ItemBuilder.init().withIsRequired(false).build()} />
+        <ListItemsRow item={ItemBuilder.init().withIsRequired(false).build()} />
       );
 
       await userEvent.click(screen.getByLabelText(label));
@@ -120,7 +122,7 @@ describe("List item should", () => {
         .build();
       await waitFor(() => initStore(useCases));
       render(
-        <ListItem item={ItemBuilder.init().withIsRequired(true).build()} />
+        <ListItemsRow item={ItemBuilder.init().withIsRequired(true).build()} />
       );
 
       await userEvent.click(screen.getByLabelText(label));

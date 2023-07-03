@@ -1,17 +1,17 @@
-import { useRoute } from "wouter";
-import { Transition } from "react-transition-group";
-import { useStore } from "../../store";
-import { Id, Item } from "../../../../domain";
 import React, { useEffect } from "react";
+import { Transition } from "react-transition-group";
+import { useRoute } from "wouter";
+import { Id } from "../../../domain";
+import { routes } from "../routes";
+import { useStore } from "../store";
 
 export function ItemCRUD() {
-  const [match, params] = useRoute("/items/:id?");
+  const [match, params] = useRoute(routes.items.detail);
   const { items, actions } = useStore();
-  // TODO: Handle if url has id
   const item = items.findById(new Id(params?.id));
 
   useEffect(() => {
-    actions.getAllItems();
+    actions.getItems();
   }, [actions]);
 
   return (
@@ -24,9 +24,4 @@ export function ItemCRUD() {
       </div>
     </Transition>
   );
-}
-
-// TODO: Create item form with data in case the item exist
-function ItemForm({ item }: { item: Item }) {
-  return;
 }

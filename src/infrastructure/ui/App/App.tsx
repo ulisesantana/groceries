@@ -3,19 +3,20 @@ import { Link, Route, Router, useRoute } from "wouter";
 import logo from "../../../assets/groceries.png";
 import { palette } from "../../../domain";
 import { CreateCategoryForm } from "../components";
+import { routes } from "../routes";
 import { initStore } from "../store";
 import "../variables.scss";
-import { Groceries, ItemCRUD, SettingsCRUD } from "../views";
+import { Groceries, ItemCRUD, SettingsView } from "../views";
 import "./App.scss";
 
 function App() {
-  const [match] = useRoute("/groceries");
+  const [match] = useRoute(routes.baseRoute);
   useEffect(() => {
     initStore();
   }, []);
 
   return (
-    <Router base="/groceries">
+    <Router base={routes.baseRoute}>
       <div className="App">
         <header
           className="App-header"
@@ -24,19 +25,22 @@ function App() {
             color: palette.white,
           }}
         >
-          <span>{!match && <Link to="/">⬅️</Link>}</span>
+          <span>{!match && <Link to={routes.root}>⬅️</Link>}</span>
           <span>
             <img src={logo} alt="Groceries" />
           </span>
           <span>
-            <Link to="/settings">⚙️</Link>
+            <Link to={routes.settings}>⚙️</Link>
           </span>
         </header>
         <main className="App-main">
-          <Route path="/" component={Groceries} />
-          <Route path="/settings" component={SettingsCRUD} />
-          <Route path="/items/:id" component={ItemCRUD} />
-          <Route path="/categories/create" component={CreateCategoryForm} />
+          <Route path={routes.root} component={Groceries} />
+          <Route path={routes.settings} component={SettingsView} />
+          <Route path={routes.items.detail} component={ItemCRUD} />
+          <Route
+            path={routes.categories.create}
+            component={CreateCategoryForm}
+          />
         </main>
       </div>
     </Router>

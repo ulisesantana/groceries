@@ -1,14 +1,14 @@
-import { describe, it } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
-import { UseCasesBuilder } from "../../../../tests/builders/use-cases-builder";
-import React from "react";
-import { initStore } from "../../store";
-import { UseCaseDouble } from "../../../../tests/doubles/use-case.double";
-import { SettingsCRUD } from "./SettingsCRUD";
 import userEvent from "@testing-library/user-event";
+import React from "react";
+import { describe, it } from "vitest";
 import { messages } from "../../../../messages";
+import { UseCasesBuilder } from "../../../../tests/builders/use-cases-builder";
+import { UseCaseDouble } from "../../../../tests/doubles/use-case.double";
+import { initStore } from "../../store";
+import { SettingsForm } from "./SettingsForm";
 
-describe("Settings CRUD view should", () => {
+describe("Settings form should", () => {
   it("edit database sync url", async () => {
     const expectedSyncUrl = "https://irrelevant.info";
     const setSettingsDouble = new UseCaseDouble();
@@ -17,7 +17,7 @@ describe("Settings CRUD view should", () => {
         UseCasesBuilder.init().withSetSettingsCase(setSettingsDouble).build()
       )
     );
-    render(<SettingsCRUD />);
+    render(<SettingsForm />);
 
     await userEvent.type(
       screen.getByLabelText(messages.settings.syncUrlInput),

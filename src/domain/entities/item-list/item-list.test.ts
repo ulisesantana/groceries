@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { CategoryBuilder, ItemBuilder } from "../../../tests/builders";
 import { ItemList } from "./item-list";
 
-describe("Item List should", () => {
+describe("Item ListItems should", () => {
   const items = [
     ItemBuilder.init()
       .withName("Milk")

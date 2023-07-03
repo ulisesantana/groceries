@@ -3,13 +3,13 @@ import { describe, it } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { ItemBuilder } from "../../../../tests/builders";
 import { messages } from "../../../../messages";
-import { List } from "./List";
+import { ListItems } from "./ListItems";
 import { Item } from "../../../../domain";
 
-describe("List should", () => {
+describe("ListItems should", () => {
   it("show a list of items separated by categories", () => {
     const items = Array(3).map(ItemBuilder.random);
-    render(<List items={items} />);
+    render(<ListItems items={items} />);
 
     items.forEach((item) => {
       screen.getByText(item.name);
@@ -18,21 +18,21 @@ describe("List should", () => {
   });
 
   it("show a message if there is no items to show", () => {
-    render(<List items={[]} />);
+    render(<ListItems items={[]} />);
 
     screen.getByText(messages.emptyList);
   });
   describe("show the amount of items passed", () => {
     it("if multiple items are passed", () => {
       const items = Array(3).map(ItemBuilder.random);
-      render(<List items={items} />);
+      render(<ListItems items={items} />);
 
       screen.getByText(`${items.length} items`);
     });
 
     it("if one item is passed", () => {
       const items = Array(1).map(ItemBuilder.random);
-      render(<List items={items} />);
+      render(<ListItems items={items} />);
 
       screen.getByText(`1 item`);
     });
@@ -40,7 +40,7 @@ describe("List should", () => {
 
   it("don't show the amount of items if the given list is empty", () => {
     const items = [] as Array<Item>;
-    render(<List items={items} />);
+    render(<ListItems items={items} />);
 
     expect(screen.queryByText(items.length)).not.toBeInTheDocument();
   });

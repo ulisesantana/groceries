@@ -1,4 +1,4 @@
-import { List, Menu, Views } from "../../components";
+import { ListItems, Menu, Views } from "../../components";
 import React, { useEffect, useState } from "react";
 import { useStore } from "../../store";
 
@@ -13,12 +13,14 @@ export function Groceries() {
 
   return (
     <>
-      {view === Views.All && <List items={items.search(lastSearch).values} />}
+      {view === Views.All && (
+        <ListItems items={items.search(lastSearch).values} />
+      )}
       {view === Views.Required && (
-        <List items={items.search(lastSearch).getAllRequired()} />
+        <ListItems items={items.search(lastSearch).getAllRequired()} />
       )}
       {view === Views.Mandatory && (
-        <List items={items.search(lastSearch).getAllMandatory()} />
+        <ListItems items={items.search(lastSearch).getAllMandatory()} />
       )}
       <Menu activeView={view} setView={setView} onSearch={setLastSearch} />
     </>
