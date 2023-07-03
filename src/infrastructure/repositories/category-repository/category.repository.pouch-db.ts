@@ -58,7 +58,6 @@ export class CategoryRepositoryPouchDb implements CategoryRepository {
     );
   }
 
-  // TODO: Test this method
   async save(category: Category): Promise<Category> {
     try {
       const response = await this.pouch.db.put({
