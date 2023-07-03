@@ -24,6 +24,7 @@ export interface StoreActions {
   setItemAsMandatory(id: Id): void;
   setItemAsNotMandatory(id: Id): void;
   setSettings(settings: Settings): void;
+  updateCategory(category: Category): Promise<void>;
 }
 
 export interface Store {
@@ -48,6 +49,7 @@ const store = proxy<Store>({
     setItemAsMandatory() {},
     setItemAsNotMandatory() {},
     setSettings() {},
+    async updateCategory() {},
   },
 });
 

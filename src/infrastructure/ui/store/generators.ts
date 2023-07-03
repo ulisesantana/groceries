@@ -107,5 +107,9 @@ export function generateActions(
         initStore();
       });
     },
+    async updateCategory(category: Category) {
+      await useCases.createCategory.exec(category);
+      return store.actions.getCategories();
+    },
   };
 }
