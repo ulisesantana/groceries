@@ -2,6 +2,7 @@ import { Category } from "./domain";
 
 export const messages = {
   menu: {
+    createItem: "Create new item",
     requiredListCTA: "Show items to buy",
     mandatoryListCTA: "Show mandatory items to buy",
     allItemsListCTA: "Show all items",

@@ -10,6 +10,10 @@
   position: fixed;
   width: 100%;
 
+  &, & * {
+    box-sizing: border-box;
+  }
+
   ul, li {
     margin: 0;
     padding: 0;
@@ -20,16 +24,17 @@
     border-radius: 48px;
     display: flex;
     gap: 16px;
+    justify-content: space-around;
     padding: 16px;
   }
 
   li {
     border-radius: 50%;
-    font-size: 32px;
-    height: 32px;
+    font-size: 2rem;
+    height: 3rem;
     list-style: none;
-    padding: 8px;
-    width: 32px;
+    padding: 0.5rem;
+    width: 3rem;
 
     button {
       background-color: transparent;
@@ -56,12 +61,15 @@
   }
 
   .flip-container {
+    align-items: center;
+    display: flex;
     background-color: transparent;
-    position: relative;
-    width: 272px;
     height: 80px;
+    justify-content: center;
+    position: relative;
     transition: transform 0.8s;
     transform-style: preserve-3d;
+    width: 100%;
   }
 
   .flip-container.active {

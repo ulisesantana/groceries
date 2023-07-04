@@ -1,5 +1,5 @@
-import { ListItems, Menu, Views } from "../../components";
 import React, { useEffect, useState } from "react";
+import { CreateCategoryForm, ListItems, Menu, Views } from "../../components";
 import { useStore } from "../../store";
 
 export function Groceries() {
@@ -13,6 +13,7 @@ export function Groceries() {
 
   return (
     <>
+      {view === Views.CreateItem && <CreateCategoryForm />}
       {view === Views.All && (
         <ListItems items={items.search(lastSearch).values} />
       )}

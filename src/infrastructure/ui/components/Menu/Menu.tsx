@@ -1,7 +1,7 @@
 import React, { FC, useCallback, useState } from "react";
 import "./Menu.scss";
 import { BsFillCartFill, BsFillStarFill, BsSearch } from "react-icons/bs";
-import { FiList } from "react-icons/fi";
+import { FiList, FiPlus } from "react-icons/fi";
 import { palette } from "../../../../domain";
 import { Search } from "../Search";
 import { messages } from "../../../../messages";
@@ -11,6 +11,7 @@ export enum Views {
   All,
   Required,
   Mandatory,
+  CreateItem,
 }
 
 export interface MenuProps {
@@ -39,6 +40,19 @@ export const Menu: FC<MenuProps> = ({ setView, activeView, onSearch }) => {
             style={{ backgroundColor: palette.purple, color: palette.white }}
             className={classNames("flip-front", { active: !search })}
           >
+            <li
+              style={{
+                backgroundColor: getBackgroundColor(Views.CreateItem),
+                color: getTextColor(Views.CreateItem),
+              }}
+            >
+              <button
+                aria-label={messages.menu.createItem}
+                onClick={() => setView(Views.CreateItem)}
+              >
+                <FiPlus />
+              </button>
+            </li>
             <li
               style={{
                 backgroundColor: getBackgroundColor(Views.All),
