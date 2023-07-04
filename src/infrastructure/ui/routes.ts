@@ -1,13 +1,13 @@
 export const routes = {
   baseRoute: "/groceries",
   categories: {
-    create: "/categories/create",
-    detail: "/categories/:id",
+    create: "/categories/new",
+    detail: "/categories/details/:id",
     list: "/categories",
   },
   items: {
-    create: "/items/create",
-    detail: "/items/:id",
+    create: "/items/new",
+    detail: "/items/details/:id",
   },
   root: "/",
   settings: "/settings",

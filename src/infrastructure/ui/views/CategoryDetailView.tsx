@@ -17,11 +17,7 @@ export function CategoryDetailView() {
 
   return (
     <Transition in={match} timeout={500}>
-      <div className="ItemCrud" style={{ width: "100%" }}>
-        <span>Hi, this is: {params!.id}</span>
-        <pre>
-          <code>{JSON.stringify(category, null, 2)}</code>
-        </pre>
+      <div className="CategoryDetail" style={{ width: "100%" }}>
         <UpdateCategoryForm category={category!} />
       </div>
     </Transition>

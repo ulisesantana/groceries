@@ -16,7 +16,7 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
   return (
     <div className="ListItemsRow" data-testid={item.id.value}>
       <span className="quantity">{item.quantity}</span>
-      <Link to={`/items/${item.id.value}`}>
+      <Link to={`/items/details/${item.id.value}`}>
         <span className="item">{item.name}</span>
       </Link>
       <span className="is-required">

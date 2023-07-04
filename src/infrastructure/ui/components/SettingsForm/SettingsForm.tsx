@@ -1,6 +1,7 @@
 import React, { FormEventHandler, useEffect } from "react";
 import { messages } from "../../../../messages";
 import { StoreActions, useStore } from "../../store";
+import "./SettingsForm.scss";
 
 export function SettingsForm() {
   const { actions, settings } = useStore();

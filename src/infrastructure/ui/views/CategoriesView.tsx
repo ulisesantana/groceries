@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Transition } from "react-transition-group";
-import { useRoute } from "wouter";
+import { Link, useRoute } from "wouter";
 import { Category } from "../../../domain";
 import { ListCategories } from "../components/ListCategories/ListCategories";
 import { routes } from "../routes";
@@ -16,7 +16,10 @@ export function CategoriesView() {
 
   return (
     <Transition in={match} timeout={500}>
-      <ListCategories categories={categories.values as Category[]} />
+      <>
+        <Link to={routes.categories.create}>Create new category</Link>
+        <ListCategories categories={categories.values as Category[]} />
+      </>
     </Transition>
   );
 }

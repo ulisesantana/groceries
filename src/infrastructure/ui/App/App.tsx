@@ -6,12 +6,18 @@ import { CreateCategoryForm } from "../components";
 import { routes } from "../routes";
 import { initStore } from "../store";
 import "../variables.scss";
-import { CategoriesView, Groceries, ItemCRUD, SettingsView } from "../views";
+import {
+  CategoriesView,
+  CategoryDetailView,
+  Groceries,
+  ItemCRUD,
+  SettingsView,
+} from "../views";
 import "./App.scss";
-import { CategoryDetailView } from "../views/CategoryDetailView";
 
 function App() {
   const [match] = useRoute(routes.baseRoute);
+  const goBack = () => window.history.back();
   useEffect(() => {
     initStore();
   }, []);
@@ -26,9 +32,17 @@ function App() {
             color: palette.white,
           }}
         >
-          <span>{!match && <Link to={routes.root}>⬅️</Link>}</span>
           <span>
-            <img src={logo} alt="Groceries" />
+            {!match && (
+              <button className="back-history" onClick={goBack}>
+                ⬅️
+              </button>
+            )}
+          </span>
+          <span>
+            <Link to={routes.root}>
+              <img src={logo} alt="Groceries" />
+            </Link>
           </span>
           <span>
             <Link to={routes.settings}>⚙️</Link>

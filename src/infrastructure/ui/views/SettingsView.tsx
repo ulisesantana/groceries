@@ -1,6 +1,6 @@
 import React from "react";
 import { Transition } from "react-transition-group";
-import { useRoute } from "wouter";
+import { Link, useRoute } from "wouter";
 import { SettingsForm } from "../components";
 import { routes } from "../routes";
 
@@ -9,7 +9,10 @@ export function SettingsView() {
 
   return (
     <Transition in={match} timeout={500}>
-      <SettingsForm />
+      <>
+        <Link to={routes.categories.list}>Categories</Link>
+        <SettingsForm />
+      </>
     </Transition>
   );
 }

@@ -11,7 +11,7 @@ export function ListCategories({ categories }: ListCategoriesProps) {
   return (
     <ul className="ListCategories">
       {categories.map((category) => (
-        <Link to={`/categories/${category.id.value}`}>
+        <Link to={`/categories/details/${category.id.value}`}>
           <li key={category.id.value}>
             <span
               className="bullet"
