@@ -9,6 +9,7 @@ import {
   SetItemAsNotRequiredCase,
   SetItemAsRequiredCase,
   SetSettingsCase,
+  UpdateCategoryCase,
   UseCases,
 } from "../../application";
 import { GetCategoriesCaseDouble, GetItemsCaseDouble } from "../doubles";
@@ -28,6 +29,7 @@ export class UseCasesBuilder {
   private setItemAsMandatory: SetItemAsMandatoryCase;
   private setItemAsNotMandatory: SetItemAsNotMandatoryCase;
   private setSettings: SetSettingsCase;
+  private updateCategory: UpdateCategoryCase;
 
   private constructor({
     createCategory,
@@ -40,6 +42,7 @@ export class UseCasesBuilder {
     setItemAsNotMandatory,
     setItemAsMandatory,
     setSettings,
+    updateCategory,
   }: Partial<Record<keyof UseCases, ValueOf<UseCases>>> = {}) {
     this.createCategory = (createCategory ||
       new UseCaseDouble()) as CreateCategoryCase;
@@ -60,6 +63,8 @@ export class UseCasesBuilder {
     this.setItemAsNotMandatory = (setItemAsNotMandatory ||
       new UseCaseDouble()) as SetItemAsNotMandatoryCase;
     this.setSettings = (setSettings || new UseCaseDouble()) as SetSettingsCase;
+    this.updateCategory = (updateCategory ||
+      new UseCaseDouble()) as UpdateCategoryCase;
   }
 
   static init(): UseCasesBuilder {
@@ -124,6 +129,11 @@ export class UseCasesBuilder {
     return this;
   }
 
+  withUpdateCategoryCase(updateCategory: UpdateCategoryCase | UseCaseDouble) {
+    this.updateCategory = updateCategory as UpdateCategoryCase;
+    return this;
+  }
+
   build(): UseCases {
     return {
       createCategory: this.createCategory,
@@ -136,6 +146,7 @@ export class UseCasesBuilder {
       setItemAsMandatory: this.setItemAsMandatory,
       setItemAsNotMandatory: this.setItemAsNotMandatory,
       setSettings: this.setSettings,
+      updateCategory: this.updateCategory,
     };
   }
 }

@@ -32,23 +32,24 @@ describe("Create Category Form should", () => {
     render(<CreateCategoryForm />);
 
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.nameInput),
+      screen.getByLabelText(messages.categoryForm.nameInput),
       category.name
     );
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.iconInput),
+      screen.getByLabelText(messages.categoryForm.iconInput),
       category.icon
     );
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.colorInput),
+      screen.getByLabelText(messages.categoryForm.colorInput),
       category.color
     );
 
     await userEvent.click(
-      screen.getByLabelText(messages.createCategoryForm.submitButton)
+      screen.getByLabelText(messages.categoryForm.submitButton.create)
     );
 
     await waitFor(() => createCategoryDouble.assertHasBeenCalled());
+    screen.getByText(messages.categoryForm.success.create);
   });
 
   it("show error message if new category already exist", async () => {
@@ -73,24 +74,24 @@ describe("Create Category Form should", () => {
     render(<CreateCategoryForm />);
 
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.nameInput),
+      screen.getByLabelText(messages.categoryForm.nameInput),
       category.name
     );
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.iconInput),
+      screen.getByLabelText(messages.categoryForm.iconInput),
       category.icon
     );
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.colorInput),
+      screen.getByLabelText(messages.categoryForm.colorInput),
       category.color
     );
 
     await userEvent.click(
-      screen.getByLabelText(messages.createCategoryForm.submitButton)
+      screen.getByLabelText(messages.categoryForm.submitButton.create)
     );
 
     screen.getByText(
-      messages.createCategoryForm.errors.categoryAlreadyExists(category)
+      messages.categoryForm.errors.categoryAlreadyExists(category)
     );
   });
 
@@ -117,22 +118,22 @@ describe("Create Category Form should", () => {
     render(<CreateCategoryForm />);
 
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.nameInput),
+      screen.getByLabelText(messages.categoryForm.nameInput),
       category.name
     );
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.iconInput),
+      screen.getByLabelText(messages.categoryForm.iconInput),
       category.icon
     );
     await userEvent.type(
-      screen.getByLabelText(messages.createCategoryForm.colorInput),
+      screen.getByLabelText(messages.categoryForm.colorInput),
       category.color
     );
 
     await userEvent.click(
-      screen.getByLabelText(messages.createCategoryForm.submitButton)
+      screen.getByLabelText(messages.categoryForm.submitButton.create)
     );
 
-    screen.getByText(messages.createCategoryForm.errors.unknown(error));
+    screen.getByText(messages.categoryForm.errors.unknown(error));
   });
 });

@@ -5,28 +5,32 @@ import { messages } from "../../../../messages";
 import { StoreActions, useStore } from "../../store";
 import { CategoryForm, CategoryFormProps } from "../CategoryForm";
 
-export function CreateCategoryForm() {
+interface UpdateCategoryFormProps {
+  category: Category;
+}
+
+export function UpdateCategoryForm({ category }: UpdateCategoryFormProps) {
   const { actions } = useStore();
   const action = generateAction(actions);
 
-  return <CategoryForm action={action} />;
+  return <CategoryForm action={action} category={category} />;
 }
 
 function generateAction(actions: StoreActions): CategoryFormProps["action"] {
   return (setSuccessMessage: Function, setErrorMessage: Function) =>
     (category: Category) => {
       actions
-        .createCategory(category)
+        .updateCategory(category)
         .then(() => {
           setErrorMessage("");
-          setSuccessMessage(messages.categoryForm.success.create);
+          setSuccessMessage(messages.categoryForm.success.update);
           // TODO: Trigger timeout for clearing messages?
         })
         .catch((error) => {
           setSuccessMessage("");
-          if (error.code === ErrorCodes.CategoryAlreadyExists) {
+          if (error.code === ErrorCodes.CategoryNotFound) {
             setErrorMessage(
-              messages.categoryForm.errors.categoryAlreadyExists(category)
+              messages.categoryForm.errors.categoryDoesNotExist(category)
             );
           } else {
             setErrorMessage(messages.categoryForm.errors.unknown(error));

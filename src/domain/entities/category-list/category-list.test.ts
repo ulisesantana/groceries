@@ -26,6 +26,14 @@ describe("Category List should", () => {
     expect(
       list.has(CategoryBuilder.init().withName(category.name).build())
     ).toBeTruthy();
+    expect(
+      list.has(
+        CategoryBuilder.init()
+          .withId(category.id)
+          .withName("Random name")
+          .build()
+      )
+    ).toBeTruthy();
   });
 
   it("find category by id", () => {

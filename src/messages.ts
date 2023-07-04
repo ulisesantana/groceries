@@ -25,15 +25,25 @@ export const messages = {
     syncUrlInput: "Set your database url",
     submitButton: "Save settings",
   },
-  createCategoryForm: {
+  categoryForm: {
     nameInput: "Category name",
     iconInput: "Category icon",
     iconInputPlaceholder: "Choose an emoji as category icon",
     colorInput: "Category color",
-    submitButton: "Create category",
+    submitButton: {
+      create: "Create category",
+      update: "Update category",
+    },
+    success: {
+      create: "Category created successfully",
+      update: "Category updated successfully",
+    },
     errors: {
       categoryAlreadyExists(category: Category) {
         return `Category "${category.name}" already exists.`;
+      },
+      categoryDoesNotExist(category: Category) {
+        return `Category "${category.name}" does not exist.`;
       },
       unknown(error: Error) {
         return `Unknown error: ${error.message}`;

@@ -21,7 +21,7 @@ describe("Update category use case should", () => {
     expect(categoriesRepository.save).toHaveBeenCalledWith(update);
   });
 
-  it("do nothing if category does not exist", async () => {
+  it("throw CategoryNotFoundError if category does not exist", async () => {
     const category = CategoryBuilder.init().build();
     const categoriesRepository = {
       findAll: vi.fn(async () => new CategoryList([])),

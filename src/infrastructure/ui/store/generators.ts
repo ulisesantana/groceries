@@ -108,7 +108,7 @@ export function generateActions(
       });
     },
     async updateCategory(category: Category) {
-      await useCases.createCategory.exec(category);
+      await useCases.updateCategory.exec(category);
       return store.actions.getCategories();
     },
   };

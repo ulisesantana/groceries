@@ -8,6 +8,7 @@ import { initStore } from "../store";
 import "../variables.scss";
 import { CategoriesView, Groceries, ItemCRUD, SettingsView } from "../views";
 import "./App.scss";
+import { CategoryDetailView } from "../views/CategoryDetailView";
 
 function App() {
   const [match] = useRoute(routes.baseRoute);
@@ -40,6 +41,10 @@ function App() {
           <Route
             path={routes.categories.create}
             component={CreateCategoryForm}
+          />
+          <Route
+            path={routes.categories.detail}
+            component={CategoryDetailView}
           />
           <Route path={routes.categories.list} component={CategoriesView} />
         </main>
