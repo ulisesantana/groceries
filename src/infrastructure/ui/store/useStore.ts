@@ -15,15 +15,16 @@ import {
 
 export interface StoreActions {
   createCategory(category: Category): Promise<void>;
+  createItem(item: Item): Promise<void>;
   getCategories(): void;
   getItems(): void;
   getSettings(): void;
-  saveItem(item: Item): void;
   setItemAsRequired(id: Id): void;
   setItemAsNotRequired(id: Id): void;
   setItemAsMandatory(id: Id): void;
   setItemAsNotMandatory(id: Id): void;
   setSettings(settings: Settings): void;
+  updateItem(item: Item): Promise<void>;
   updateCategory(category: Category): Promise<void>;
 }
 
@@ -40,15 +41,16 @@ const store = proxy<Store>({
   settings: { syncUrl: undefined },
   actions: {
     async createCategory() {},
+    async createItem() {},
     getCategories() {},
     getItems() {},
     getSettings() {},
-    saveItem() {},
     setItemAsRequired() {},
     setItemAsNotRequired() {},
     setItemAsMandatory() {},
     setItemAsNotMandatory() {},
     setSettings() {},
+    async updateItem() {},
     async updateCategory() {},
   },
 });

@@ -11,14 +11,21 @@
     padding: 16px;
   }
 
+  details {
+    margin-bottom: 1rem;
+  }
+
+  details > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px;
+    width: calc(100% - 16px);
+  }
+
   ul, li {
     margin: 0;
     padding: 0;
-  }
-
-  ul {
-    padding: 8px;
-    width: calc(100% - 16px);
   }
 
   li {

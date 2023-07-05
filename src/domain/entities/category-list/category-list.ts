@@ -7,7 +7,7 @@ export class CategoryList {
     this._categories = [...categories].sort(CategoryList.sortByName);
   }
 
-  private get categories() {
+  private get categories(): Category[] {
     return [...this._categories];
   }
 

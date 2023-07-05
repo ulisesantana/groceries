@@ -61,6 +61,10 @@ export function generateActions(
       await useCases.createCategory.exec(category);
       return store.actions.getCategories();
     },
+    async createItem(item: Item) {
+      await useCases.createItem.exec(item);
+      return store.actions.getCategories();
+    },
     getCategories() {
       useCases.getCategories.exec().then((categories) => {
         store.categories = categories;
@@ -74,11 +78,6 @@ export function generateActions(
     getSettings() {
       useCases.getSettings.exec().then((settings) => {
         store.settings = settings;
-      });
-    },
-    saveItem(item: Item) {
-      useCases.saveItem.exec(item).then(() => {
-        return store.actions.getItems();
       });
     },
     setItemAsRequired(id: Id) {
@@ -110,6 +109,10 @@ export function generateActions(
     async updateCategory(category: Category) {
       await useCases.updateCategory.exec(category);
       return store.actions.getCategories();
+    },
+    async updateItem(item: Item) {
+      await useCases.updateItem.exec(item);
+      return store.actions.getItems();
     },
   };
 }

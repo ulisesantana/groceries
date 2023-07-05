@@ -1,11 +1,10 @@
 import React, { FC } from "react";
+import { BsFillCartFill, BsFillStarFill } from "react-icons/bs";
+import { Link } from "wouter";
 import { Item, palette } from "../../../../domain";
-import "./ListItemRow.scss";
-import { BsFillStarFill } from "react-icons/bs";
-import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 import { messages } from "../../../../messages";
 import { useStore } from "../../store";
-import { Link } from "wouter";
+import "./ListItemRow.scss";
 
 export interface ListItemProps {
   item: Item;
@@ -25,14 +24,14 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
             aria-label={messages.actions.setItemAsNotRequired}
             onClick={() => actions.setItemAsNotRequired(item.id)}
           >
-            <AiFillMinusCircle size={32} color={palette.red} />
+            <BsFillCartFill size={32} color={palette.green} />
           </button>
         ) : (
           <button
             aria-label={messages.actions.setItemAsRequired}
             onClick={() => actions.setItemAsRequired(item.id)}
           >
-            <AiFillPlusCircle size={32} color={palette.green} />
+            <BsFillCartFill size={32} color={palette.gray} />
           </button>
         )}
       </span>

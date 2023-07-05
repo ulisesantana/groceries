@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Item, ItemList } from "../../../../domain";
+import { messages } from "../../../../messages";
 import { ListItemsRow } from "../ListItemsRow";
 import "./ListItems.scss";
-import { messages } from "../../../../messages";
 
 export interface ListProps {
   items: Item[];

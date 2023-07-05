@@ -1,4 +1,4 @@
-import { Category } from "./domain";
+import { Category, Item } from "./domain";
 
 export const messages = {
   menu: {
@@ -45,6 +45,37 @@ export const messages = {
       },
       categoryDoesNotExist(category: Category) {
         return `Category "${category.name}" does not exist.`;
+      },
+      unknown(error: Error) {
+        return `Unknown error: ${error.message}`;
+      },
+    },
+  },
+  itemForm: {
+    nameInput: "Name",
+    categoryInput: "Category",
+    quantityInput: "Quantity",
+    isRequiredInput: "You need to buy this item",
+    isMandatoryInput: "You can't leave the shop without this item",
+    submitButton: {
+      create: "Create item",
+      update: "Update item",
+    },
+    success: {
+      create: "Item created successfully",
+      update: "Item updated successfully",
+    },
+    errors: {
+      thereAreNoCategories: {
+        message:
+          "You need to create first at least one category for your items.",
+        cta: "Create your first category",
+      },
+      itemAlreadyExists(item: Item) {
+        return `Item "${item.name}" already exists.`;
+      },
+      itemDoesNotExist(item: Item) {
+        return `Item "${item.name}" does not exist.`;
       },
       unknown(error: Error) {
         return `Unknown error: ${error.message}`;
