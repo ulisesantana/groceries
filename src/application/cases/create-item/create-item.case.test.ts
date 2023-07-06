@@ -5,7 +5,7 @@ import { ItemRepository } from "../../repositories";
 import { CreateItemCase } from "./create-item.case";
 
 describe("Create item use case should", () => {
-  it("create a item successfully", async () => {
+  it("create an item successfully", async () => {
     const item = ItemBuilder.init().build();
     const itemRepository = {
       findAll: vi.fn(async () => new ItemList([])),

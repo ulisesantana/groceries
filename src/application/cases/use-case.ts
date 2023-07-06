@@ -9,6 +9,7 @@ import {
   GetCategoriesCase,
   GetItemsCase,
   GetSettingsCase,
+  RemoveItemCase,
   SetItemAsMandatoryCase,
   SetItemAsNotMandatoryCase,
   SetItemAsNotRequiredCase,
@@ -28,6 +29,7 @@ export interface UseCases {
   getCategories: GetCategoriesCase;
   getItems: GetItemsCase;
   getSettings: GetSettingsCase;
+  removeItem: RemoveItemCase;
   setItemAsRequired: SetItemAsRequiredCase;
   setItemAsNotRequired: SetItemAsNotRequiredCase;
   setItemAsMandatory: SetItemAsMandatoryCase;
@@ -54,6 +56,7 @@ export function generateUseCases({
     getCategories: new GetCategoriesCase(categoryRepository),
     getItems: new GetItemsCase(itemRepository),
     getSettings: new GetSettingsCase(settingsRepository),
+    removeItem: new RemoveItemCase(itemRepository),
     setItemAsMandatory: new SetItemAsMandatoryCase(itemRepository),
     setItemAsNotMandatory: new SetItemAsNotMandatoryCase(itemRepository),
     setItemAsNotRequired: new SetItemAsNotRequiredCase(itemRepository),

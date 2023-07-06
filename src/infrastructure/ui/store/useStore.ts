@@ -19,6 +19,7 @@ export interface StoreActions {
   getCategories(): void;
   getItems(): void;
   getSettings(): void;
+  removeItem(id: Id): void;
   setItemAsRequired(id: Id): void;
   setItemAsNotRequired(id: Id): void;
   setItemAsMandatory(id: Id): void;
@@ -45,6 +46,7 @@ const store = proxy<Store>({
     getCategories() {},
     getItems() {},
     getSettings() {},
+    removeItem(id: Id) {},
     setItemAsRequired() {},
     setItemAsNotRequired() {},
     setItemAsMandatory() {},

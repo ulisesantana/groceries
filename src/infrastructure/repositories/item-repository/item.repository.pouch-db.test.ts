@@ -105,6 +105,33 @@ describe("Pouch DB implementation for item repository should", () => {
       new ItemNotSavedError(expectedItem)
     );
   });
+
+  describe("remove item by id", () => {
+    it("successfully", async () => {
+      const expectedItem = ItemBuilder.random();
+      await helper.createItem(expectedItem);
+
+      await new ItemRepositoryPouchDB(pouchDataSource).removeById(
+        expectedItem.id
+      );
+
+      await expect(
+        new ItemRepositoryPouchDB(pouchDataSource).findById(expectedItem.id)
+      ).rejects.toThrow(new ItemNotFoundError(expectedItem.id));
+    });
+
+    it("do nothing if item is not in database", async () => {
+      const expectedItem = ItemBuilder.random();
+
+      await new ItemRepositoryPouchDB(pouchDataSource).removeById(
+        expectedItem.id
+      );
+
+      await expect(
+        new ItemRepositoryPouchDB(pouchDataSource).findById(expectedItem.id)
+      ).rejects.toThrow(new ItemNotFoundError(expectedItem.id));
+    });
+  });
 });
 
 function assertItemsAreEqual(item: Item, expectedItem: Item) {

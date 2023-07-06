@@ -113,6 +113,15 @@ export class ItemRepositoryPouchDB implements ItemRepository {
     }
   }
 
+  async removeById(id: Id): Promise<void> {
+    try {
+      const rawItem = await this.pouch.db.get<PouchDBItem>(id.value);
+      await this.pouch.db.remove(rawItem);
+    } catch (error) {
+      console.error(`Error removing item ${id.value}: ${error}`);
+    }
+  }
+
   private groupDocumentsByType(
     documents: PouchDB.Core.AllDocsResponse<PouchDBItem | PouchDBCategory>
   ) {

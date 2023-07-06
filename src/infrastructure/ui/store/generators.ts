@@ -80,6 +80,11 @@ export function generateActions(
         store.settings = settings;
       });
     },
+    removeItem(id: Id) {
+      useCases.removeItem.exec(id).then(() => {
+        store.actions.getItems();
+      });
+    },
     setItemAsRequired(id: Id) {
       useCases.setItemAsRequired.exec(id).then(() => {
         return store.actions.getItems();
