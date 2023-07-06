@@ -56,7 +56,7 @@ export const messages = {
     categoryInput: "Category",
     quantityInput: "Quantity",
     isRequiredInput: "You need to buy this item",
-    isMandatoryInput: "You can't leave the shop without this item",
+    isMandatoryInput: "You MUST buy this item",
     submitButton: {
       create: "Create item",
       update: "Update item",
@@ -70,9 +70,6 @@ export const messages = {
         message:
           "You need to create first at least one category for your items.",
         cta: "Create your first category",
-      },
-      itemAlreadyExists(item: Item) {
-        return `Item "${item.name}" already exists.`;
       },
       itemDoesNotExist(item: Item) {
         return `Item "${item.name}" does not exist.`;

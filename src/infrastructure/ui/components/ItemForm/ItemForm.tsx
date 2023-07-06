@@ -100,7 +100,7 @@ export function ItemForm({ action, item, categories }: ItemFormProps) {
     <span>
       {messages.itemForm.errors.thereAreNoCategories.message}
       <a
-        href={routes.categories.create}
+        href={routes.baseRoute + routes.categories.create}
         aria-label={messages.itemForm.errors.thereAreNoCategories.cta}
       >
         {messages.itemForm.errors.thereAreNoCategories.cta}

@@ -6,3 +6,4 @@ export * from "./Menu";
 export * from "./Search";
 export * from "./SettingsForm";
 export * from "./UpdateCategoryForm";
+export * from "./UpdateItemForm";

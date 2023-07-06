@@ -10,7 +10,7 @@ import {
   CategoriesView,
   CategoryDetailView,
   Groceries,
-  ItemCRUD,
+  ItemDetails,
   SettingsView,
 } from "../views";
 import "./App.scss";
@@ -51,7 +51,7 @@ function App() {
         <main className="App-main">
           <Route path={routes.root} component={Groceries} />
           <Route path={routes.settings} component={SettingsView} />
-          <Route path={routes.items.detail} component={ItemCRUD} />
+          <Route path={routes.items.detail} component={ItemDetails} />
           <Route
             path={routes.categories.create}
             component={CreateCategoryForm}

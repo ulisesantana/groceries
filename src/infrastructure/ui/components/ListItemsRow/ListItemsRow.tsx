@@ -24,7 +24,7 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
             aria-label={messages.actions.setItemAsNotRequired}
             onClick={() => actions.setItemAsNotRequired(item.id)}
           >
-            <BsFillCartFill size={32} color={palette.green} />
+            <BsFillCartFill size={32} color={palette.purple} />
           </button>
         ) : (
           <button

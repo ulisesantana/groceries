@@ -13,7 +13,7 @@ import { initStore } from "../../store";
 import { UpdateCategoryForm } from "./UpdateCategoryForm";
 
 describe("Update Category Form should", () => {
-  it("update a new category", async () => {
+  it("update a category", async () => {
     const category = new Category({
       name: "Test Category",
       icon: "test-icon",

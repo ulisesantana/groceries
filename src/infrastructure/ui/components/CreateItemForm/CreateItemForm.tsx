@@ -1,6 +1,5 @@
 import React from "react";
 import { Category, Item } from "../../../../domain";
-import { ErrorCodes } from "../../../../domain/errors/ErrorCodes";
 import { messages } from "../../../../messages";
 import { ItemForm, ItemFormProps } from "../ItemForm";
 
@@ -31,11 +30,7 @@ function generateAction(
         })
         .catch((error) => {
           setSuccessMessage("");
-          if (error.code === ErrorCodes.ItemAlreadyExists) {
-            setErrorMessage(messages.itemForm.errors.itemAlreadyExists(item));
-          } else {
-            setErrorMessage(messages.itemForm.errors.unknown(error));
-          }
+          setErrorMessage(messages.itemForm.errors.unknown(error));
         });
     };
 }
