@@ -51,6 +51,12 @@ export const messages = {
       },
     },
   },
+  removeItemButton: {
+    cta: "Delete item",
+    dialogText: "Are you sure? This action can't be undone.",
+    confirm: "Yes, delete the item",
+    cancel: "No",
+  },
   itemForm: {
     nameInput: "Name",
     categoryInput: "Category",
