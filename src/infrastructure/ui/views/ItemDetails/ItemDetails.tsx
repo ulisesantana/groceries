@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Transition } from "react-transition-group";
 import { useRoute } from "wouter";
 import { Category, Id } from "../../../../domain";
+import { messages } from "../../../../messages";
 import { UpdateItemForm } from "../../components";
 import { RemoveItemButton } from "../../components/RemoveItemButton/RemoveItemButton";
 import { routes } from "../../routes";
@@ -27,13 +28,15 @@ export function ItemDetails() {
               categories={categories.values as Category[]}
               item={item}
             />
-            <RemoveItemButton
-              item={item}
-              removeItemUseCase={actions.removeItem}
-            />
+            {item && (
+              <RemoveItemButton
+                item={item}
+                removeItemUseCase={actions.removeItem}
+              />
+            )}
           </>
         ) : (
-          <span>Item not found.</span>
+          <span>{messages.itemForm.errors.itemDoesNotExist()}</span>
         )}
       </div>
     </Transition>

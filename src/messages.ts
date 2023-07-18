@@ -79,8 +79,10 @@ export const messages = {
           "You need to create first at least one category for your items.",
         cta: "Create your first category",
       },
-      itemDoesNotExist(item: Item) {
-        return `Item "${item.name}" does not exist.`;
+      itemDoesNotExist(item?: Item) {
+        return item
+          ? `Item "${item.name}" does not exist.`
+          : `Item does not exist.`;
       },
       unknown(error: Error) {
         return `Unknown error: ${error.message}`;
