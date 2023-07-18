@@ -5,7 +5,8 @@ import { palette } from "../../../domain";
 import { CreateCategoryForm } from "../components";
 import { routes } from "../routes";
 import { initStore } from "../store";
-import "../variables.scss";
+import "../styles/variables.scss";
+import "../styles/form.scss";
 import {
   CategoriesView,
   CategoryDetailView,

@@ -18,6 +18,7 @@ export function SettingsForm() {
         name="syncUrl"
         type="url"
         aria-label={messages.settings.syncUrlInput}
+        placeholder={messages.settings.syncUrlInput}
         defaultValue={settings?.syncUrl}
       />
       <button type="submit" aria-label={messages.settings.submitButton}>

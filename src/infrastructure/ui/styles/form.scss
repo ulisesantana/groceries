@@ -1,4 +1,4 @@
-.ItemForm {
+form {
   align-content: center;
   display: flex;
   flex-direction: column;
@@ -12,8 +12,26 @@
     font-size: 1.25rem;
   }
 
+  button, input, select {
+    border-radius: 24px;
+    padding: 0.5rem 1rem;
+  }
+
+  button {
+    background-color: var(--purple);
+    border-color: transparent;
+    color: var(--white);
+    font-weight: bold;
+  }
+
   label {
     font-weight: bold;
+  }
+
+  input[type="color"] {
+    padding: 0.5rem;
+    height: 3.2rem;
+    width: 3rem;
   }
 
   .success-box, .error-box {

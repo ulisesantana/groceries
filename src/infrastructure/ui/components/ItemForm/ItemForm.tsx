@@ -2,7 +2,6 @@ import classNames from "classnames";
 import React, { FormEventHandler, useState } from "react";
 import { Category, Item } from "../../../../domain";
 import { messages } from "../../../../messages";
-import "./ItemForm.scss";
 import { routes } from "../../routes";
 
 export type ItemAction = (item: Item) => void;

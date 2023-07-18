@@ -9,6 +9,8 @@ export const messages = {
     searchCTA: "Search items",
   },
   actions: {
+    createACategory: "Create a new category",
+    goToCategories: "Manage your categories",
     setItemAsRequired: "Set item to buy",
     setItemAsNotRequired: "Remove item from buy list",
     setItemAsMandatory: "Set item as mandatory to buy",

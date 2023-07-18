@@ -2,6 +2,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { Id, Item } from "../../../../domain";
 import { messages } from "../../../../messages";
+import "./RemoveItemButton.scss";
 
 interface RemoveItemButtonProps {
   item: Item;
@@ -40,7 +41,11 @@ export function RemoveItemButton({
     });
   };
   return (
-    <button onClick={onClick} aria-label={messages.removeItemButton.cta}>
+    <button
+      className="RemoveItemButton"
+      onClick={onClick}
+      aria-label={messages.removeItemButton.cta}
+    >
       {messages.removeItemButton.cta}
     </button>
   );

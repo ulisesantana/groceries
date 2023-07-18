@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { Transition } from "react-transition-group";
 import { useRoute } from "wouter";
-import { Category, Id } from "../../../domain";
-import { UpdateItemForm } from "../components";
-import { RemoveItemButton } from "../components/RemoveItemButton/RemoveItemButton";
-import { routes } from "../routes";
-import { useStore } from "../store";
+import { Category, Id } from "../../../../domain";
+import { UpdateItemForm } from "../../components";
+import { RemoveItemButton } from "../../components/RemoveItemButton/RemoveItemButton";
+import { routes } from "../../routes";
+import { useStore } from "../../store";
+import "./ItemDetails.scss";
 
 export function ItemDetails() {
   const [match, params] = useRoute(routes.items.detail);
