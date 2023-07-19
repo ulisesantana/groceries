@@ -34,6 +34,7 @@ export class ItemRepositoryPouchDB implements ItemRepository {
       category,
       isRequired: document.isRequired,
       isMandatory: document.isMandatory,
+      quantity: document.quantity,
     });
   }
 
@@ -78,7 +79,9 @@ export class ItemRepositoryPouchDB implements ItemRepository {
     }
     // @ts-ignore
     const conflicts = documents.rows.filter((doc) => doc._conflicts);
-    console.log("[CONFLICTS]", conflicts);
+    if (conflicts.length) {
+      console.log("[CONFLICTS]", conflicts);
+    }
     const { categories, items } = this.groupDocumentsByType(documents);
     const categoryDictionary =
       ItemRepositoryPouchDB.generateCategoryDictionary(categories);

@@ -53,13 +53,10 @@ export function ItemForm({ action, item, categories }: ItemFormProps) {
         id="category"
         aria-label={messages.itemForm.categoryInput}
         required
+        defaultValue={item?.category.id.value}
       >
         {categories.map((c) => (
-          <option
-            key={c.id.value}
-            value={c.id.value}
-            selected={item?.category && c.id.equals(item.category.id)}
-          >
+          <option key={c.id.value} value={c.id.value}>
             {c.title}
           </option>
         ))}
