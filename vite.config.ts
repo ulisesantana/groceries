@@ -8,7 +8,6 @@ import rollupNodePolyFill from "rollup-plugin-node-polyfills";
 // Grocery icon created by surang - Flaticon | https://www.flaticon.es/icono-gratis/tienda-de-comestibles_3724788"
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/groceries/",
   server: {
     port: 3000,
   },

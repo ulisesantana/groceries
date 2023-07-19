@@ -17,14 +17,14 @@ import {
 import "./App.scss";
 
 function App() {
-  const [match] = useRoute(routes.baseRoute);
+  const [match] = useRoute(routes.root);
   const goBack = () => window.history.back();
   useEffect(() => {
     initStore();
   }, []);
 
   return (
-    <Router base={routes.baseRoute}>
+    <Router>
       <div className="App">
         <header
           className="App-header"
