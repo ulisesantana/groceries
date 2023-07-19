@@ -1,13 +1,23 @@
-import { Id, Settings } from "../../../domain";
+import { Category, Id, Item, Settings } from "../../../domain";
 import { generateUseCases, UseCases } from "../../../application";
-import { ItemRepositoryPouchDB } from "../../repositories/item-repository/item.repository.pouch-db";
 import { PouchDatasource } from "../../data-sources/pouch-db.data-source";
-import { SettingsRepositoryLocalStorage } from "../../repositories";
+import {
+  CategoryRepositoryPouchDb,
+  ItemRepositoryPouchDB,
+  SettingsRepositoryLocalStorage,
+} from "../../repositories";
 import { LocalStorage, LocalStorageCollection } from "../../data-sources";
 import { initStore, Store, StoreActions } from "./useStore";
 
 export function generateUseCasesWithRemoteDb(settings: Settings, cb: Function) {
   return generateUseCases({
+    categoryRepository: new CategoryRepositoryPouchDb(
+      PouchDatasource.createPouchDbBrowser({
+        dbName: PouchDatasource.dbName,
+        dbUrl: settings.syncUrl,
+        cb,
+      })
+    ),
     itemRepository: new ItemRepositoryPouchDB(
       PouchDatasource.createPouchDbBrowser({
         dbName: PouchDatasource.dbName,
@@ -22,6 +32,11 @@ export function generateUseCasesWithRemoteDb(settings: Settings, cb: Function) {
 }
 
 export function generateUseCasesWithLocalDb() {
+  const categoryRepository = new CategoryRepositoryPouchDb(
+    PouchDatasource.createPouchDbBrowser({
+      dbName: PouchDatasource.dbName,
+    })
+  );
   const itemRepository = new ItemRepositoryPouchDB(
     PouchDatasource.createPouchDbBrowser({
       dbName: PouchDatasource.dbName,
@@ -31,6 +46,7 @@ export function generateUseCasesWithLocalDb() {
     new LocalStorage<Settings>(LocalStorageCollection.Settings)
   );
   return generateUseCases({
+    categoryRepository,
     itemRepository,
     settingsRepository,
   });
@@ -41,8 +57,21 @@ export function generateActions(
   useCases: UseCases
 ): StoreActions {
   return {
-    getAllItems() {
-      useCases.getAllItems.exec().then((items) => {
+    async createCategory(category: Category) {
+      await useCases.createCategory.exec(category);
+      return store.actions.getCategories();
+    },
+    async createItem(item: Item) {
+      await useCases.createItem.exec(item);
+      return store.actions.getCategories();
+    },
+    getCategories() {
+      useCases.getCategories.exec().then((categories) => {
+        store.categories = categories;
+      });
+    },
+    getItems() {
+      useCases.getItems.exec().then((items) => {
         store.items = items;
       });
     },
@@ -51,24 +80,29 @@ export function generateActions(
         store.settings = settings;
       });
     },
+    removeItem(id: Id) {
+      useCases.removeItem.exec(id).then(() => {
+        store.actions.getItems();
+      });
+    },
     setItemAsRequired(id: Id) {
       useCases.setItemAsRequired.exec(id).then(() => {
-        return store.actions.getAllItems();
+        return store.actions.getItems();
       });
     },
     setItemAsNotRequired(id: Id) {
       useCases.setItemAsNotRequired.exec(id).then(() => {
-        return store.actions.getAllItems();
+        return store.actions.getItems();
       });
     },
     setItemAsMandatory(id: Id) {
       useCases.setItemAsMandatory.exec(id).then(() => {
-        return store.actions.getAllItems();
+        return store.actions.getItems();
       });
     },
     setItemAsNotMandatory(id: Id) {
       useCases.setItemAsNotMandatory.exec(id).then(() => {
-        return store.actions.getAllItems();
+        return store.actions.getItems();
       });
     },
     setSettings(settings: Settings) {
@@ -76,6 +110,14 @@ export function generateActions(
         store.settings = savedSettings;
         initStore();
       });
+    },
+    async updateCategory(category: Category) {
+      await useCases.updateCategory.exec(category);
+      return store.actions.getCategories();
+    },
+    async updateItem(item: Item) {
+      await useCases.updateItem.exec(item);
+      return store.actions.getItems();
     },
   };
 }

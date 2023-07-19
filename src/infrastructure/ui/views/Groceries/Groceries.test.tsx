@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { ItemList } from "../../../../domain";
 import { ItemBuilder } from "../../../../tests/builders";
-import { GetAllItemsCaseDouble } from "../../../../tests/doubles";
+import { GetItemsCaseDouble } from "../../../../tests/doubles";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import { UseCasesBuilder } from "../../../../tests/builders/use-cases-builder";
 import userEvent from "@testing-library/user-event";
@@ -16,17 +16,17 @@ describe("Groceries view should", () => {
     const items = new ItemList(
       Array.from({ length: 3 }).map(ItemBuilder.random)
     );
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items]);
 
     await waitFor(() =>
       initStore(
-        UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
+        UseCasesBuilder.init().withGetItemsCase(getAllItemsDouble).build()
       )
     );
     render(<Groceries />);
 
     await waitFor(() => getAllItemsDouble.assertHasBeenCalled());
-    for (const item of items.getAll()) {
+    for (const item of items.values) {
       await screen.findByText(item.name);
     }
   });
@@ -37,11 +37,11 @@ describe("Groceries view should", () => {
       ItemBuilder.init().withName("cream").build(),
       ItemBuilder.init().withName("milk").build(),
     ]);
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items]);
 
     await waitFor(() =>
       initStore(
-        UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
+        UseCasesBuilder.init().withGetItemsCase(getAllItemsDouble).build()
       )
     );
     render(<Groceries />);
@@ -52,10 +52,10 @@ describe("Groceries view should", () => {
     );
 
     await waitFor(() => {
-      screen.getByText(items.getAll().at(1)!.name);
-      screen.getByText(items.getAll().at(2)!.name);
+      screen.getByText(items.values.at(1)!.name);
+      screen.getByText(items.values.at(2)!.name);
       expect(
-        screen.queryByText(items.getAll().at(0)!.name)
+        screen.queryByText(items.values.at(0)!.name)
       ).not.toBeInTheDocument();
     });
   });
@@ -67,15 +67,15 @@ describe("Groceries view should", () => {
       ItemBuilder.init().withName("milk").build(),
     ]);
     const itemsUpdated = new ItemList([
-      ItemBuilder.clone(items.getAll().at(0)!).withIsRequired(true).build(),
-      ItemBuilder.clone(items.getAll().at(1)!).build(),
-      ItemBuilder.clone(items.getAll().at(2)!).build(),
+      ItemBuilder.clone(items.values.at(0)!).withIsRequired(true).build(),
+      ItemBuilder.clone(items.values.at(1)!).build(),
+      ItemBuilder.clone(items.values.at(2)!).build(),
     ]);
-    const [item] = items.getAll();
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items, itemsUpdated]);
+    const [item] = items.values;
+    const getAllItemsDouble = new GetItemsCaseDouble([items, itemsUpdated]);
     const setItemAsRequired = new UseCaseDouble();
     const useCases = UseCasesBuilder.init()
-      .withGetAllItemsCase(getAllItemsDouble)
+      .withGetItemsCase(getAllItemsDouble)
       .withSetItemAsRequiredCase(setItemAsRequired)
       .build();
     await waitFor(() => initStore(useCases));
@@ -107,15 +107,15 @@ describe("Groceries view should", () => {
       ItemBuilder.init().withName("milk").build(),
     ]);
     const itemsUpdated = new ItemList([
-      ItemBuilder.clone(items.getAll().at(0)!).withIsMandatory(true).build(),
-      ItemBuilder.clone(items.getAll().at(1)!).build(),
-      ItemBuilder.clone(items.getAll().at(2)!).build(),
+      ItemBuilder.clone(items.values.at(0)!).withIsMandatory(true).build(),
+      ItemBuilder.clone(items.values.at(1)!).build(),
+      ItemBuilder.clone(items.values.at(2)!).build(),
     ]);
-    const [item] = items.getAll();
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items, itemsUpdated]);
+    const [item] = items.values;
+    const getAllItemsDouble = new GetItemsCaseDouble([items, itemsUpdated]);
     const setItemAsMandatoryDouble = new UseCaseDouble();
     const useCases = UseCasesBuilder.init()
-      .withGetAllItemsCase(getAllItemsDouble)
+      .withGetItemsCase(getAllItemsDouble)
       .withSetItemAsMandatoryCase(setItemAsMandatoryDouble)
       .build();
 
@@ -146,10 +146,10 @@ describe("Groceries view should", () => {
       ItemBuilder.init().withName("cream").withIsRequired(false).build(),
       ItemBuilder.init().withName("milk").withIsRequired(false).build(),
     ]);
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items]);
     await waitFor(() =>
       initStore(
-        UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
+        UseCasesBuilder.init().withGetItemsCase(getAllItemsDouble).build()
       )
     );
     render(<Groceries />);
@@ -160,13 +160,13 @@ describe("Groceries view should", () => {
     await userEvent.click(screen.getByLabelText(messages.menu.requiredListCTA));
 
     await waitFor(() => {
-      screen.getByText(items.getAll().at(0)!.name);
+      screen.getByText(items.values.at(0)!.name);
       expect(
-        screen.queryByText(items.getAll().at(2)!.name)
+        screen.queryByText(items.values.at(2)!.name)
       ).not.toBeInTheDocument();
     });
     expect(
-      screen.queryByText(items.getAll().at(1)!.name)
+      screen.queryByText(items.values.at(1)!.name)
     ).not.toBeInTheDocument();
   });
 
@@ -188,10 +188,10 @@ describe("Groceries view should", () => {
         .withIsMandatory(false)
         .build(),
     ]);
-    const getAllItemsDouble = new GetAllItemsCaseDouble([items]);
+    const getAllItemsDouble = new GetItemsCaseDouble([items]);
     await waitFor(() =>
       initStore(
-        UseCasesBuilder.init().withGetAllItemsCase(getAllItemsDouble).build()
+        UseCasesBuilder.init().withGetItemsCase(getAllItemsDouble).build()
       )
     );
     render(<Groceries />);
@@ -204,13 +204,13 @@ describe("Groceries view should", () => {
     );
 
     await waitFor(() => {
-      screen.getByText(items.getAll().at(1)!.name);
+      screen.getByText(items.values.at(1)!.name);
       expect(
-        screen.queryByText(items.getAll().at(2)!.name)
+        screen.queryByText(items.values.at(2)!.name)
       ).not.toBeInTheDocument();
     });
     expect(
-      screen.queryByText(items.getAll().at(0)!.name)
+      screen.queryByText(items.values.at(0)!.name)
     ).not.toBeInTheDocument();
   });
 });

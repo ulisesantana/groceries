@@ -26,7 +26,12 @@ export class CategoryBuilder {
     return new CategoryBuilder().build();
   }
 
-  witName(name: string): CategoryBuilder {
+  withId(id: Id): CategoryBuilder {
+    this.id = id;
+    return this;
+  }
+
+  withName(name: string): CategoryBuilder {
     this.name = name;
     return this;
   }

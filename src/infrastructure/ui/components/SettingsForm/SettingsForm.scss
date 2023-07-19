@@ -1,0 +1,14 @@
+.SettingsForm {
+  align-content: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0.5rem;
+  width: calc(100% - 1rem);
+
+  &, input, button {
+    font-size: 1.25rem;
+  }
+}

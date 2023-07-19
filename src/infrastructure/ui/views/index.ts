@@ -1,3 +1,5 @@
+export * from "./CategoriesView";
+export * from "./CategoryDetailView";
 export * from "./Groceries";
-export * from "./ItemCRUD";
-export * from "./SettingsCRUD";
+export * from "./ItemDetails";
+export * from "./SettingsView";

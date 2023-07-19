@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { CategoryBuilder, ItemBuilder } from "../../../tests/builders";
 import { ItemList } from "./item-list";
 
-describe("Item List should", () => {
+describe("Item ListItems should", () => {
   const items = [
     ItemBuilder.init()
       .withName("Milk")
@@ -27,7 +27,7 @@ describe("Item List should", () => {
   ];
 
   it("return all items sorted", () => {
-    expect(new ItemList(items).getAll()).toStrictEqual([
+    expect(new ItemList(items).values).toStrictEqual([
       items.at(3),
       items.at(1),
       items.at(0),
@@ -59,8 +59,8 @@ describe("Item List should", () => {
   });
 
   it("group items by category sorted by category name", () => {
-    const categoryA = CategoryBuilder.init().witName("Category A").build();
-    const categoryB = CategoryBuilder.init().witName("Category B").build();
+    const categoryA = CategoryBuilder.init().withName("Category A").build();
+    const categoryB = CategoryBuilder.init().withName("Category B").build();
     const items = [
       ItemBuilder.init().withCategory(categoryB).build(),
       ItemBuilder.init().withCategory(categoryA).build(),
@@ -82,5 +82,19 @@ describe("Item List should", () => {
     const item = items.at(1);
 
     expect(new ItemList(items).findById(item!.id)).toStrictEqual(item);
+  });
+
+  it("check if an item is in the list", () => {
+    const items = [
+      ItemBuilder.random(),
+      ItemBuilder.random(),
+      ItemBuilder.random(),
+    ];
+    const item = items.at(1);
+
+    const itemList = new ItemList(items);
+
+    expect(itemList.has(item!)).toBeTruthy();
+    expect(itemList.has(ItemBuilder.random())).toBeFalsy();
   });
 });

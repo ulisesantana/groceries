@@ -10,16 +10,13 @@ import {
   PouchDatasource,
   PouchDBDocument,
 } from "../../data-sources/pouch-db.data-source";
-import { ItemNotFoundError } from "../../../domain/errors/ItemNotFoundError";
+import { ItemNotFoundError } from "../../../domain";
+import { PouchDBCategory } from "../category-repository";
 
 export type PouchDBItem = PouchDBDocument<Item> & {
   _conflicts?: Array<string>;
   id: string;
   category: string;
-};
-export type PouchDBCategory = PouchDBDocument<Category> & {
-  _conflicts?: Array<string>;
-  id: string;
 };
 
 export class ItemRepositoryPouchDB implements ItemRepository {
@@ -37,6 +34,7 @@ export class ItemRepositoryPouchDB implements ItemRepository {
       category,
       isRequired: document.isRequired,
       isMandatory: document.isMandatory,
+      quantity: document.quantity,
     });
   }
 
@@ -81,7 +79,9 @@ export class ItemRepositoryPouchDB implements ItemRepository {
     }
     // @ts-ignore
     const conflicts = documents.rows.filter((doc) => doc._conflicts);
-    console.log("[CONFLICTS]", conflicts);
+    if (conflicts.length) {
+      console.log("[CONFLICTS]", conflicts);
+    }
     const { categories, items } = this.groupDocumentsByType(documents);
     const categoryDictionary =
       ItemRepositoryPouchDB.generateCategoryDictionary(categories);
@@ -113,6 +113,15 @@ export class ItemRepositoryPouchDB implements ItemRepository {
       } else {
         throw error;
       }
+    }
+  }
+
+  async removeById(id: Id): Promise<void> {
+    try {
+      const rawItem = await this.pouch.db.get<PouchDBItem>(id.value);
+      await this.pouch.db.remove(rawItem);
+    } catch (error) {
+      console.error(`Error removing item ${id.value}: ${error}`);
     }
   }
 

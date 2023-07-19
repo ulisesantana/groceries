@@ -1,19 +1,30 @@
 import React, { useEffect } from "react";
-import "./App.scss";
-import { palette } from "../../../domain";
-import { initStore } from "../store";
 import { Link, Route, Router, useRoute } from "wouter";
-import { Groceries, ItemCRUD, SettingsCRUD } from "../views";
 import logo from "../../../assets/groceries.png";
+import { palette } from "../../../domain";
+import { CreateCategoryForm } from "../components";
+import { routes } from "../routes";
+import { initStore } from "../store";
+import "../styles/variables.scss";
+import "../styles/form.scss";
+import {
+  CategoriesView,
+  CategoryDetailView,
+  Groceries,
+  ItemDetails,
+  SettingsView,
+} from "../views";
+import "./App.scss";
 
 function App() {
-  const [match] = useRoute("/groceries");
+  const [match] = useRoute(routes.baseRoute);
+  const goBack = () => window.history.back();
   useEffect(() => {
     initStore();
   }, []);
 
   return (
-    <Router base="/groceries">
+    <Router base={routes.baseRoute}>
       <div className="App">
         <header
           className="App-header"
@@ -22,18 +33,35 @@ function App() {
             color: palette.white,
           }}
         >
-          <span>{!match && <Link to="/">⬅️</Link>}</span>
           <span>
-            <img src={logo} alt="Groceries" />
+            {!match && (
+              <button className="back-history" onClick={goBack}>
+                ⬅️
+              </button>
+            )}
           </span>
           <span>
-            <Link to="/settings">⚙️</Link>
+            <Link to={routes.root}>
+              <img src={logo} alt="Groceries" />
+            </Link>
+          </span>
+          <span>
+            <Link to={routes.settings}>⚙️</Link>
           </span>
         </header>
         <main className="App-main">
-          <Route path="/" component={Groceries} />
-          <Route path="/settings" component={SettingsCRUD} />
-          <Route path="/items/:id" component={ItemCRUD} />
+          <Route path={routes.root} component={Groceries} />
+          <Route path={routes.settings} component={SettingsView} />
+          <Route path={routes.items.detail} component={ItemDetails} />
+          <Route
+            path={routes.categories.create}
+            component={CreateCategoryForm}
+          />
+          <Route
+            path={routes.categories.detail}
+            component={CategoryDetailView}
+          />
+          <Route path={routes.categories.list} component={CategoriesView} />
         </main>
       </div>
     </Router>

@@ -37,6 +37,16 @@ export class ItemBuilder {
     return new ItemBuilder({ ...item });
   }
 
+  withId(id: Id): ItemBuilder {
+    this.id = id;
+    return this;
+  }
+
+  withQuantity(quantity: number): ItemBuilder {
+    this.quantity = quantity;
+    return this;
+  }
+
   withName(name: string): ItemBuilder {
     this.name = name;
     return this;

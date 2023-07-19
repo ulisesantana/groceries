@@ -1,43 +1,66 @@
 import {
-  GetAllItemsCase,
+  CreateCategoryCase,
+  GetCategoriesCase,
+  GetItemsCase,
   GetSettingsCase,
+  UpdateItemCase,
   SetItemAsMandatoryCase,
   SetItemAsNotMandatoryCase,
   SetItemAsNotRequiredCase,
   SetItemAsRequiredCase,
   SetSettingsCase,
+  UpdateCategoryCase,
   UseCases,
+  CreateItemCase,
+  RemoveItemCase,
 } from "../../application";
-import { GetAllItemsCaseDouble } from "../doubles";
+import { GetCategoriesCaseDouble, GetItemsCaseDouble } from "../doubles";
 import { UseCaseDouble } from "../doubles/use-case.double";
 import { SettingsBuilder } from "./settings-builder";
 
 type ValueOf<T> = T[keyof T];
 
 export class UseCasesBuilder {
-  private getAllItems: GetAllItemsCase;
+  private createCategory: CreateCategoryCase;
+  private createItem: CreateItemCase;
+  private getCategories: GetCategoriesCase;
+  private getItems: GetItemsCase;
   private getSettings: GetSettingsCase;
+  private removeItem: RemoveItemCase;
   private setItemAsRequired: SetItemAsRequiredCase;
   private setItemAsNotRequired: SetItemAsNotRequiredCase;
   private setItemAsMandatory: SetItemAsMandatoryCase;
   private setItemAsNotMandatory: SetItemAsNotMandatoryCase;
   private setSettings: SetSettingsCase;
+  private updateCategory: UpdateCategoryCase;
+  private updateItem: UpdateItemCase;
 
   private constructor({
-    getAllItems,
+    createCategory,
+    createItem,
+    getCategories,
+    getItems,
     getSettings,
+    removeItem,
     setItemAsRequired,
     setItemAsNotRequired,
     setItemAsNotMandatory,
     setItemAsMandatory,
     setSettings,
+    updateCategory,
+    updateItem,
   }: Partial<Record<keyof UseCases, ValueOf<UseCases>>> = {}) {
-    this.getAllItems = (getAllItems ||
-      new GetAllItemsCaseDouble()) as GetAllItemsCase;
+    this.createCategory = (createCategory ||
+      new UseCaseDouble()) as CreateCategoryCase;
+    this.createItem = (createItem || new UseCaseDouble()) as CreateItemCase;
+    this.getCategories = (getCategories ||
+      new GetCategoriesCaseDouble()) as GetCategoriesCase;
+    this.getItems = (getItems || new GetItemsCaseDouble()) as GetItemsCase;
     this.getSettings = (getSettings ||
       new UseCaseDouble([
         SettingsBuilder.init().withSyncUrl(undefined).build(),
       ])) as GetSettingsCase;
+    this.removeItem = (removeItem || new UseCaseDouble()) as RemoveItemCase;
     this.setItemAsRequired = (setItemAsRequired ||
       new UseCaseDouble()) as SetItemAsRequiredCase;
     this.setItemAsNotRequired = (setItemAsNotRequired ||
@@ -47,6 +70,9 @@ export class UseCasesBuilder {
     this.setItemAsNotMandatory = (setItemAsNotMandatory ||
       new UseCaseDouble()) as SetItemAsNotMandatoryCase;
     this.setSettings = (setSettings || new UseCaseDouble()) as SetSettingsCase;
+    this.updateCategory = (updateCategory ||
+      new UseCaseDouble()) as UpdateCategoryCase;
+    this.updateItem = (updateItem || new UseCaseDouble()) as UpdateItemCase;
   }
 
   static init(): UseCasesBuilder {
@@ -57,17 +83,34 @@ export class UseCasesBuilder {
     return new UseCasesBuilder().build();
   }
 
-  withGetAllItemsCase(
-    getAllItems: GetAllItemsCase | UseCaseDouble
+  withCreateCategoryCase(
+    createCategory: CreateCategoryCase | UseCaseDouble
   ): UseCasesBuilder {
-    this.getAllItems = getAllItems as GetAllItemsCase;
+    this.createCategory = createCategory as CreateCategoryCase;
     return this;
   }
 
-  withGetSettingsCase(
-    getSettings: GetSettingsCase | UseCaseDouble
+  withCreateItemCase(createItem: CreateItemCase | UseCaseDouble) {
+    this.createItem = createItem as CreateItemCase;
+    return this;
+  }
+
+  withGetItemsCase(getItems: GetItemsCase | UseCaseDouble): UseCasesBuilder {
+    this.getItems = getItems as GetItemsCase;
+    return this;
+  }
+
+  withGetCategoriesCase(
+    getCategories: GetCategoriesCase | UseCaseDouble
   ): UseCasesBuilder {
-    this.getSettings = getSettings as GetSettingsCase;
+    this.getCategories = getCategories as GetCategoriesCase;
+    return this;
+  }
+
+  withUpdateItemCase(
+    updateItem: UpdateItemCase | UseCaseDouble
+  ): UseCasesBuilder {
+    this.updateItem = updateItem as UpdateItemCase;
     return this;
   }
 
@@ -108,15 +151,26 @@ export class UseCasesBuilder {
     return this;
   }
 
+  withUpdateCategoryCase(updateCategory: UpdateCategoryCase | UseCaseDouble) {
+    this.updateCategory = updateCategory as UpdateCategoryCase;
+    return this;
+  }
+
   build(): UseCases {
     return {
-      getAllItems: this.getAllItems,
+      createCategory: this.createCategory,
+      createItem: this.createItem,
+      getCategories: this.getCategories,
+      getItems: this.getItems,
       getSettings: this.getSettings,
+      removeItem: this.removeItem,
       setItemAsRequired: this.setItemAsRequired,
       setItemAsNotRequired: this.setItemAsNotRequired,
       setItemAsMandatory: this.setItemAsMandatory,
       setItemAsNotMandatory: this.setItemAsNotMandatory,
       setSettings: this.setSettings,
+      updateCategory: this.updateCategory,
+      updateItem: this.updateItem,
     };
   }
 }
