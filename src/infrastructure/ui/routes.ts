@@ -1,5 +1,5 @@
 export const routes = {
-  baseRoute: "/groceries",
+  baseRoute: "/",
   categories: {
     create: "/categories/new",
     detail: "/categories/details/:id",
