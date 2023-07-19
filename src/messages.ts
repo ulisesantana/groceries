@@ -23,6 +23,10 @@ export const messages = {
     closeCTA: "Close search",
   },
   settings: {
+    categories: "Categories",
+    dataSync: "Data sync",
+  },
+  settingsForm: {
     syncUrlInputLabel:
       "Add your CouchDB url for syncing your data across devices.",
     syncUrlInput: "Set your database url",

@@ -13,16 +13,16 @@ export function SettingsForm() {
 
   return (
     <form className="SettingsForm" onSubmit={onSubmitHandler}>
-      <label htmlFor="syncUrl">{messages.settings.syncUrlInputLabel}</label>
+      <label htmlFor="syncUrl">{messages.settingsForm.syncUrlInputLabel}</label>
       <input
         name="syncUrl"
         type="url"
-        aria-label={messages.settings.syncUrlInput}
-        placeholder={messages.settings.syncUrlInput}
+        aria-label={messages.settingsForm.syncUrlInput}
+        placeholder={messages.settingsForm.syncUrlInput}
         defaultValue={settings?.syncUrl}
       />
-      <button type="submit" aria-label={messages.settings.submitButton}>
-        {messages.settings.submitButton} 💾
+      <button type="submit" aria-label={messages.settingsForm.submitButton}>
+        {messages.settingsForm.submitButton} 💾
       </button>
     </form>
   );

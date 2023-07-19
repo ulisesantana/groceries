@@ -20,11 +20,11 @@ describe("Settings form should", () => {
     render(<SettingsForm />);
 
     await userEvent.type(
-      screen.getByLabelText(messages.settings.syncUrlInput),
+      screen.getByLabelText(messages.settingsForm.syncUrlInput),
       expectedSyncUrl
     );
     await userEvent.click(
-      screen.getByLabelText(messages.settings.submitButton)
+      screen.getByLabelText(messages.settingsForm.submitButton)
     );
 
     await waitFor(() =>

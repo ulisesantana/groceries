@@ -1,0 +1,29 @@
+.SettingsView {
+  margin: 0;
+  padding: 0;
+  width: calc(100% - 16px);
+
+  details {
+    margin-bottom: 2rem;
+  }
+
+  details > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  li {
+    font-size: 1.25rem;
+    padding: 0.25rem 0;
+  }
+
+  summary {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+}

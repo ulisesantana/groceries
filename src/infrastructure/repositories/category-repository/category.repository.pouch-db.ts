@@ -46,7 +46,9 @@ export class CategoryRepositoryPouchDb implements CategoryRepository {
     }
     // @ts-ignore
     const conflicts = documents.rows.filter((doc) => doc._conflicts);
-    console.log("[CONFLICTS]", conflicts);
+    if (conflicts.length) {
+      console.log("[CONFLICTS]", conflicts);
+    }
     const rawCategories = documents.rows.filter(
       //@ts-ignore
       ({ doc }) => doc.type === PouchDatasource.DocumentTypes.Category
