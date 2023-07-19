@@ -1,7 +1,11 @@
 import { CategoryRepository } from "../../../application";
-import { Category, CategoryList, Id } from "../../../domain";
-import { CategoryNotFoundError } from "../../../domain/errors/CategoryNotFoundError";
-import { CategoryNotSavedError } from "../../../domain/errors/CategoryNotSavedError";
+import {
+  Category,
+  CategoryList,
+  CategoryNotFoundError,
+  CategoryNotSavedError,
+  Id,
+} from "../../../domain";
 import {
   PouchDatasource,
   PouchDBDocument,
