@@ -21,7 +21,11 @@ describe("Pouch DB implementation for item repository should", () => {
 
   describe("find item by id", () => {
     it("successfully", async () => {
-      const expectedItem = ItemBuilder.random();
+      const expectedItem = ItemBuilder.init()
+        .withName("Water")
+        .withIsRequired(true)
+        .withQuantity(6)
+        .build();
       await helper.createItem(expectedItem);
 
       const item = await new ItemRepositoryPouchDB(pouchDataSource).findById(
