@@ -10,7 +10,7 @@ export interface ListProps {
 
 const EmptyList = () => (
   <div className="ListItems">
-    <p>{messages.emptyList}</p>
+    <p>{messages.itemList.empty}</p>
   </div>
 );
 
@@ -20,9 +20,7 @@ export const ListItems: FC<ListProps> = ({ items }) => {
   }
   return (
     <div className="ListItems">
-      <span className="items-total">
-        {items.length === 1 ? "1 item" : `${items.length} items`}
-      </span>
+      <span className="items-total">{messages.itemList.total(items)}</span>
       {ItemList.groupItemsByCategory(items).map(([categoryTitle, items]) => (
         <details open key={categoryTitle}>
           <summary>{categoryTitle}</summary>

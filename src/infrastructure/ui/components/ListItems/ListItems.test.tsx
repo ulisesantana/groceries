@@ -20,21 +20,21 @@ describe("ListItems should", () => {
   it("show a message if there is no items to show", () => {
     render(<ListItems items={[]} />);
 
-    screen.getByText(messages.emptyList);
+    screen.getByText(messages.itemList.empty);
   });
   describe("show the amount of items passed", () => {
     it("if multiple items are passed", () => {
       const items = Array(3).map(ItemBuilder.random);
       render(<ListItems items={items} />);
 
-      screen.getByText(`${items.length} items`);
+      screen.getByText(messages.itemList.total(items));
     });
 
     it("if one item is passed", () => {
       const items = Array(1).map(ItemBuilder.random);
       render(<ListItems items={items} />);
 
-      screen.getByText(`1 item`);
+      screen.getByText(messages.itemList.total(items));
     });
   });
 
