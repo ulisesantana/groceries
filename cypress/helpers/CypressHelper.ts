@@ -57,6 +57,10 @@ export class CypressHelper {
     return this.cy.get(`[aria-label="${label}"]`);
   }
 
+  getByTestId(testId: string) {
+    return this.cy.get(`[data-testid="${testId}"]`);
+  }
+
   goToAllItemsListView() {
     this.cy.visit(this.baseUrl);
     this.getByLabel(messages.menu.allItemsListCTA).click();

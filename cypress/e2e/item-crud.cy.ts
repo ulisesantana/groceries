@@ -3,10 +3,9 @@ import { CategoryBuilder, ItemBuilder } from "../../src/tests/builders";
 import { CypressHelper } from "../helpers/";
 
 describe("Item CRUD should", () => {
-  const baseUrl = "http://localhost:3000";
   const category = CategoryBuilder.random();
   const item = ItemBuilder.init().withCategory(category).build();
-  const cypressHelper = new CypressHelper(cy, baseUrl);
+  const cypressHelper = new CypressHelper(cy, Cypress.config().baseUrl!);
 
   before(async () => {
     await cypressHelper.clearIndexedDB();
@@ -28,6 +27,7 @@ describe("Item CRUD should", () => {
   });
 
   it("update the item", () => {
+    // TODO: Update the whole item
     const oldName = item.name;
     const newName = "Irrelevant item name";
     // Select Item
@@ -56,4 +56,9 @@ describe("Item CRUD should", () => {
     // Check item does not exist anymore
     cy.get("body").should("not.contain.text", item.name);
   });
+
+  it("set item as required");
+  it("set item as not required");
+  it("set item as mandatory");
+  it("set item as not mandatory");
 });
