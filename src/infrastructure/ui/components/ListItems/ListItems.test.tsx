@@ -27,14 +27,14 @@ describe("ListItems should", () => {
       const items = Array(3).map(ItemBuilder.random);
       render(<ListItems items={items} />);
 
-      screen.getByText(messages.itemList.total(items));
+      screen.getByText(messages.itemList.total(items.length));
     });
 
     it("if one item is passed", () => {
       const items = Array(1).map(ItemBuilder.random);
       render(<ListItems items={items} />);
 
-      screen.getByText(messages.itemList.total(items));
+      screen.getByText(messages.itemList.total(items.length));
     });
   });
 

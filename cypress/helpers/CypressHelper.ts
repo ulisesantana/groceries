@@ -1,6 +1,7 @@
 import { Category, Item } from "../../src/domain";
 import { routes } from "../../src/infrastructure/ui/routes";
 import { messages } from "../../src/messages";
+import { CategoryBuilder, ItemBuilder } from "../../src/tests/builders";
 
 export class CypressHelper {
   constructor(
@@ -27,6 +28,10 @@ export class CypressHelper {
     );
   }
 
+  contains(text: string) {
+    return this.cy.contains(text);
+  }
+
   createCategory(category: Category) {
     const initialUrl = this.cy.url();
     this.goToCreateCategoryView();
@@ -35,6 +40,18 @@ export class CypressHelper {
     this.getByLabel(messages.categoryForm.colorInput).type(category.color);
     this.getByLabel(messages.categoryForm.submitButton.create).click();
     initialUrl.then((url) => this.visit(url));
+  }
+
+  createCategories(amountOfCategories: number) {
+    const categories = Array.from({ length: amountOfCategories }).map(
+      CategoryBuilder.random
+    );
+
+    for (const category of categories) {
+      this.createCategory(category);
+    }
+
+    return categories;
   }
 
   createItem(item: Item) {
@@ -48,9 +65,24 @@ export class CypressHelper {
       item.category.title
     );
     this.setCheckbox(messages.itemForm.isRequiredInput, item.isRequired);
-    this.setCheckbox(messages.itemForm.isRequiredInput, item.isMandatory);
+    this.setCheckbox(messages.itemForm.isMandatoryInput, item.isMandatory);
     this.getByLabel(messages.itemForm.submitButton.create).click();
     initialUrl.then((url) => this.visit(url));
+  }
+
+  createItemsForCategory(category: Category, amountOfItems: number) {
+    const items = Array.from({ length: amountOfItems }).map((_, index) =>
+      ItemBuilder.init()
+        .withQuantity(index + 1)
+        .withCategory(category)
+        .build()
+    );
+
+    for (const item of items) {
+      this.createItem(item);
+    }
+
+    return items;
   }
 
   getByLabel(label: string) {
@@ -77,6 +109,12 @@ export class CypressHelper {
 
   setCheckbox(label: string, checked: boolean) {
     this.getByLabel(label)[checked ? "check" : "uncheck"]();
+  }
+
+  shouldBeRendered(items: Item[]) {
+    for (const item of items) {
+      this.contains(item.name);
+    }
   }
 
   visit(url: string) {

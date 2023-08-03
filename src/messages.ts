@@ -17,8 +17,8 @@ export const messages = {
     setItemAsNotMandatory: "Remove item from mandatory to buy list",
   },
   itemList: {
-    total: ({ length }: Item[]) =>
-      length === 1 ? "1 item" : `${length} items`,
+    total: (totalItems: number) =>
+      totalItems === 1 ? "1 item" : `${totalItems} items`,
     empty: "There are no items in this list",
   },
   search: {

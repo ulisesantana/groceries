@@ -7,5 +7,7 @@ export default defineConfig({
     setupNodeEvents(on) {
       on("file:preprocessor", vitePreprocessor());
     },
+    viewportWidth: 375,
+    viewportHeight: 812,
   },
 });

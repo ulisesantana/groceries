@@ -1,6 +1,6 @@
 import { messages } from "../../src/messages";
 import { CategoryBuilder, ItemBuilder } from "../../src/tests/builders";
-import { CypressHelper } from "../helpers/";
+import { CypressHelper } from "../helpers";
 
 describe("Item CRUD should", () => {
   const category = CategoryBuilder.random();
@@ -57,6 +57,10 @@ describe("Item CRUD should", () => {
     cy.get("body").should("not.contain.text", item.name);
   });
 
+  it("the visual feedback should disappear 2 seconds after creating an item");
+  it("the visual feedback should disappear 2 seconds after updating an item");
+
+  // Maybe these are for another test suite
   it("set item as required");
   it("set item as not required");
   it("set item as mandatory");

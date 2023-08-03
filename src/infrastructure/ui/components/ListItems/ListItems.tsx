@@ -20,10 +20,12 @@ export const ListItems: FC<ListProps> = ({ items }) => {
   }
   return (
     <div className="ListItems">
-      <span className="items-total">{messages.itemList.total(items)}</span>
+      <span className="items-total">
+        {messages.itemList.total(items.length)}
+      </span>
       {ItemList.groupItemsByCategory(items).map(([categoryTitle, items]) => (
         <details open key={categoryTitle}>
-          <summary>{categoryTitle}</summary>
+          <summary aria-label={categoryTitle}>{categoryTitle}</summary>
           <ul>
             {items.map((item) => (
               <li key={item.id.value}>
