@@ -3,6 +3,7 @@ import { LocalStorageDataSource } from "./local-storage.data-source";
 export enum LocalStorageCollection {
   Items = "groceries:items",
   Settings = "groceries:settings",
+  CategoryVisibilityDictionary = "groceries:category-visibility-dictionary",
 }
 
 export class LocalStorage<T> implements LocalStorageDataSource<T> {

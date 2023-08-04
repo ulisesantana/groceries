@@ -30,10 +30,18 @@ export function RemoveItemButton({
             <h1>{messages.removeItemButton.cta}</h1>
             <p>{messages.removeItemButton.dialogText}</p>
             <div className="cta-container">
-              <button className="confirm" onClick={onConfirm}>
+              <button
+                className="confirm"
+                onClick={onConfirm}
+                aria-label={messages.removeItemButton.confirm}
+              >
                 {messages.removeItemButton.confirm}
               </button>
-              <button className="cancel" onClick={onClose}>
+              <button
+                className="cancel"
+                onClick={onClose}
+                aria-label={messages.removeItemButton.cancel}
+              >
                 {messages.removeItemButton.cancel}
               </button>
             </div>

@@ -14,7 +14,13 @@ import {
   CreateItemCase,
   RemoveItemCase,
 } from "../../application";
-import { GetCategoriesCaseDouble, GetItemsCaseDouble } from "../doubles";
+import { GetVisibilityDictionaryCase } from "../../application/cases/get-visibility-dictionary/get-visibility-dictionary.case";
+import { SetVisibilityDictionaryCase } from "../../application/cases/set-visibility-dictionary/set-visibility-dictionary.case";
+import {
+  GetCategoriesCaseDouble,
+  GetVisibilityDictionaryCaseDouble,
+  GetItemsCaseDouble,
+} from "../doubles";
 import { UseCaseDouble } from "../doubles/use-case.double";
 import { SettingsBuilder } from "./settings-builder";
 
@@ -24,6 +30,7 @@ export class UseCasesBuilder {
   private createCategory: CreateCategoryCase;
   private createItem: CreateItemCase;
   private getCategories: GetCategoriesCase;
+  private getCategoryVisibilityDictionary: GetVisibilityDictionaryCase;
   private getItems: GetItemsCase;
   private getSettings: GetSettingsCase;
   private removeItem: RemoveItemCase;
@@ -32,6 +39,7 @@ export class UseCasesBuilder {
   private setItemAsMandatory: SetItemAsMandatoryCase;
   private setItemAsNotMandatory: SetItemAsNotMandatoryCase;
   private setSettings: SetSettingsCase;
+  private setCategoryVisibilityDictionary: SetVisibilityDictionaryCase;
   private updateCategory: UpdateCategoryCase;
   private updateItem: UpdateItemCase;
 
@@ -39,6 +47,7 @@ export class UseCasesBuilder {
     createCategory,
     createItem,
     getCategories,
+    getCategoryVisibilityDictionary,
     getItems,
     getSettings,
     removeItem,
@@ -47,6 +56,7 @@ export class UseCasesBuilder {
     setItemAsNotMandatory,
     setItemAsMandatory,
     setSettings,
+    setCategoryVisibilityDictionary,
     updateCategory,
     updateItem,
   }: Partial<Record<keyof UseCases, ValueOf<UseCases>>> = {}) {
@@ -55,12 +65,16 @@ export class UseCasesBuilder {
     this.createItem = (createItem || new UseCaseDouble()) as CreateItemCase;
     this.getCategories = (getCategories ||
       new GetCategoriesCaseDouble()) as GetCategoriesCase;
+    this.getCategoryVisibilityDictionary = (getCategoryVisibilityDictionary ||
+      new GetVisibilityDictionaryCaseDouble()) as GetVisibilityDictionaryCase;
     this.getItems = (getItems || new GetItemsCaseDouble()) as GetItemsCase;
     this.getSettings = (getSettings ||
       new UseCaseDouble([
         SettingsBuilder.init().withSyncUrl(undefined).build(),
       ])) as GetSettingsCase;
     this.removeItem = (removeItem || new UseCaseDouble()) as RemoveItemCase;
+    this.setCategoryVisibilityDictionary = (setCategoryVisibilityDictionary ||
+      new UseCaseDouble()) as SetVisibilityDictionaryCase;
     this.setItemAsRequired = (setItemAsRequired ||
       new UseCaseDouble()) as SetItemAsRequiredCase;
     this.setItemAsNotRequired = (setItemAsNotRequired ||
@@ -161,9 +175,11 @@ export class UseCasesBuilder {
       createCategory: this.createCategory,
       createItem: this.createItem,
       getCategories: this.getCategories,
+      getCategoryVisibilityDictionary: this.getCategoryVisibilityDictionary,
       getItems: this.getItems,
       getSettings: this.getSettings,
       removeItem: this.removeItem,
+      setCategoryVisibilityDictionary: this.setCategoryVisibilityDictionary,
       setItemAsRequired: this.setItemAsRequired,
       setItemAsNotRequired: this.setItemAsNotRequired,
       setItemAsMandatory: this.setItemAsMandatory,

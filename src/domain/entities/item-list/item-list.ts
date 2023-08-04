@@ -14,9 +14,7 @@ export class ItemList {
     return [...this._items];
   }
 
-  static groupItemsByCategory(
-    items: Item[]
-  ): Array<[CategoryName, Array<Item>]> {
+  static groupItemsByCategory(items: Item[]): Array<[Category, Array<Item>]> {
     return Object.entries(
       items.reduce((dictionary, item) => {
         if (dictionary[item.category.name]) {
@@ -29,7 +27,7 @@ export class ItemList {
       }, {} as Record<CategoryName, Item[]>)
     )
       .sort(([a], [b]) => ItemList.sortAsc(a, b))
-      .map(([_category, items]) => [items.at(0)!.category.title, items]);
+      .map(([_category, items]) => [items.at(0)!.category, items]);
   }
 
   private static sortByName<T extends { name: string }>(a: T, b: T) {

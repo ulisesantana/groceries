@@ -11,16 +11,23 @@
     padding: 16px;
   }
 
-  details {
+  .category-container {
     margin-bottom: 1rem;
   }
 
-  details > ul {
+  .category-container > ul {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    height: 100%;
     padding: 8px;
+    visibility: visible;
     width: calc(100% - 16px);
+
+    &.hidden {
+      height: 0;
+      visibility: hidden;
+    }
   }
 
   ul, li {
@@ -32,8 +39,23 @@
     list-style: none;
   }
 
-  summary {
+  button {
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: space-between;
     font-size: 2rem;
+    width: 100%;
+
+    span {
+      display: block;
+
+      i {
+        vertical-align: super;
+        font-size: 1rem;
+      }
+    }
   }
 
   p {

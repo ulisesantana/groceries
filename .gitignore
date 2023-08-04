@@ -12,6 +12,7 @@ lerna-debug.log*
 
 # testing
 /coverage
+/cypress/videos
 
 # Editor directories and files
 .vscode/*

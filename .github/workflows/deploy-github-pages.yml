@@ -35,6 +35,10 @@ jobs:
         run: npm i
       - name: ✅ Test
         run: npm t
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run dev
       - name: 🏗 Build
         run: npm run build
       - name: ⚙️ Setup Pages

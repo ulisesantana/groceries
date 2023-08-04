@@ -1,0 +1,29 @@
+.chevron {
+  display: inline-block;
+  height: 15px;
+  margin: 1rem;
+  transition: transform 0.1s linear;
+  vertical-align: middle;
+  width: 18px;
+
+  .chevron_group {
+    transform: translateY(0);
+  }
+
+  .chevron_box--left,
+  .chevron_box--right {
+    transform: rotate(0) translateY(0);
+  }
+
+  .chevron_box--left {
+    transform-origin: 1px 1px;
+  }
+
+  .chevron_box--right {
+    transform-origin: 7px 1px;
+  }
+}
+
+.chevron--flip {
+  transform: rotate(180deg);
+}

@@ -16,7 +16,11 @@ export const messages = {
     setItemAsMandatory: "Set item as mandatory to buy",
     setItemAsNotMandatory: "Remove item from mandatory to buy list",
   },
-  emptyList: "There are no items in this list",
+  itemList: {
+    total: (totalItems: number) =>
+      totalItems === 1 ? "1 item" : `${totalItems} items`,
+    empty: "There are no items in this list",
+  },
   search: {
     searchInput: "🔍 Search",
     resetCTA: "Reset your search",
