@@ -26,8 +26,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    container: node:20
+    runs-on: ubuntu-22.04
     steps:
       - name: 🛎️ Checkout
         uses: actions/checkout@v3
@@ -36,9 +35,9 @@ jobs:
       - name: ✅ Unit test
         run: npm t
       - name: 🦺 End to end test
-        run: |
-          npm run dev &
-          npm run test:e2e
+        uses: cypress-io/github-action@v5
+        with:
+          start: npm run dev
       - name: 🏗 Build
         run: npm run build
       - name: ⚙️ Setup Pages
