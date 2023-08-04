@@ -44,7 +44,7 @@ describe("All items list should", () => {
       );
       // Hide category items
       helper.getByLabel(category.title).click();
-      helper.shouldNotBeRendered(items);
+      helper.shouldNotBeRendered(categoryItems);
       // Show category items
       helper.getByLabel(category.title).click();
       helper.shouldBeRendered(categoryItems);
