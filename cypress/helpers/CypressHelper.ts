@@ -2,6 +2,7 @@ import { Category, Item } from "../../src/domain";
 import { routes } from "../../src/infrastructure/ui/routes";
 import { messages } from "../../src/messages";
 import { CategoryBuilder, ItemBuilder } from "../../src/tests/builders";
+import { IndexedDBTestHelper } from "./IndexedDBTestHelper";
 
 export class CypressHelper {
   constructor(
@@ -9,23 +10,8 @@ export class CypressHelper {
     private readonly baseUrl: string
   ) {}
 
-  async clearIndexedDB() {
-    const databases = await window.indexedDB.databases();
-
-    return Promise.all(
-      databases.map(
-        (db) =>
-          new Promise((resolve, reject) => {
-            const request = window.indexedDB.deleteDatabase(db.name!);
-
-            request.addEventListener("success", resolve);
-            // Note: we need to also listen to the "blocked" event
-            // (and resolve the promise) due to https://stackoverflow.com/a/35141818
-            request.addEventListener("blocked", resolve);
-            request.addEventListener("error", reject);
-          })
-      )
-    );
+  clearIndexedDB() {
+    return IndexedDBTestHelper.clearIndexedDB();
   }
 
   contains(text: string) {
@@ -94,16 +80,16 @@ export class CypressHelper {
   }
 
   goToAllItemsListView() {
-    this.cy.visit(this.baseUrl);
+    this.visit(this.baseUrl);
     this.getByLabel(messages.menu.allItemsListCTA).click();
   }
 
   goToCreateCategoryView() {
-    this.cy.visit(this.baseUrl + routes.categories.create);
+    this.visit(this.baseUrl + routes.categories.create);
   }
 
   goToCreateItemView() {
-    this.cy.visit(this.baseUrl);
+    this.visit(this.baseUrl);
     this.getByLabel(messages.menu.createItem).click();
   }
 
@@ -113,7 +99,13 @@ export class CypressHelper {
 
   shouldBeRendered(items: Item[]) {
     for (const item of items) {
-      this.contains(item.name);
+      this.cy.contains(item.name).should("be.visible");
+    }
+  }
+
+  shouldNotBeRendered(items: Item[]) {
+    for (const item of items) {
+      this.cy.contains(item.name).should("not.be.visible");
     }
   }
 
