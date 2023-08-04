@@ -36,9 +36,9 @@ jobs:
       - name: ✅ Unit test
         run: npm t
       - name: 🦺 End to end test
-        uses: cypress-io/github-action@v5
-        with:
-          start: npm run dev
+        run: |
+          npm run dev &
+          npm run test:e2e
       - name: 🏗 Build
         run: npm run build
       - name: ⚙️ Setup Pages
