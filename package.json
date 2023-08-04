@@ -5,7 +5,7 @@
   "homepage": "https://groceries.tools/",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "deploy": "gh-pages -d build",
     "linter:fix": "eslint --fix src",
     "nuke": "rm -rf node_modules && rm package-lock.json && npm install",
