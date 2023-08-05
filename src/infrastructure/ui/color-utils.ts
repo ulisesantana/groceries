@@ -76,7 +76,7 @@ export class ColorUtils {
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
   }
 
-  private static lightenRgbColor(
+  private static setLuminosityFromRgb(
     r: number,
     g: number,
     b: number,
@@ -86,9 +86,9 @@ export class ColorUtils {
     return this.hslToRgb(h, s, percentage);
   }
 
-  static lightenColor(hexColor: string, percentage: number): string {
+  static setLuminosity(hexColor: string, percentage: number): string {
     const [r, g, b] = this.hexToRgb(hexColor);
-    const [newR, newG, newB] = this.lightenRgbColor(r, g, b, percentage);
+    const [newR, newG, newB] = this.setLuminosityFromRgb(r, g, b, percentage);
     return this.rgbToHex(newR, newG, newB);
   }
 

@@ -14,11 +14,14 @@ export interface ListItemProps {
 export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
   const { actions } = useStore();
   const color = item.category.color;
-  const backgroundColor = ColorUtils.lightenColor(color, 0.8);
+  const backgroundColor = ColorUtils.setLuminosity(color, 0.8);
   const accentColor = ColorUtils.isGrayscale(color)
     ? palette.purple
-    : ColorUtils.lightenColor(color, 0.3);
-  const mandatoryColor = palette.yellow;
+    : ColorUtils.setLuminosity(color, 0.3);
+  const mandatoryColor = palette.red;
+  const disabledColor = ColorUtils.isGrayscale(color)
+    ? ColorUtils.setLuminosity(palette.purple, 0.96)
+    : palette.gray;
   return (
     <div
       className="ListItemsRow"
