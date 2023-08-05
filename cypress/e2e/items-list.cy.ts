@@ -92,7 +92,7 @@ describe("Items list should", () => {
     const [item] = items;
     const newQuantity = "42";
     // Update
-    helper.getByTestId(item.name, "> .quantity > button").click();
+    helper.getByTestId(item.name, "> .quantity button").click();
     helper
       .getByLabel(messages.itemForm.quantityInput)
       .clear()
@@ -102,24 +102,20 @@ describe("Items list should", () => {
     cy.wait(250);
     cy.reload();
     // Check new value
-    helper.getByTestId(item.name, "> .quantity > button").contains(newQuantity);
+    helper.getByTestId(item.name).contains(newQuantity);
   });
 
   it("update item name by clicking on it", () => {
     const [item] = items;
     const newName = "Irrelevant item name";
     // Update
-    helper.getByTestId(item.name, "> .item > button").click();
-    helper
-      .getByTestId(item.name, "> .item > input")
-      .clear()
-      .type(newName)
-      .blur();
+    helper.getByTestId(item.name, "> .item button").click();
+    helper.getByTestId(item.name, "> .item input").clear().type(newName).blur();
     // Reload
     cy.wait(250);
     cy.reload();
     // Check new value
-    helper.getByTestId(newName, "> .item > button").contains(newName);
+    helper.getByTestId(newName).contains(newName);
   });
 
   describe("set item as", () => {
