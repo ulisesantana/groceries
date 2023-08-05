@@ -47,8 +47,8 @@ export function CategoryForm({ action, category }: CategoryFormProps) {
       <input
         type="color"
         name="color"
-        aria-label={messages.categoryForm.colorInput}
         required
+        aria-label={messages.categoryForm.colorInput}
         defaultValue={category?.color}
       />
       <span className={classNames("success-box", { active: successMessage })}>
