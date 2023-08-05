@@ -3,6 +3,7 @@ import { BsFillCartFill, BsFillStarFill } from "react-icons/bs";
 import { Link } from "wouter";
 import { Item, palette } from "../../../../domain";
 import { messages } from "../../../../messages";
+import { ColorUtils } from "../../color-utils";
 import { useStore } from "../../store";
 import "./ListItemRow.scss";
 
@@ -12,8 +13,20 @@ export interface ListItemProps {
 
 export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
   const { actions } = useStore();
+  const color = item.category.color;
+  const backgroundColor = ColorUtils.lightenColor(color, 0.8);
+  const accentColor = ColorUtils.isGrayscale(color)
+    ? palette.purple
+    : ColorUtils.lightenColor(color, 0.3);
+  const mandatoryColor = palette.yellow;
   return (
-    <div className="ListItemsRow" data-testid={item.id.value}>
+    <div
+      className="ListItemsRow"
+      data-testid={item.id.value}
+      style={{
+        backgroundColor,
+      }}
+    >
       <span className="quantity">{item.quantity}</span>
       <Link to={`/items/details/${item.id.value}`}>
         <span className="item">{item.name}</span>
@@ -24,7 +37,7 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
             aria-label={messages.actions.setItemAsNotRequired}
             onClick={() => actions.setItemAsNotRequired(item.id)}
           >
-            <BsFillCartFill size={32} color={palette.purple} />
+            <BsFillCartFill size={32} color={accentColor} />
           </button>
         ) : (
           <button
@@ -41,7 +54,7 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
             aria-label={messages.actions.setItemAsNotMandatory}
             onClick={() => actions.setItemAsNotMandatory(item.id)}
           >
-            <BsFillStarFill size={32} color={palette.yellow} />
+            <BsFillStarFill size={32} color={mandatoryColor} />
           </button>
         ) : (
           <button
