@@ -27,13 +27,11 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    position: relative;
     input, button {
       background-color: transparent;
       border: none;
       display: block;
       font-size: 1.25rem;
-      position: absolute;
       text-align: left;
       width: 100%;
     }
