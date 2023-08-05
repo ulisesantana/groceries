@@ -1,11 +1,9 @@
-import React, { ChangeEvent, FC, MouseEventHandler } from "react";
+import React, { FC, MouseEventHandler } from "react";
 import { Id, Item, ItemList, VisibilityDictionary } from "../../../../domain";
 import { messages } from "../../../../messages";
 import { Chevron } from "../Chevron";
 import { ListItemsRow } from "../ListItemsRow";
 import "./ListItems.scss";
-
-type CategoryId = string;
 
 export interface ListProps {
   items: Item[];
@@ -24,8 +22,7 @@ export const ListItems: FC<ListProps> = ({
   categoriesVisibilityDictionary,
   onClick,
 }) => {
-  const onClickHandler = (id: Id) => (event: ChangeEvent) => {
-    event.stopPropagation();
+  const onClickHandler = (id: Id) => () => {
     onClick(id);
   };
   if (items.length === 0) {
@@ -41,11 +38,15 @@ export const ListItems: FC<ListProps> = ({
         const toggleVisibility = onClickHandler(
           category.id
         ) as unknown as MouseEventHandler<HTMLElement>;
+        const goToCategoryDetails = () => {
+          window.location.pathname = `/categories/details/${category.id.value}`;
+        };
         return (
           <div className="category-container" key={category.id.value}>
             <button
               aria-label={category.title}
               onClick={toggleVisibility}
+              onDoubleClick={goToCategoryDetails}
               style={{ borderBottom: `solid 0.35rem ${category.color}` }}
             >
               <span>{category.icon}</span>
