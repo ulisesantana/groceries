@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Category } from "../../../../domain";
+import { ActiveViewRepository } from "../../../repositories";
 import { CreateItemForm, ListItems, Menu, Views } from "../../components";
 import { Store, useStore } from "../../store";
 
 export function Groceries() {
   const { items, actions, categories, categoriesVisibilityDictionary } =
     useStore() as Store;
+  // TODO: test active view keep stored after page reload
+  const activeView = ActiveViewRepository.read();
   const [lastSearch, setLastSearch] = useState("");
-  const [view, setView] = useState(Views.All);
+  const [view, setView] = useState(activeView);
+  const setAndPersistView = (view: Views) => {
+    ActiveViewRepository.write(view);
+    setView(view);
+  };
 
   useEffect(() => {
     actions.getItems();
@@ -44,7 +51,11 @@ export function Groceries() {
           categoriesVisibilityDictionary={categoriesVisibilityDictionary}
         />
       )}
-      <Menu activeView={view} setView={setView} onSearch={setLastSearch} />
+      <Menu
+        activeView={view}
+        setView={setAndPersistView}
+        onSearch={setLastSearch}
+      />
     </>
   );
 }

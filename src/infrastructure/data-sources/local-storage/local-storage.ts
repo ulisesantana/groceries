@@ -4,6 +4,7 @@ export enum LocalStorageCollection {
   Items = "groceries:items",
   Settings = "groceries:settings",
   CategoryVisibilityDictionary = "groceries:category-visibility-dictionary",
+  ActiveView = "groceries:active-view",
 }
 
 export class LocalStorage<T> implements LocalStorageDataSource<T> {

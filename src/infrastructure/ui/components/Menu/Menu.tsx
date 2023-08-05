@@ -8,10 +8,10 @@ import { messages } from "../../../../messages";
 import classNames from "classnames";
 
 export enum Views {
-  All,
-  Required,
-  Mandatory,
-  CreateItem,
+  All = "All",
+  Required = "Required",
+  Mandatory = "Mandatory",
+  CreateItem = "CreateItem",
 }
 
 export interface MenuProps {
