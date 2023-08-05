@@ -8,7 +8,13 @@ import "./SettingsView.scss";
 
 export function SettingsView() {
   const [match] = useRoute(routes.settings);
-
+  const reload = () => {
+    const url = new URL(
+      window.location.href.replaceAll(window.location.pathname, "")
+    );
+    url.searchParams.set("reloadTime", Date.now().toString());
+    window.location.href = url.toString();
+  };
   return (
     <Transition in={match} timeout={500}>
       <div className="SettingsView">
@@ -30,6 +36,12 @@ export function SettingsView() {
         <details open>
           <summary>{messages.settings.dataSync}</summary>
           <SettingsForm />
+        </details>
+        <details open>
+          <summary>Update</summary>
+          <div className="center">
+            <button onClick={reload}>Reload 🔄</button>
+          </div>
         </details>
       </div>
     </Transition>
