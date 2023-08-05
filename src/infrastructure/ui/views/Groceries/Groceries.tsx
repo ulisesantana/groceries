@@ -34,6 +34,8 @@ export function Groceries() {
         <ListItems
           items={items.search(lastSearch).values}
           onClick={actions.setCategoryVisibility}
+          onCollapseAll={actions.collapseAllCategories}
+          onExpandAll={actions.expandAllCategories}
           categoriesVisibilityDictionary={categoriesVisibilityDictionary}
         />
       )}
@@ -41,6 +43,8 @@ export function Groceries() {
         <ListItems
           items={items.search(lastSearch).getAllRequired()}
           onClick={actions.setCategoryVisibility}
+          onCollapseAll={actions.collapseAllCategories}
+          onExpandAll={actions.expandAllCategories}
           categoriesVisibilityDictionary={categoriesVisibilityDictionary}
         />
       )}
@@ -48,6 +52,8 @@ export function Groceries() {
         <ListItems
           items={items.search(lastSearch).getAllMandatory()}
           onClick={actions.setCategoryVisibility}
+          onCollapseAll={actions.collapseAllCategories}
+          onExpandAll={actions.expandAllCategories}
           categoriesVisibilityDictionary={categoriesVisibilityDictionary}
         />
       )}

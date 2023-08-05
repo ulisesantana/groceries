@@ -12,9 +12,9 @@ import {
   CategoryRepositoryPouchDb,
   ItemRepositoryPouchDB,
   SettingsRepositoryLocalStorage,
+  VisibilityRepositoryLocalStorage,
 } from "../../repositories";
 import { LocalStorage, LocalStorageCollection } from "../../data-sources";
-import { VisibilityRepositoryLocalStorage } from "../../repositories/visibility-repository";
 import { initStore, Store, StoreActions } from "./useStore";
 
 export function generateUseCasesWithRemoteDb(settings: Settings, cb: Function) {
@@ -78,6 +78,15 @@ export function generateActions(
   useCases: UseCases
 ): StoreActions {
   return {
+    collapseAllCategories() {
+      const dictionary = store.categoriesVisibilityDictionary.clone();
+      for (const key of Object.keys(dictionary.values)) {
+        dictionary.set(key, false);
+      }
+      useCases.setCategoryVisibilityDictionary.exec(dictionary).then(() => {
+        store.categoriesVisibilityDictionary = dictionary;
+      });
+    },
     async createCategory(category: Category) {
       await useCases.createCategory.exec(category);
       return store.actions.getCategories();
@@ -85,6 +94,15 @@ export function generateActions(
     async createItem(item: Item) {
       await useCases.createItem.exec(item);
       return store.actions.getCategories();
+    },
+    expandAllCategories() {
+      const dictionary = store.categoriesVisibilityDictionary.clone();
+      for (const key of Object.keys(dictionary.values)) {
+        dictionary.set(key, true);
+      }
+      useCases.setCategoryVisibilityDictionary.exec(dictionary).then(() => {
+        store.categoriesVisibilityDictionary = dictionary;
+      });
     },
     getCategories() {
       const dictionary = store.categoriesVisibilityDictionary.clone();

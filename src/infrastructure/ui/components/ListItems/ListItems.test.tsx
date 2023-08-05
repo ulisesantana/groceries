@@ -9,12 +9,16 @@ import { Item, VisibilityDictionary } from "../../../../domain";
 describe("ListItems should", () => {
   const categoryVisibilityDictionary = new VisibilityDictionary();
   const onClick = vi.fn();
+  const onExpandAll = vi.fn();
+  const onCollapseAll = vi.fn();
   it("show a list of items separated by categories", () => {
     const items = Array(3).map(ItemBuilder.random);
     render(
       <ListItems
         items={items}
         onClick={onClick}
+        onCollapseAll={onCollapseAll}
+        onExpandAll={onExpandAll}
         categoriesVisibilityDictionary={categoryVisibilityDictionary}
       />
     );
@@ -30,6 +34,8 @@ describe("ListItems should", () => {
       <ListItems
         items={[]}
         onClick={onClick}
+        onCollapseAll={onCollapseAll}
+        onExpandAll={onExpandAll}
         categoriesVisibilityDictionary={categoryVisibilityDictionary}
       />
     );
@@ -43,6 +49,8 @@ describe("ListItems should", () => {
         <ListItems
           items={items}
           onClick={onClick}
+          onCollapseAll={onCollapseAll}
+          onExpandAll={onExpandAll}
           categoriesVisibilityDictionary={categoryVisibilityDictionary}
         />
       );
@@ -56,6 +64,8 @@ describe("ListItems should", () => {
         <ListItems
           items={items}
           onClick={onClick}
+          onCollapseAll={onCollapseAll}
+          onExpandAll={onExpandAll}
           categoriesVisibilityDictionary={categoryVisibilityDictionary}
         />
       );
@@ -70,6 +80,8 @@ describe("ListItems should", () => {
       <ListItems
         items={items}
         onClick={onClick}
+        onCollapseAll={onCollapseAll}
+        onExpandAll={onExpandAll}
         categoriesVisibilityDictionary={categoryVisibilityDictionary}
       />
     );

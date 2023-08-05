@@ -1,4 +1,5 @@
 import React, { FC, MouseEventHandler } from "react";
+import { FiMaximize2, FiMinimize2 } from "react-icons/all";
 import { Id, Item, ItemList, VisibilityDictionary } from "../../../../domain";
 import { messages } from "../../../../messages";
 import { Chevron } from "../Chevron";
@@ -9,6 +10,8 @@ export interface ListProps {
   items: Item[];
   categoriesVisibilityDictionary: VisibilityDictionary;
   onClick: (id: Id) => void;
+  onExpandAll: () => void;
+  onCollapseAll: () => void;
 }
 
 const EmptyList = () => (
@@ -21,6 +24,8 @@ export const ListItems: FC<ListProps> = ({
   items,
   categoriesVisibilityDictionary,
   onClick,
+  onCollapseAll,
+  onExpandAll,
 }) => {
   const onClickHandler = (id: Id) => () => {
     onClick(id);
@@ -31,7 +36,18 @@ export const ListItems: FC<ListProps> = ({
   return (
     <div className="ListItems">
       <span className="items-total">
-        {messages.itemList.total(items.length)}
+        <span></span>
+        <span className="message">{messages.itemList.total(items.length)}</span>
+        <span className="expand-and-collapse">
+          <FiMaximize2
+            aria-label={messages.itemList.expandAllCategories}
+            onClick={onExpandAll}
+          />
+          <FiMinimize2
+            aria-label={messages.itemList.collapseAllCategories}
+            onClick={onCollapseAll}
+          />
+        </span>
       </span>
       {ItemList.groupItemsByCategory(items).map(([category, items]) => {
         const isOpen = categoriesVisibilityDictionary.get(category.id.value);

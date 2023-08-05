@@ -1,14 +1,31 @@
 .ListItems {
   margin: 0;
   padding: 0;
+  position: relative;
   width: calc(100% - 16px);
 
   .items-total {
-    display: flex;
+    background-color: var(--white);
     align-content: center;
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
     font-size: 150%;
     padding: 16px;
+    position: sticky;
+    top: 0;
+    width: calc(100% - 32px);
+    z-index: 100;
+
+    .message {
+      margin-right: -4rem;
+    }
+
+    .expand-and-collapse {
+      align-content: center;
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem
+    }
   }
 
   .category-container {

@@ -17,6 +17,8 @@ export const messages = {
     setItemAsNotMandatory: "Remove item from mandatory to buy list",
   },
   itemList: {
+    collapseAllCategories: "Collapse all categories",
+    expandAllCategories: "Expand all categories",
     total: (totalItems: number) =>
       totalItems === 1 ? "1 item" : `${totalItems} items`,
     empty: "There are no items in this list",

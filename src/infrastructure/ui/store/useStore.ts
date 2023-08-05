@@ -15,8 +15,10 @@ import {
 } from "./generators";
 
 export interface StoreActions {
+  collapseAllCategories(): void;
   createCategory(category: Category): Promise<void>;
   createItem(item: Item): Promise<void>;
+  expandAllCategories(): void;
   getCategories(): void;
   getCategoryVisibilityDictionary(): void;
   getItems(): void;
@@ -46,8 +48,10 @@ const store = proxy<Store>({
   items: new ItemList([]),
   settings: { syncUrl: undefined },
   actions: {
+    collapseAllCategories() {},
     async createCategory() {},
     async createItem() {},
+    expandAllCategories() {},
     getCategories() {},
     getCategoryVisibilityDictionary() {},
     getItems() {},

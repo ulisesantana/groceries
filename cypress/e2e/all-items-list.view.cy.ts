@@ -67,6 +67,14 @@ describe("All items list should", () => {
     // Check category items keep hidden
     helper.shouldNotBeRendered(categoryItems);
   });
+
+  it("expand and collapse all categories", () => {
+    helper.getByLabel(messages.itemList.expandAllCategories).click();
+    helper.shouldBeRendered(items);
+    helper.getByLabel(messages.itemList.collapseAllCategories).click();
+    helper.shouldNotBeRendered(items);
+  });
+
   it("navigate to item details if an item is clicked");
 
   describe("show each item with", () => {
