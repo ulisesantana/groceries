@@ -32,6 +32,8 @@ describe("All items list should", () => {
       items = items.concat(newItems);
     }
 
+    helper.goToAllItemsListView();
+
     helper.contains(messages.itemList.total(totalItems));
   });
 

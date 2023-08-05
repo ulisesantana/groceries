@@ -41,7 +41,6 @@ export class CypressHelper {
   }
 
   createItem(item: Item) {
-    const initialUrl = this.cy.url();
     this.goToCreateItemView();
     this.getByLabel(messages.itemForm.nameInput).clear().type(item.name);
     this.getByLabel(messages.itemForm.quantityInput)
@@ -53,7 +52,6 @@ export class CypressHelper {
     this.setCheckbox(messages.itemForm.isRequiredInput, item.isRequired);
     this.setCheckbox(messages.itemForm.isMandatoryInput, item.isMandatory);
     this.getByLabel(messages.itemForm.submitButton.create).click();
-    initialUrl.then((url) => this.visit(url));
   }
 
   createItemsForCategory(category: Category, amountOfItems: number) {
