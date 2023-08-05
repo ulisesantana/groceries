@@ -1,4 +1,5 @@
 @import "src/infrastructure/ui/styles/variables";
+
 .ListItemsRow {
   align-items: center;
   background-color: lighten($purple, 50%);
@@ -13,11 +14,33 @@
 
   span {
     display: block;
+
     button {
       background: transparent;
       border: none;
       margin: 0;
       padding: 0;
+    }
+  }
+
+  .quantity, .item {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    input, button {
+      background-color: transparent;
+      border: none;
+      display: block;
+      font-size: 1.25rem;
+      position: absolute;
+      text-align: left;
+      width: 100%;
+    }
+
+    input:focus {
+      border: none;
+      border-bottom: solid var(--black) 2px;
     }
   }
 

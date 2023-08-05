@@ -16,12 +16,15 @@ export function ItemDetails() {
 
   useEffect(() => {
     actions.getItems();
+    actions.getCategories();
   }, [actions]);
+
+  console.log(params, items.values.length, item);
 
   return (
     <Transition in={match} timeout={500}>
       <div className="ItemDetails" style={{ width: "100%" }}>
-        {item ? (
+        {item !== undefined ? (
           <>
             <UpdateItemForm
               updateItemUseCase={actions.updateItem}

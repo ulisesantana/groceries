@@ -32,7 +32,7 @@ describe("Item CRUD should", () => {
     const newName = "Irrelevant item name";
     // Select Item
     cypressHelper.goToAllItemsListView();
-    cy.contains(oldName).click();
+    cy.contains(oldName).dblclick();
     // Update item
     cypressHelper.getByLabel(messages.itemForm.nameInput).clear().type(newName);
     cypressHelper.getByLabel(messages.itemForm.submitButton.update).click();
@@ -51,7 +51,7 @@ describe("Item CRUD should", () => {
     cypressHelper.createItem(item);
     // Delete item
     cypressHelper.goToAllItemsListView();
-    cy.contains(item.name).click();
+    cy.contains(item.name).dblclick();
     cy.contains(messages.removeItemButton.cta).click();
     cy.contains(messages.removeItemButton.confirm).click();
     // Check item does not exist anymore

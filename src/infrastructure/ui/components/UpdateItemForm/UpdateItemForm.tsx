@@ -12,11 +12,12 @@ interface UpdateItemFormProps {
 
 export function UpdateItemForm({
   updateItemUseCase,
-  ...props
+  categories,
+  item,
 }: UpdateItemFormProps) {
   const action = generateAction(updateItemUseCase);
 
-  return <ItemForm action={action} {...props} />;
+  return <ItemForm action={action} item={item} categories={categories} />;
 }
 
 function generateAction(
