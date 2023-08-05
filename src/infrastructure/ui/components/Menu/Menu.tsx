@@ -1,6 +1,6 @@
 import React, { FC, useCallback, useState } from "react";
 import "./Menu.scss";
-import { BsFillCartFill, BsFillStarFill, BsSearch } from "react-icons/bs";
+import { BsFillCartFill, BsSearch, FaExclamation } from "react-icons/all";
 import { FiList, FiPlus } from "react-icons/fi";
 import { palette } from "../../../../domain";
 import { Search } from "../Search";
@@ -89,7 +89,7 @@ export const Menu: FC<MenuProps> = ({ setView, activeView, onSearch }) => {
                 aria-label={messages.menu.mandatoryListCTA}
                 onClick={() => setView(Views.Mandatory)}
               >
-                <BsFillStarFill />
+                <FaExclamation />
               </button>
             </li>
             <li>

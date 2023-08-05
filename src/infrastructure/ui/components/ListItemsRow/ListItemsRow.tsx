@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { BsFillCartFill, BsFillStarFill } from "react-icons/bs";
+import { BsFillCartFill, FaExclamation } from "react-icons/all";
 import { Link } from "wouter";
 import { Item, palette } from "../../../../domain";
 import { messages } from "../../../../messages";
@@ -47,7 +47,7 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
             aria-label={messages.actions.setItemAsRequired}
             onClick={() => actions.setItemAsRequired(item.id)}
           >
-            <BsFillCartFill size={32} color={palette.gray} />
+            <BsFillCartFill size={32} color={disabledColor} />
           </button>
         )}
       </span>
@@ -57,14 +57,14 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
             aria-label={messages.actions.setItemAsNotMandatory}
             onClick={() => actions.setItemAsNotMandatory(item.id)}
           >
-            <BsFillStarFill size={32} color={mandatoryColor} />
+            <FaExclamation size={32} color={mandatoryColor} />
           </button>
         ) : (
           <button
             aria-label={messages.actions.setItemAsMandatory}
             onClick={() => actions.setItemAsMandatory(item.id)}
           >
-            <BsFillStarFill size={32} color={palette.gray} />
+            <FaExclamation size={32} color={disabledColor} />
           </button>
         )}
       </span>
