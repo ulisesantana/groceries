@@ -41,6 +41,7 @@ form {
     font-weight: bold;
     justify-content: center;
     padding: 8px;
+    visibility: hidden;
     width: calc(100% - 16px);
   }
 
@@ -53,6 +54,23 @@ form {
   }
 
   .active {
+    animation: fadeOut 1s forwards;
+    animation-delay: 1s;
     display: flex;
+    opacity: 1;
+    visibility: visible;
+
+    @keyframes fadeOut {
+      0% {
+        display: flex;
+        opacity: 1;
+        visibility: visible;
+      }
+      100% {
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
   }
 }

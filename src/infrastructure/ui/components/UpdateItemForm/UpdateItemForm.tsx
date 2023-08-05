@@ -28,7 +28,9 @@ function generateAction(
         .then(() => {
           setErrorMessage("");
           setSuccessMessage(messages.itemForm.success.update);
-          // TODO: Trigger timeout for clearing messages?
+          setTimeout(() => {
+            setSuccessMessage("");
+          }, 2000);
         })
         .catch((error) => {
           setSuccessMessage("");

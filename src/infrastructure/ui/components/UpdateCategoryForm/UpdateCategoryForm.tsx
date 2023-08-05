@@ -24,7 +24,9 @@ function generateAction(actions: StoreActions): CategoryFormProps["action"] {
         .then(() => {
           setErrorMessage("");
           setSuccessMessage(messages.categoryForm.success.update);
-          // TODO: Trigger timeout for clearing messages?
+          setTimeout(() => {
+            setSuccessMessage("");
+          }, 2000);
         })
         .catch((error) => {
           setSuccessMessage("");

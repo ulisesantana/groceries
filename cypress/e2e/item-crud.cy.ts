@@ -1,3 +1,4 @@
+import { Item } from "../../src/domain";
 import { messages } from "../../src/messages";
 import { CategoryBuilder, ItemBuilder } from "../../src/tests/builders";
 import { CypressHelper } from "../helpers";
@@ -57,8 +58,27 @@ describe("Item CRUD should", () => {
     cy.get("body").should("not.contain.text", item.name);
   });
 
-  it("the visual feedback should disappear 2 seconds after creating an item");
-  it("the visual feedback should disappear 2 seconds after updating an item");
+  it("the visual feedback should disappear 2 seconds after creating an item", () => {
+    const item = ItemBuilder.init().withCategory(category).build();
+    cypressHelper.goToAllItemsListView();
+    // Create item
+    createItem(cypressHelper, item);
+    cy.wait(3000);
+    cypressHelper
+      .contains(messages.itemForm.success.create)
+      .should("not.exist");
+  });
+
+  it("the visual feedback should disappear 2 seconds after updating an item", () => {
+    const item = ItemBuilder.init().withCategory(category).build();
+    cypressHelper.goToAllItemsListView();
+    // Create item
+    createItem(cypressHelper, item);
+    cy.wait(3000);
+    cypressHelper
+      .contains(messages.itemForm.success.update)
+      .should("not.exist");
+  });
 
   // Maybe these are for another test suite
   it("set item as required");
@@ -66,3 +86,21 @@ describe("Item CRUD should", () => {
   it("set item as mandatory");
   it("set item as not mandatory");
 });
+
+function createItem(cypressHelper: CypressHelper, item: Item) {
+  cypressHelper.goToCreateItemView();
+  cypressHelper.getByLabel(messages.itemForm.nameInput).clear().type(item.name);
+  cypressHelper
+    .getByLabel(messages.itemForm.quantityInput)
+    .clear()
+    .type(String(item.quantity));
+  cypressHelper
+    .getByLabel(messages.itemForm.categoryInput)
+    .select(item.category.title);
+  cypressHelper.setCheckbox(messages.itemForm.isRequiredInput, item.isRequired);
+  cypressHelper.setCheckbox(
+    messages.itemForm.isMandatoryInput,
+    item.isMandatory
+  );
+  cypressHelper.getByLabel(messages.itemForm.submitButton.create).click();
+}
