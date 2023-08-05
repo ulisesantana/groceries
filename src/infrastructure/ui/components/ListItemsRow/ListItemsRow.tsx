@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import React, { FC, RefObject, useRef, useState } from "react";
 import { BsFillCartFill, FaExclamation } from "react-icons/all";
 import { Item, palette } from "../../../../domain";
@@ -54,11 +53,9 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
     }
   };
   const focusItemName = () => {
-    enableWriteMode();
     focusInput(inputNameRef);
   };
   const focusItemQuantity = () => {
-    enableWriteMode();
     focusInput(inputQuantityRef);
   };
   const updateName = () => {
@@ -94,7 +91,7 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
   return (
     <div
       className="ListItemsRow"
-      data-testid={item.id.value}
+      data-testid={item.name}
       style={{
         backgroundColor,
       }}
@@ -127,7 +124,7 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
           />
         )}
       </span>
-      <span className="is-required">
+      <span className="is-required" data-is-required={item.isRequired}>
         {item.isRequired ? (
           <button
             aria-label={messages.actions.setItemAsNotRequired}
@@ -144,7 +141,7 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
           </button>
         )}
       </span>
-      <span className="is-mandatory">
+      <span className="is-mandatory" data-is-mandatory={item.isMandatory}>
         {item.isMandatory ? (
           <button
             aria-label={messages.actions.setItemAsNotMandatory}

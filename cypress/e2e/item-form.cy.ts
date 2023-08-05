@@ -2,7 +2,7 @@ import { messages } from "../../src/messages";
 import { CategoryBuilder, ItemBuilder } from "../../src/tests/builders";
 import { CypressHelper } from "../helpers";
 
-describe("Item CRUD should", () => {
+describe("Item form should", () => {
   const category = CategoryBuilder.random();
   const item = ItemBuilder.init().withCategory(category).build();
   const cypressHelper = new CypressHelper(cy, Cypress.config().baseUrl!);
@@ -77,10 +77,4 @@ describe("Item CRUD should", () => {
       .contains(messages.itemForm.success.update)
       .should("not.exist");
   });
-
-  // Maybe these are for another test suite
-  it("set item as required");
-  it("set item as not required");
-  it("set item as mandatory");
-  it("set item as not mandatory");
 });

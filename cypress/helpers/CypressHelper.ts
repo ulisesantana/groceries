@@ -69,12 +69,12 @@ export class CypressHelper {
     return items;
   }
 
-  getByLabel(label: string) {
-    return this.cy.get(`[aria-label="${label}"]`);
+  getByLabel(label: string, selector: string = "") {
+    return this.cy.get(`[aria-label="${label}"] ${selector}`);
   }
 
-  getByTestId(testId: string) {
-    return this.cy.get(`[data-testid="${testId}"]`);
+  getByTestId(testId: string, selector: string = "") {
+    return this.cy.get(`[data-testid="${testId}"] ${selector}`);
   }
 
   goToAllItemsListView() {

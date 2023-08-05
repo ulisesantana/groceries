@@ -1,15 +1,14 @@
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import React from "react";
 import { describe, expect, it } from "vitest";
 import { ItemList } from "../../../../domain";
-import { ItemBuilder } from "../../../../tests/builders";
-import { GetItemsCaseDouble } from "../../../../tests/doubles";
-import { render, screen, waitFor, within } from "@testing-library/react";
-import { UseCasesBuilder } from "../../../../tests/builders/use-cases-builder";
-import userEvent from "@testing-library/user-event";
 import { messages } from "../../../../messages";
-import React from "react";
-import { Groceries } from "./Groceries";
+import { ItemBuilder } from "../../../../tests/builders";
+import { UseCasesBuilder } from "../../../../tests/builders/use-cases-builder";
+import { GetItemsCaseDouble } from "../../../../tests/doubles";
 import { initStore } from "../../store";
-import { UseCaseDouble } from "../../../../tests/doubles/use-case.double";
+import { Groceries } from "./Groceries";
 
 describe("Groceries view should", () => {
   it("fetch items and render them", async () => {
@@ -58,86 +57,6 @@ describe("Groceries view should", () => {
         screen.queryByText(items.values.at(0)!.name)
       ).not.toBeInTheDocument();
     });
-  });
-
-  it("set item to buy and render it updated", async () => {
-    const items = new ItemList([
-      ItemBuilder.init().withName("cookies").withIsRequired(false).build(),
-      ItemBuilder.init().withName("cream").build(),
-      ItemBuilder.init().withName("milk").build(),
-    ]);
-    const itemsUpdated = new ItemList([
-      ItemBuilder.clone(items.values.at(0)!).withIsRequired(true).build(),
-      ItemBuilder.clone(items.values.at(1)!).build(),
-      ItemBuilder.clone(items.values.at(2)!).build(),
-    ]);
-    const [item] = items.values;
-    const getAllItemsDouble = new GetItemsCaseDouble([items, itemsUpdated]);
-    const setItemAsRequired = new UseCaseDouble();
-    const useCases = UseCasesBuilder.init()
-      .withGetItemsCase(getAllItemsDouble)
-      .withSetItemAsRequiredCase(setItemAsRequired)
-      .build();
-    await waitFor(() => initStore(useCases));
-    render(<Groceries />);
-
-    await waitFor(() => {
-      screen.getByTestId(item.id.value);
-    });
-    await userEvent.click(
-      within(screen.getByTestId(item.id.value)).getByLabelText(
-        messages.actions.setItemAsRequired
-      )
-    );
-
-    setItemAsRequired.assertHasBeenCalledTimes(1);
-    await waitFor(() => getAllItemsDouble.assertHasBeenCalledTimes(2));
-    const firstItemUpdated = screen.getByTestId(item.id.value);
-    expect(
-      within(firstItemUpdated).queryByLabelText(
-        messages.actions.setItemAsRequired
-      )
-    ).toBeNull();
-  });
-
-  it("set item mandatory to buy and render it updated", async () => {
-    const items = new ItemList([
-      ItemBuilder.init().withName("cookies").withIsMandatory(false).build(),
-      ItemBuilder.init().withName("cream").build(),
-      ItemBuilder.init().withName("milk").build(),
-    ]);
-    const itemsUpdated = new ItemList([
-      ItemBuilder.clone(items.values.at(0)!).withIsMandatory(true).build(),
-      ItemBuilder.clone(items.values.at(1)!).build(),
-      ItemBuilder.clone(items.values.at(2)!).build(),
-    ]);
-    const [item] = items.values;
-    const getAllItemsDouble = new GetItemsCaseDouble([items, itemsUpdated]);
-    const setItemAsMandatoryDouble = new UseCaseDouble();
-    const useCases = UseCasesBuilder.init()
-      .withGetItemsCase(getAllItemsDouble)
-      .withSetItemAsMandatoryCase(setItemAsMandatoryDouble)
-      .build();
-
-    await waitFor(() => initStore(useCases));
-    render(<Groceries />);
-    await waitFor(() => {
-      screen.getByTestId(item.id.value);
-    });
-    await userEvent.click(
-      within(screen.getByTestId(item.id.value)).getByLabelText(
-        messages.actions.setItemAsMandatory
-      )
-    );
-
-    setItemAsMandatoryDouble.assertHasBeenCalledTimes(1);
-    await waitFor(() => getAllItemsDouble.assertHasBeenCalledTimes(2));
-    const firstItemUpdated = screen.getByTestId(item.id.value);
-    expect(
-      within(firstItemUpdated).queryByLabelText(
-        messages.actions.setItemAsMandatory
-      )
-    ).toBeNull();
   });
 
   it("navigate to buy list", async () => {
