@@ -59,6 +59,8 @@ export class CypressHelper {
       ItemBuilder.init()
         .withQuantity(index + 1)
         .withCategory(category)
+        .withIsRequired(false)
+        .withIsMandatory(false)
         .build()
     );
 
@@ -80,6 +82,16 @@ export class CypressHelper {
   goToAllItemsListView() {
     this.visit(this.baseUrl);
     this.getByLabel(messages.menu.allItemsListCTA).click();
+  }
+
+  goToRequiredItemsListView() {
+    this.visit(this.baseUrl);
+    this.getByLabel(messages.menu.requiredListCTA).click();
+  }
+
+  goToMandatoryItemsListView() {
+    this.visit(this.baseUrl);
+    this.getByLabel(messages.menu.mandatoryListCTA).click();
   }
 
   goToCreateCategoryView() {

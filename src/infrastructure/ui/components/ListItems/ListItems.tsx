@@ -75,7 +75,7 @@ export const ListItems: FC<ListProps> = ({
             </button>
             <ul className={isOpen ? "" : "hidden"}>
               {items.map((item) => (
-                <li key={item.id.value}>
+                <li data-testid="list-item-row" key={item.id.value}>
                   <ListItemsRow item={item} />
                 </li>
               ))}

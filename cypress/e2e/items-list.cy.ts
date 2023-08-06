@@ -8,6 +8,8 @@ describe("Items list should", () => {
   let categories: Category[];
   let items: Item[] = [];
   const totalCategories = 2;
+  const itemsPerCategory = 2;
+  const totalItems = itemsPerCategory * totalCategories;
 
   before(async () => {
     await helper.clearIndexedDB();
@@ -23,8 +25,6 @@ describe("Items list should", () => {
 
   it("show how many items are listed", () => {
     categories = helper.createCategories(totalCategories);
-    const itemsPerCategory = 2;
-    const totalItems = itemsPerCategory * totalCategories;
     for (const category of categories) {
       const newItems = helper.createItemsForCategory(
         category,
@@ -36,6 +36,39 @@ describe("Items list should", () => {
     helper.goToAllItemsListView();
 
     helper.contains(messages.itemList.total(totalItems));
+  });
+
+  it("show all items", () => {
+    helper.getByTestId("list-item-row").should("have.length", totalItems);
+  });
+
+  it("show items required to buy", () => {
+    helper.createItem(
+      ItemBuilder.init()
+        .withCategory(categories.at(0)!)
+        .withIsRequired(true)
+        .withIsMandatory(false)
+        .build()
+    );
+    helper.goToRequiredItemsListView();
+    helper.getByTestId("list-item-row").should("have.length", 1);
+  });
+
+  it("show items mandatory to buy", () => {
+    helper.createItem(
+      ItemBuilder.init()
+        .withCategory(categories.at(0)!)
+        .withIsMandatory(true)
+        .build()
+    );
+    helper.createItem(
+      ItemBuilder.init()
+        .withCategory(categories.at(0)!)
+        .withIsMandatory(true)
+        .build()
+    );
+    helper.goToMandatoryItemsListView();
+    helper.getByTestId("list-item-row").should("have.length", 2);
   });
 
   it("every item list is collapsable, allowing to toggle categories", () => {
