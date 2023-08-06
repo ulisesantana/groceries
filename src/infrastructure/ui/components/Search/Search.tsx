@@ -32,7 +32,7 @@ export const Search: FC<SearchProps> = ({ onChange, onClose }) => {
   };
 
   return (
-    <div className="Search">
+    <div className="Search" data-testid="search">
       <input
         aria-label={messages.search.searchInput}
         type="text"

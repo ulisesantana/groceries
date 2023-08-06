@@ -89,6 +89,11 @@ export class CypressHelper {
     this.getByLabel(messages.menu.requiredListCTA).click();
   }
 
+  goToSearchView() {
+    this.visit(this.baseUrl);
+    this.getByLabel(messages.menu.searchCTA).click();
+  }
+
   goToMandatoryItemsListView() {
     this.visit(this.baseUrl);
     this.getByLabel(messages.menu.mandatoryListCTA).click();

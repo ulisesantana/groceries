@@ -53,7 +53,9 @@ export class ItemList {
   search(search: string): ItemList {
     return new ItemList(
       this.items.filter((i) =>
-        i.name.toLowerCase().includes(search.toLowerCase())
+        this.removeAccentMarks(i.name.toLowerCase()).includes(
+          this.removeAccentMarks(search.toLowerCase())
+        )
       )
     );
   }
@@ -64,5 +66,10 @@ export class ItemList {
 
   has(item: Item): boolean {
     return this._items.some(({ id }) => item.id.equals(id));
+  }
+
+  // https://javascriptf1.com/snippet/remove-accents-from-a-string-in-javascript
+  private removeAccentMarks(text: string) {
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   }
 }
