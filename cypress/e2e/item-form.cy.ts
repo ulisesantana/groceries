@@ -4,25 +4,29 @@ import { CypressHelper } from "../helpers";
 
 describe("Item form should", () => {
   const category = CategoryBuilder.random();
-  const item = ItemBuilder.init().withCategory(category).build();
-  const cypressHelper = new CypressHelper(cy, Cypress.config().baseUrl!);
+  const item = ItemBuilder.init()
+    .withCategory(category)
+    .withIsRequired(false)
+    .withIsMandatory(false)
+    .build();
+  const helper = new CypressHelper(cy, Cypress.config().baseUrl!);
 
   before(async () => {
-    await cypressHelper.clearIndexedDB();
+    await helper.clearIndexedDB();
   });
 
   it("add a new item", () => {
     // Check the item doesn't exist
-    cypressHelper.goToAllItemsListView();
+    helper.goToAllItemsListView();
     cy.get("body").should("not.contain.text", item.name);
     // Create a category
-    cypressHelper.createCategory(category);
+    helper.createCategory(category);
     // Create an item for that category
-    cypressHelper.goToCreateItemView();
-    cypressHelper.getByLabel(messages.itemForm.nameInput).type(item.name);
-    cypressHelper.getByLabel(messages.itemForm.submitButton.create).click();
+    helper.goToCreateItemView();
+    helper.getByLabel(messages.itemForm.nameInput).type(item.name);
+    helper.getByLabel(messages.itemForm.submitButton.create).click();
     // Check the item is created
-    cypressHelper.goToAllItemsListView();
+    helper.goToAllItemsListView();
     cy.get("body").should("contain.text", item.name);
   });
 
@@ -30,27 +34,39 @@ describe("Item form should", () => {
     // TODO: Update the whole item
     const oldName = item.name;
     const newName = "Irrelevant item name";
+    const newQuantity = "42";
+    const oldQuantity = item.quantity;
     // Select Item
-    cypressHelper.goToAllItemsListView();
+    helper.goToAllItemsListView();
     cy.contains(oldName).dblclick();
     // Update item
-    cypressHelper.getByLabel(messages.itemForm.nameInput).clear().type(newName);
-    cypressHelper.getByLabel(messages.itemForm.submitButton.update).click();
+    helper.getByLabel(messages.itemForm.nameInput).clear().type(newName);
+    helper
+      .getByLabel(messages.itemForm.quantityInput)
+      .clear()
+      .type(newQuantity);
+    helper.getByLabel(messages.itemForm.isRequiredInput).click();
+    helper.getByLabel(messages.itemForm.isMandatoryInput).click();
+    helper.getByLabel(messages.itemForm.submitButton.update).click();
     // Check the item is updated
-    cypressHelper.goToAllItemsListView();
-    cy.get("body").should("contain.text", newName);
-    cy.get("body").should("not.contain.text", oldName);
+    helper.goToAllItemsListView();
+    helper.getByTestId(newName).should("contain.text", newName);
+    helper.getByTestId(newName).should("not.contain.text", oldName);
+    helper.getByTestId(newName).should("contain.text", newQuantity);
+    helper.getByTestId(newName).should("not.contain.text", oldQuantity);
+    helper.getByTestId(newName, `> [data-is-required="true"]`).should("exist");
+    helper.getByTestId(newName, `> [data-is-mandatory="true"]`).should("exist");
   });
 
   it("delete the item", () => {
     const item = ItemBuilder.init().withCategory(category).build();
     //Check item does not exist
-    cypressHelper.goToAllItemsListView();
+    helper.goToAllItemsListView();
     cy.get("body").should("not.contain.text", item.name);
     // Create item
-    cypressHelper.createItem(item);
+    helper.createItem(item);
     // Delete item
-    cypressHelper.goToAllItemsListView();
+    helper.goToAllItemsListView();
     cy.contains(item.name).dblclick();
     cy.contains(messages.removeItemButton.cta).click();
     cy.contains(messages.removeItemButton.confirm).click();
@@ -61,20 +77,25 @@ describe("Item form should", () => {
   it("the visual feedback should disappear 2 seconds after creating an item", () => {
     const item = ItemBuilder.init().withCategory(category).build();
     // Create item
-    cypressHelper.createItem(item);
+    helper.createItem(item);
     cy.wait(2000);
-    cypressHelper
-      .contains(messages.itemForm.success.create)
-      .should("not.exist");
+    helper.contains(messages.itemForm.success.create).should("not.exist");
   });
 
   it("the visual feedback should disappear 2 seconds after updating an item", () => {
     const item = ItemBuilder.init().withCategory(category).build();
+    const oldName = item.name;
+    const newName = "Irrelevant item name";
     // Create item
-    cypressHelper.createItem(item);
+    helper.createItem(item);
+    // Select Item
+    helper.goToAllItemsListView();
+    cy.contains(oldName).dblclick();
+    // Update item
+    helper.getByLabel(messages.itemForm.nameInput).clear().type(newName);
+    helper.getByLabel(messages.itemForm.submitButton.update).click();
+    helper.contains(messages.itemForm.success.update).should("exist");
     cy.wait(2000);
-    cypressHelper
-      .contains(messages.itemForm.success.update)
-      .should("not.exist");
+    helper.contains(messages.itemForm.success.update).should("not.exist");
   });
 });

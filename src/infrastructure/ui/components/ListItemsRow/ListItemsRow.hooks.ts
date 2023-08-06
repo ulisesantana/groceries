@@ -111,6 +111,7 @@ export function useListItemRow(item: Item) {
       () => actions.setItemAsRequired(item.id),
       [item, actions]
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     updateName: useCallback(
       generateUpdateItemWithInputValueHandler({
         inputRef: inputNameRef,
@@ -120,8 +121,9 @@ export function useListItemRow(item: Item) {
         actions,
         item,
       }),
-      [actions, setReadMode]
+      [actions, setReadMode, item, enableReadMode, inputNameRef]
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     updateQuantity: useCallback(
       generateUpdateItemWithInputValueHandler({
         inputRef: inputQuantityRef,
@@ -131,7 +133,7 @@ export function useListItemRow(item: Item) {
         actions,
         item,
       }),
-      [actions, setReadMode]
+      [actions, setReadMode, item, enableReadMode, inputQuantityRef]
     ),
   };
 }
