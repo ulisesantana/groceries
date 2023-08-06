@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { FormEventHandler, useState } from "react";
-import { Category } from "../../../../domain";
+import { Category, palette } from "../../../../domain";
 import { messages } from "../../../../messages";
 import "../CategoryForm/CategoryForm.scss";
 
@@ -43,7 +43,13 @@ export function CategoryForm({ action, category }: CategoryFormProps) {
         required
         defaultValue={category?.icon}
       />
-      <label htmlFor="color">{messages.categoryForm.colorInput}</label>
+      <label htmlFor="color">
+        {messages.categoryForm.colorInput}{" "}
+        <span
+          className="circle"
+          style={{ backgroundColor: category?.color || palette.purple }}
+        ></span>
+      </label>
       <input
         type="color"
         name="color"
