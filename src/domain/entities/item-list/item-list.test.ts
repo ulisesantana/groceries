@@ -24,11 +24,17 @@ describe("Item ListItems should", () => {
       .withIsRequired(false)
       .withIsMandatory(false)
       .build(),
+    ItemBuilder.init()
+      .withName("Beletén")
+      .withIsRequired(false)
+      .withIsMandatory(false)
+      .build(),
   ];
 
   it("return all items sorted", () => {
     expect(new ItemList(items).values).toStrictEqual([
       items.at(3),
+      items.at(4),
       items.at(1),
       items.at(0),
       items.at(2),
@@ -50,6 +56,12 @@ describe("Item ListItems should", () => {
     it("returning items which name includes the search content", () => {
       expect(new ItemList(items).search("milk")).toStrictEqual(
         new ItemList([items.at(0)!, items.at(2)!])
+      );
+    });
+
+    it("returning items which name includes the search content ignoring accent marks", () => {
+      expect(new ItemList(items).search("beleten")).toStrictEqual(
+        new ItemList([items.at(4)!])
       );
     });
 

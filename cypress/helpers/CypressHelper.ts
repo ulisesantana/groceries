@@ -59,6 +59,8 @@ export class CypressHelper {
       ItemBuilder.init()
         .withQuantity(index + 1)
         .withCategory(category)
+        .withIsRequired(false)
+        .withIsMandatory(false)
         .build()
     );
 
@@ -69,17 +71,32 @@ export class CypressHelper {
     return items;
   }
 
-  getByLabel(label: string) {
-    return this.cy.get(`[aria-label="${label}"]`);
+  getByLabel(label: string, selector: string = "") {
+    return this.cy.get(`[aria-label="${label}"] ${selector}`);
   }
 
-  getByTestId(testId: string) {
-    return this.cy.get(`[data-testid="${testId}"]`);
+  getByTestId(testId: string, selector: string = "") {
+    return this.cy.get(`[data-testid="${testId}"] ${selector}`);
   }
 
   goToAllItemsListView() {
     this.visit(this.baseUrl);
     this.getByLabel(messages.menu.allItemsListCTA).click();
+  }
+
+  goToRequiredItemsListView() {
+    this.visit(this.baseUrl);
+    this.getByLabel(messages.menu.requiredListCTA).click();
+  }
+
+  goToSearchView() {
+    this.visit(this.baseUrl);
+    this.getByLabel(messages.menu.searchCTA).click();
+  }
+
+  goToMandatoryItemsListView() {
+    this.visit(this.baseUrl);
+    this.getByLabel(messages.menu.mandatoryListCTA).click();
   }
 
   goToCreateCategoryView() {
