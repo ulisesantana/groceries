@@ -7,7 +7,7 @@ import {
   ItemQuantityFunction,
 } from "./Inputs";
 import "./ListItemRow.scss";
-import { useListItemRow } from "./ListItemsRow.hooks";
+import { useListItemRow, useListItemRowColors } from "./ListItemsRow.hooks";
 
 export interface ListItemProps {
   item: Item;
@@ -15,15 +15,11 @@ export interface ListItemProps {
 
 export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
   const {
-    accentColor,
-    backgroundColor,
-    disabledColor,
     focusItemNameInput,
     focusItemQuantityInput,
     goToItemDetails,
     inputNameRef,
     inputQuantityRef,
-    mandatoryColor,
     readMode,
     setAsMandatory,
     setAsNotMandatory,
@@ -32,6 +28,8 @@ export const ListItemsRow: FC<ListItemProps> = ({ item }) => {
     updateName,
     updateQuantity,
   } = useListItemRow(item);
+  const { backgroundColor, accentColor, mandatoryColor, disabledColor } =
+    useListItemRowColors(item);
   return (
     <div
       className="ListItemsRow"

@@ -1,7 +1,7 @@
 import { RefObject, useCallback, useRef, useState } from "react";
 import { Item, palette } from "../../../../domain";
 import { ColorUtils } from "../../color-utils";
-import { useStore } from "../../store";
+import { StoreActions, useStore } from "../../store";
 
 function retry(exitCondition: Function, callback: Function, ms: number) {
   setTimeout(() => {
@@ -13,16 +13,41 @@ function retry(exitCondition: Function, callback: Function, ms: number) {
   }, ms);
 }
 
-export function useListItemRow(item: Item) {
-  const { actions } = useStore();
-  const inputNameRef = useRef<HTMLInputElement>(null);
-  const inputQuantityRef = useRef<HTMLInputElement>(null);
-  const [readMode, setReadMode] = useState(true);
-  const color = item.category.color;
+interface GenerateUpdateItemWithInputValueHandlerParams {
+  inputRef: RefObject<HTMLInputElement>;
+  validation: (value: string | undefined) => boolean;
+  property: keyof Item;
+  enableReadMode: () => void;
+  item: Item;
+  actions: StoreActions;
+}
 
-  const enableWriteMode = () => setReadMode(false);
-  const enableReadMode = () => setReadMode(true);
-  const generateInputFocus = (inputRef: RefObject<HTMLInputElement>) => () => {
+function generateUpdateItemWithInputValueHandler({
+  inputRef,
+  validation,
+  property,
+  enableReadMode,
+  item,
+  actions,
+}: GenerateUpdateItemWithInputValueHandlerParams) {
+  return () => {
+    const newValue = inputRef?.current?.value;
+    if (validation(newValue)) {
+      const itemToUpdate = new Item({
+        ...item,
+        [property]: newValue,
+      });
+      actions.updateItem(itemToUpdate).catch(console.error);
+    }
+    enableReadMode();
+  };
+}
+
+function generateInputFocus(
+  inputRef: RefObject<HTMLInputElement>,
+  enableWriteMode: () => void
+) {
+  return () => {
     enableWriteMode();
     const isInputReady = () => inputRef?.current?.focus !== undefined;
     const focus = () => inputRef?.current?.focus();
@@ -34,36 +59,10 @@ export function useListItemRow(item: Item) {
       console.debug(`retrying to focus input in ${ms} ms`);
     }
   };
-  function updateName() {
-    const newName = inputNameRef?.current?.value;
-    if (newName && newName !== item.name) {
-      const itemToUpdate = new Item({
-        ...item,
-        name: newName,
-      });
-      actions.updateItem(itemToUpdate).then(() => {
-        console.log(
-          `Item updated from "${item.name}" to "${itemToUpdate.name}"`
-        );
-      });
-    }
-    enableReadMode();
-  }
-  function updateQuantity() {
-    const newQuantity = inputQuantityRef?.current?.value;
-    if (newQuantity !== null) {
-      const itemToUpdate = new Item({
-        ...item,
-        quantity: Number(newQuantity),
-      });
-      actions.updateItem(itemToUpdate).then(() => {
-        console.log(
-          `Item "${item.name}" updated quantity from "${item.quantity}" to "${itemToUpdate.quantity}"`
-        );
-      });
-    }
-    enableReadMode();
-  }
+}
+
+export function useListItemRowColors(item: Item) {
+  const color = item.category.color;
   return {
     accentColor: ColorUtils.isGrayscale(color)
       ? palette.purple
@@ -72,14 +71,29 @@ export function useListItemRow(item: Item) {
     disabledColor: ColorUtils.isGrayscale(color)
       ? ColorUtils.setLuminosity(palette.purple, 0.96)
       : palette.gray,
-    focusItemNameInput: generateInputFocus(inputNameRef),
-    focusItemQuantityInput: generateInputFocus(inputQuantityRef),
+    mandatoryColor: palette.red,
+  };
+}
+
+export function useListItemRow(item: Item) {
+  const { actions } = useStore();
+  const inputNameRef = useRef<HTMLInputElement>(null);
+  const inputQuantityRef = useRef<HTMLInputElement>(null);
+  const [readMode, setReadMode] = useState(true);
+  const enableWriteMode = () => setReadMode(false);
+  const enableReadMode = () => setReadMode(true);
+
+  return {
+    focusItemNameInput: generateInputFocus(inputNameRef, enableWriteMode),
+    focusItemQuantityInput: generateInputFocus(
+      inputQuantityRef,
+      enableWriteMode
+    ),
     goToItemDetails: useCallback(() => {
       window.location.pathname = `/items/details/${item.id.value}`;
     }, [item]),
     inputNameRef,
     inputQuantityRef,
-    mandatoryColor: palette.red,
     readMode,
     setAsNotMandatory: useCallback(
       () => actions.setItemAsNotMandatory(item.id),
@@ -97,7 +111,27 @@ export function useListItemRow(item: Item) {
       () => actions.setItemAsRequired(item.id),
       [item, actions]
     ),
-    updateName,
-    updateQuantity,
+    updateName: useCallback(
+      generateUpdateItemWithInputValueHandler({
+        inputRef: inputNameRef,
+        validation: (value) => (value && value !== item.name) as boolean,
+        property: "name",
+        enableReadMode,
+        actions,
+        item,
+      }),
+      [actions, setReadMode]
+    ),
+    updateQuantity: useCallback(
+      generateUpdateItemWithInputValueHandler({
+        inputRef: inputQuantityRef,
+        validation: (value) => value !== undefined,
+        property: "quantity",
+        enableReadMode,
+        actions,
+        item,
+      }),
+      [actions, setReadMode]
+    ),
   };
 }
