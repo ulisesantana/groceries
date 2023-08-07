@@ -1,4 +1,4 @@
-import { Category } from "../category";
+import { Category, RawCategory } from "../category";
 import { Id } from "../id";
 
 export class CategoryList {
@@ -31,5 +31,15 @@ export class CategoryList {
 
   findById(id: Id): Category | undefined {
     return this.categories.find((category) => id.equals(category.id));
+  }
+
+  toRaw(): RawCategory[] {
+    return this.values.map((c) => ({
+      id: c.id.value,
+      name: c.name,
+      color: c.color,
+      icon: c.icon,
+      title: c.title,
+    }));
   }
 }

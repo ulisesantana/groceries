@@ -1,4 +1,4 @@
-import { Item } from "../item";
+import { Item, RawItem } from "../item";
 import { Id } from "../id";
 import { Category } from "../category";
 
@@ -66,6 +66,17 @@ export class ItemList {
 
   has(item: Item): boolean {
     return this._items.some(({ id }) => item.id.equals(id));
+  }
+
+  toRaw(): RawItem[] {
+    return this.values.map((item) => ({
+      id: item.id.value,
+      category: item.category.id.value,
+      name: item.name,
+      isRequired: item.isRequired,
+      isMandatory: item.isMandatory,
+      quantity: item.quantity,
+    }));
   }
 
   // https://javascriptf1.com/snippet/remove-accents-from-a-string-in-javascript

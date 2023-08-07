@@ -10,6 +10,14 @@ export interface CategoryParams {
   icon?: string;
 }
 
+export interface RawCategory {
+  id: string;
+  name: string;
+  color: string;
+  icon: string;
+  title: string;
+}
+
 export class Category {
   readonly _id: string;
   readonly _rev?: string;

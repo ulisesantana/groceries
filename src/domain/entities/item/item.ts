@@ -12,6 +12,15 @@ export interface ItemParams {
   quantity?: number;
 }
 
+export interface RawItem {
+  id: string;
+  category: string;
+  name: string;
+  isRequired: boolean;
+  isMandatory: boolean;
+  quantity: number;
+}
+
 export class Item {
   readonly _id: string;
   readonly _rev?: string;
