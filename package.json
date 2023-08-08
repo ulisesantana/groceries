@@ -1,21 +1,22 @@
 {
   "name": "groceries",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "homepage": "https://groceries.tools/",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
-    "deploy": "gh-pages -d build",
+    "docs:update": "auto-changelog -p && git add CHANGELOG.md && git commit -m \"📝 update changelog\"",
     "linter:fix": "eslint --fix src",
     "nuke": "rm -rf node_modules && rm package-lock.json && npm install",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "tag": "TAG=v$(node -pe \"require('./package.json').version\"); git commit -am \"🔖 $TAG\" && git tag $TAG && npm run docs:update && git push --tags",
     "test": "vitest run src",
     "test:coverage": "npm run test -- --coverage",
     "test:e2e": "cypress run",
     "test:e2e:ui": "cypress open",
-    "test:ui": "npm run test -- --ui"
+    "test:ui": "npm run test -- --ui",
+    "update-version": "node ./update-version.mjs"
   },
   "engines": {
     "node": "^20"
@@ -48,6 +49,7 @@
     "@vitejs/plugin-react": "4.0.0",
     "@vitest/coverage-v8": "0.32.2",
     "@vitest/ui": "0.32.2",
+    "auto-changelog": "2.4.0",
     "cypress": "12.17.3",
     "cypress-vite": "1.4.2",
     "eslint-config-prettier": "8.5.0",
@@ -64,5 +66,10 @@
     "vite": "4.3.9",
     "vite-plugin-pwa": "0.15.0",
     "vitest": "0.32.2"
+  },
+  "auto-changelog": {
+    "commitLimit": false,
+    "unreleased": true,
+    "sortCommits": "date-desc"
   }
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { Transition } from "react-transition-group";
 import { Link, useRoute } from "wouter";
 import { messages } from "../../../../messages";
+import version from "../../../../version";
 import { SettingsForm } from "../../components";
 import { routes } from "../../routes";
 import { useStore } from "../../store";
@@ -52,6 +53,9 @@ export function SettingsView() {
             <button onClick={reload}>Reload 🔄</button>
           </div>
         </details>
+        <div className="center">
+          <span>version {version}</span>
+        </div>
       </div>
     </Transition>
   );
