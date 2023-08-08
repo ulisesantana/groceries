@@ -13,6 +13,7 @@ if (!appVersion.includes(pkg.version)) {
   await child_process.exec(`git tag ${tag}`)
   await child_process.exec(`npm run docs:update`)
   await child_process.exec(`git push --tags`)
+  await child_process.exec(`git push`)
   console.log(`Version updated to ${pkg.version}`)
 } else {
   console.log(`Nothing to update (version ${pkg.version}).`)
