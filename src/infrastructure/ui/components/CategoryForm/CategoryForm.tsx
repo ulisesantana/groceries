@@ -23,6 +23,7 @@ export function CategoryForm({ action, category }: CategoryFormProps) {
     action(setSuccessMessage, setErrorMessage),
     category
   );
+  const color = category?.color || palette.purple;
 
   return (
     <form className="CategoryForm" onSubmit={onSubmitHandler}>
@@ -47,7 +48,7 @@ export function CategoryForm({ action, category }: CategoryFormProps) {
         {messages.categoryForm.colorInput}{" "}
         <span
           className="circle"
-          style={{ backgroundColor: category?.color || palette.purple }}
+          style={{ backgroundColor: color }}
         ></span>
       </label>
       <input
@@ -55,7 +56,7 @@ export function CategoryForm({ action, category }: CategoryFormProps) {
         name="color"
         required
         aria-label={messages.categoryForm.colorInput}
-        defaultValue={category?.color}
+        defaultValue={color}
       />
       <span className={classNames("success-box", { active: successMessage })}>
         {successMessage}
