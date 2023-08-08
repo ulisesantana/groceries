@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { FormEventHandler, useState } from "react";
+import React, { FormEventHandler, useEffect, useRef, useState } from "react";
 import { Category, palette } from "../../../../domain";
 import { messages } from "../../../../messages";
 import "../CategoryForm/CategoryForm.scss";
@@ -14,6 +14,7 @@ export interface CategoryFormProps {
 }
 
 export function CategoryForm({ action, category }: CategoryFormProps) {
+  const colorRef = useRef<HTMLInputElement>(null);
   const submitText = category
     ? messages.categoryForm.submitButton.update
     : messages.categoryForm.submitButton.create;
@@ -23,7 +24,12 @@ export function CategoryForm({ action, category }: CategoryFormProps) {
     action(setSuccessMessage, setErrorMessage),
     category
   );
-  const color = category?.color || palette.purple;
+
+  useEffect(() => {
+    if (colorRef.current) {
+      colorRef.current.value = category?.color || palette.purple;
+    }
+  }, [category, colorRef]);
 
   return (
     <form className="CategoryForm" onSubmit={onSubmitHandler}>
@@ -44,19 +50,13 @@ export function CategoryForm({ action, category }: CategoryFormProps) {
         required
         defaultValue={category?.icon}
       />
-      <label htmlFor="color">
-        {messages.categoryForm.colorInput}{" "}
-        <span
-          className="circle"
-          style={{ backgroundColor: color }}
-        ></span>
-      </label>
+      <label htmlFor="color">{messages.categoryForm.colorInput}</label>
       <input
         type="color"
         name="color"
+        ref={colorRef}
         required
         aria-label={messages.categoryForm.colorInput}
-        defaultValue={color}
       />
       <span className={classNames("success-box", { active: successMessage })}>
         {successMessage}
