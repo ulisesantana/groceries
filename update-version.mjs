@@ -9,11 +9,17 @@ const pkg = JSON.parse((await fs.readFile("./package.json")).toString());
 if (!appVersion.includes(pkg.version)) {
   await fs.writeFile(appVersionPath, `export default "${pkg.version}";\n`)
   const tag = `v${pkg.version}`
-  await child_process.exec(`git commit -am \"🔖 ${tag}\"`)
-  await child_process.exec(`git tag ${tag}`)
-  await child_process.exec(`npm run docs:update`)
-  await child_process.exec(`git push --tags`)
-  await child_process.exec(`git push`)
+  const commands = [
+    `git commit -am \"🔖 ${tag}\"`,
+    `git tag ${tag}`,
+    `npm run docs:update`,
+    `git push --tags`,
+    `git push`
+  ]
+  for (const command of commands) {
+    console.log(`Running: "${command}"`)
+    await child_process.exec(command)
+  }
   console.log(`Version updated to ${pkg.version}`)
 } else {
   console.log(`Nothing to update (version ${pkg.version}).`)
