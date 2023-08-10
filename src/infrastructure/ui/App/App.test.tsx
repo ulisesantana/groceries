@@ -7,6 +7,6 @@ describe("Groceries list App should", () => {
   it("renders app name", () => {
     render(<App />);
 
-    screen.getByAltText(/Groceries/);
+    screen.getByText(/Groceries/);
   });
 });
