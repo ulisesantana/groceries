@@ -37,9 +37,9 @@
     padding: 0.5rem 1rem;
   }
 
-  .center {
-    align-items: center;
-    display: flex;
-    justify-content: center;
+  a, a:visited {
+    color: var(--purple);
+    font-size: 1.25rem;
+    font-weight: bolder;
   }
 }

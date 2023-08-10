@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { MdSettings } from "react-icons/all";
+import { BiArrowBack } from "react-icons/bi";
 import { Link, Route, Router, useRoute } from "wouter";
 import logo from "../../../assets/groceries.png";
 import { palette } from "../../../domain";
@@ -36,17 +38,17 @@ function App() {
           <span>
             {!match && (
               <button className="back-history" onClick={goBack}>
-                ⬅️
+                <BiArrowBack size={48} color={palette.white} />
               </button>
             )}
           </span>
-          <span>
-            <Link to={routes.root}>
-              <img src={logo} alt="Groceries" />
-            </Link>
+          <span className="isotype">
+            <Link to={routes.root}>Groceries</Link>
           </span>
           <span>
-            <Link to={routes.settings}>⚙️</Link>
+            <Link to={routes.settings}>
+              <MdSettings size={48} color={palette.white} />
+            </Link>
           </span>
         </header>
         <main className="App-main">
