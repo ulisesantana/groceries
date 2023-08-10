@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { MdSettings } from "react-icons/all";
 import { BiArrowBack } from "react-icons/bi";
 import { Link, Route, Router, useRoute } from "wouter";
-import logo from "../../../assets/groceries.png";
 import { palette } from "../../../domain";
 import { CreateCategoryForm } from "../components";
 import { routes } from "../routes";
