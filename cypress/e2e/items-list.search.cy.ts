@@ -45,12 +45,11 @@ describe("Items list search should", () => {
   });
 
   it("show only items which name contains search value", () => {
-    const [agua, aguacate] = items;
+    const [beleten] = [...items].reverse();
     helper.shouldBeRendered(items);
-    helper.getByTestId("search", "input").focus().type("agua");
-    helper.contains(agua.name);
-    helper.contains(aguacate.name);
-    helper.getByTestId("list-item-row").should("have.length", 2);
+    helper.getByTestId("search", "input").focus().type("bele");
+    helper.contains(beleten.name);
+    helper.getByTestId("list-item-row").should("have.length", 1);
   });
 
   it("show all items when deleting search", () => {
@@ -74,25 +73,32 @@ describe("Items list search should", () => {
     helper.getByTestId("list-item-row").should("have.length", items.length);
   });
 
-  it("search filtering by required items", () => {
+  it("search on required items view filtering only by search value", () => {
     const [agua, aguacate] = items;
     helper.goToRequiredItemsListView();
     helper.goToSearchView();
+    // Check is showing only the mandatory items
     helper.getByTestId("list-item-row").should("have.length", 3);
+    // You want to search something else
     helper.getByTestId("search", "input").focus().type("agua");
+    // You will see Agua and Aguacate
     helper.contains(agua.name);
-    helper.contains(aguacate.name).should("not.exist");
-    helper.getByTestId("list-item-row").should("have.length", 1);
+    helper.contains(aguacate.name);
+    helper.getByTestId("list-item-row").should("have.length", 2);
   });
 
-  it("search filtering by mandatory items", () => {
-    const [beleten] = [...items].reverse();
+  it("search on mandatory items view filtering only by search value", () => {
+    const [agua, aguacate] = items;
     helper.goToMandatoryItemsListView();
     helper.goToSearchView();
+    // Check is showing only the mandatory items
     helper.getByTestId("list-item-row").should("have.length", 2);
-    helper.getByTestId("search", "input").focus().type("bele");
-    helper.contains(beleten.name);
-    helper.getByTestId("list-item-row").should("have.length", 1);
+    // You want to search something else
+    helper.getByTestId("search", "input").focus().type("agua");
+    // You will see Agua and Aguacate
+    helper.contains(agua.name);
+    helper.contains(aguacate.name);
+    helper.getByTestId("list-item-row").should("have.length", 2);
   });
 
   it("search ignoring accent marks", () => {

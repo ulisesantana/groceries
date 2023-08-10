@@ -41,7 +41,11 @@ export function Groceries() {
       )}
       {view === Views.Required && (
         <ListItems
-          items={items.search(lastSearch).getAllRequired()}
+          items={
+            lastSearch
+              ? items.search(lastSearch).values
+              : items.getAllRequired()
+          }
           onClick={actions.setCategoryVisibility}
           onCollapseAll={actions.collapseAllCategories}
           onExpandAll={actions.expandAllCategories}
@@ -50,7 +54,11 @@ export function Groceries() {
       )}
       {view === Views.Mandatory && (
         <ListItems
-          items={items.search(lastSearch).getAllMandatory()}
+          items={
+            lastSearch
+              ? items.search(lastSearch).values
+              : items.getAllMandatory()
+          }
           onClick={actions.setCategoryVisibility}
           onCollapseAll={actions.collapseAllCategories}
           onExpandAll={actions.expandAllCategories}
