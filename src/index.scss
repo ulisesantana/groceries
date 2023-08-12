@@ -50,13 +50,16 @@ hr {
 
     a, a:visited {
       color: transparent;
-
-      button {
-        background-color: var(--purple);
-        color: var(--white);
-        font-size: 1.25rem;
-        font-weight: bolder;
-      }
     }
   }
+}
+
+button {
+  background-color: var(--purple);
+  border-color: transparent;
+  border-radius: 24px;
+  color: var(--white);
+  font-size: 1.25rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
 }

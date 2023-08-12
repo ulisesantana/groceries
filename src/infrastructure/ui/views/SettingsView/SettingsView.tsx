@@ -27,35 +27,33 @@ export function SettingsView() {
   return (
     <Transition in={match} timeout={500}>
       <div className="SettingsView">
-        <details open>
-          <summary>{messages.settings.categories}</summary>
-          <ul>
-            <li>
-              <Link to={routes.categories.create}>
-                {messages.actions.createACategory}
-              </Link>
-            </li>
-            <li>
-              <Link to={routes.categories.list}>
-                {messages.actions.goToCategories}
-              </Link>
-            </li>
-          </ul>
-        </details>
-        <details open>
-          <summary>{messages.settings.dataSync}</summary>
-          <SettingsForm />
-          <button onClick={backupDatabase}>Backup database ⬇️</button>
-        </details>
-        <details open>
-          <summary>Update</summary>
-          <div className="center">
+        <section>
+          <h2>{messages.settings.categories}</h2>
+          <div className="container">
+            <Link to={routes.categories.create}>
+              <button>{messages.actions.createACategory}</button>
+            </Link>
+            <Link to={routes.categories.list}>
+              <button>{messages.actions.goToCategories}</button>
+            </Link>
+          </div>
+        </section>
+        <section>
+          <h2>{messages.settings.dataSync}</h2>
+          <div className="container">
+            <SettingsForm />
+            <button onClick={backupDatabase}>Backup database ⬇️</button>
+          </div>
+        </section>
+        <section>
+          <h2>Update</h2>
+          <div className="container">
             <button onClick={reload}>Reload 🔄</button>
           </div>
-        </details>
-        <div className="center">
+        </section>
+        <section className="center">
           <span>version {version}</span>
-        </div>
+        </section>
       </div>
     </Transition>
   );
