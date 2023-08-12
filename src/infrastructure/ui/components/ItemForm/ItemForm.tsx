@@ -3,7 +3,6 @@ import React, { FormEventHandler, useState } from "react";
 import { Category, Item } from "../../../../domain";
 import { messages } from "../../../../messages";
 import { routes } from "../../routes";
-import "./ItemForm.scss";
 
 export type ItemAction = (item: Item) => void;
 export interface ItemFormProps {
@@ -94,14 +93,14 @@ export function ItemForm({ action, item, categories }: ItemFormProps) {
       </button>
     </form>
   ) : (
-    <div className="no-categories">
+    <div className="padded-info">
       <span>{messages.itemForm.errors.thereAreNoCategories.message}</span>
       <span>
         <a
           href={routes.categories.create}
           aria-label={messages.itemForm.errors.thereAreNoCategories.cta}
         >
-          {messages.itemForm.errors.thereAreNoCategories.cta}
+          <button>{messages.itemForm.errors.thereAreNoCategories.cta}</button>
         </a>
       </span>
     </div>

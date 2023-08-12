@@ -16,7 +16,9 @@ export interface ListProps {
 
 const EmptyList = () => (
   <div className="ListItems">
-    <p>{messages.itemList.empty}</p>
+    <div className="padded-info">
+      <span>{messages.itemList.empty}</span>
+    </div>
   </div>
 );
 
