@@ -23,6 +23,12 @@ export const messages = {
       totalItems === 1 ? "1 item" : `${totalItems} items`,
     empty: "There are no items in this list",
   },
+  categoryList: {
+    empty: {
+      message: "You have no categories yet.",
+      cta: "Create your first category"
+    }
+  },
   search: {
     searchInput: "🔍 Search",
     resetCTA: "Reset your search",
