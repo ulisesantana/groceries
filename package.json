@@ -18,7 +18,7 @@
     "update-version": "node ./update-version.mjs"
   },
   "engines": {
-    "node": "^20"
+    "node": "20.2.0 || 18.x"
   },
   "dependencies": {
     "classnames": "2.3.2",
