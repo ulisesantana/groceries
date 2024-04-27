@@ -51,11 +51,10 @@ export class ItemList {
   }
 
   search(search: string): ItemList {
+    const sanitizedSearch = this.removeAccentMarks(search.toLowerCase());
     return new ItemList(
       this.items.filter((i) =>
-        this.removeAccentMarks(i.name.toLowerCase()).includes(
-          this.removeAccentMarks(search.toLowerCase())
-        )
+        this.removeAccentMarks(i.name.toLowerCase()).includes(sanitizedSearch)
       )
     );
   }

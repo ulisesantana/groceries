@@ -8,11 +8,11 @@ form {
   padding: 16px;
   width: calc(100% - 32px);
 
-  &, input, button, select, option {
+  &, input, button, select, option, textarea {
     font-size: 1.25rem;
   }
 
-  button, input, select {
+  button, input, select, textarea {
     border-radius: 24px;
     padding: 0.5rem 1rem;
   }

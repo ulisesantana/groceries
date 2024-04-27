@@ -26,8 +26,8 @@ export const messages = {
   categoryList: {
     empty: {
       message: "You have no categories yet.",
-      cta: "Create your first category"
-    }
+      cta: "Create your first category",
+    },
   },
   search: {
     searchInput: "🔍 Search",
@@ -37,6 +37,16 @@ export const messages = {
   settings: {
     categories: "Categories",
     dataSync: "Data sync",
+    backupData: "Backup database ⬇️",
+    settingsConfigUrl: "Your sync URL",
+    settingsConfigTextArea:
+      "Add your Cloudant API Credentials for creating your sync URL",
+    settingsConfigCopyButton: "Copy your URL",
+    settingsConfigCopyFeedback: "Your URL has been copied",
+    updateApp: {
+      title: "Update",
+      CTA: "Reload 🔄",
+    },
   },
   settingsForm: {
     syncUrlInputLabel:

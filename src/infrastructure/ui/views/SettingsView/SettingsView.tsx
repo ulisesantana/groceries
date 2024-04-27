@@ -3,7 +3,7 @@ import { Transition } from "react-transition-group";
 import { Link, useRoute } from "wouter";
 import { messages } from "../../../../messages";
 import version from "../../../../version";
-import { SettingsForm } from "../../components";
+import { SettingsForm, SyncUrlForm } from "../../components";
 import { routes } from "../../routes";
 import { useStore } from "../../store";
 import "./SettingsView.scss";
@@ -24,6 +24,7 @@ export function SettingsView() {
       `groceries.${new Date().toISOString().slice(0, 19)}.json`
     );
   };
+
   return (
     <Transition in={match} timeout={500}>
       <div className="SettingsView">
@@ -42,13 +43,20 @@ export function SettingsView() {
           <h2>{messages.settings.dataSync}</h2>
           <div className="container">
             <SettingsForm />
-            <button onClick={backupDatabase}>Backup database ⬇️</button>
+            <button
+              type="button"
+              title={messages.settings.backupData}
+              onClick={backupDatabase}
+            >
+              {messages.settings.backupData}
+            </button>
+            <SyncUrlForm />
           </div>
         </section>
         <section>
-          <h2>Update</h2>
+          <h2>{messages.settings.updateApp.title}</h2>
           <div className="container">
-            <button onClick={reload}>Reload 🔄</button>
+            <button onClick={reload}>{messages.settings.updateApp.CTA}</button>
           </div>
         </section>
         <section className="center">
